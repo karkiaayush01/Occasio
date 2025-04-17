@@ -1,0 +1,358 @@
+@import url('./globals.css');
+
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	padding-top: 10px;
+}
+
+.main{
+	padding-left: 82px;
+	padding-right: 82px; 
+}
+
+.home-nav{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 84px;
+	gap: 60px;
+	margin-bottom: 16px;
+}
+
+.nav-title{
+	font-size: 40px; 
+	color: rgba(246, 94, 44, 1);
+}
+
+.nav-buttonbar{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 1 1 0%;
+	max-width: 624px;
+}
+
+.nav-button{
+	background: none;
+	border: none;
+	font-size: 20px;
+	font-family: Poppins;
+	cursor: pointer;
+}
+
+.nav-button:hover{
+	color: blue;
+	text-decoration: underline;
+}
+
+.nav-user-section{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.nav-user-profile-picture{
+	background: rgba(217, 217, 217, 1);
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+}
+
+.nav-user-details-view-prof-button:hover{
+	font-size: 13px; 
+	color: rgba(37, 81, 227, 1); 
+	font-family: 'Poppins';
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.event-search-bar-form{
+	width: 100%;
+	display: flex;
+	align-items: center; 
+	justify-content: center;
+	height: 48px;
+}
+
+.event-search-bar{
+	height: 100%;
+	display: flex;
+	border: 2px solid black;
+	width: 604px;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+	margin-bottom: 24px;
+}
+
+.search-bar-input{
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 16px;
+	font-family: 'Poppins-Regular';
+}
+
+.search-bar-input:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.events-card-container{
+	width: 100%;
+	display: flex;
+	overflow-x: auto;
+	gap: 32px;
+	scrollbar-width: none;
+  	-ms-overflow-style: none;
+}
+
+.events-card-container::-webkit-scrollbar{
+	display: none;
+}
+
+.user-events, .ongoing-events, .upcoming-events{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 24px; 
+	margin-bottom: 32px;
+}
+
+.event-section-title{
+	font-size: 24px;
+}
+
+.events-actions-add{
+	display: flex;
+	align-items: center;
+	padding: 8px 15px;
+	border-radius: 6px;
+	background: rgba(246, 94, 44, 1);
+	color: white;
+	border: none;
+	gap: 8px;
+	height: 48px;
+	font-size: 16px;
+	font-family: 'Poppins-Light';
+	cursor: pointer;
+}
+
+.events-actions-add:hover{
+	background: rgba(220, 75, 30, 1);
+}
+
+.user-events-card{
+	display: flex;
+	max-width: 514px;
+	min-height: 152px;
+}
+
+.user-events-cover{
+	max-width: 220px;
+	background: rgba(235, 235, 235, 1);
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+}
+
+.user-events-card-details{
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	background: rgba(235, 235, 235, 1);
+	border-top-right-radius: 12px;
+  	border-bottom-right-radius: 12px;
+	width: 100%;
+	padding: 6px 12px 4px 8px;
+}
+
+.user-events-card-details-title, .ongoing-events-card-details-title{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 6px 2px 6px 0px;
+}
+
+.view-event-details-link{
+	font-size: 12px;
+	color: rgba(37, 81, 227, 1);
+	font-family: 'Poppins';
+	cursor: pointer;
+}
+
+.view-event-details-link:hover{
+	text-decoration: underline;
+}
+
+.user-event-card-details-info, .ongoing-events-card-info, .upcoming-events-card-info{
+	display: flex;
+	flex-direction: column; 
+	gap: 4px;
+	padding: 2px 0px;
+}
+
+.user-event-card-details-info-child, .ongoing-events-card-info-child, .upcoming-events-card-info-child{
+	display: flex; 
+	align-items: center;
+	gap: 8px;
+	color: rgba(75, 85, 99, 1)
+}
+
+.user-event-card-details-info-child, .ongoing-events-card-info-child, .upcoming-events-card-info-child span{
+	font-family: 'Poppins-Regular';
+	font-size: 12px;
+}
+
+.event-card-interested{
+	display: flex;
+	padding: 4px 0px;
+}
+
+.interested-counts{
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.interested-user-images{
+	width: 100px; 
+	display: flex; 
+	align-items: center;
+}
+
+.interested-user-images img{
+	background: rgba(217, 217, 217, 1);
+	border-radius: 50%;
+	width: 28px;
+	height: 28px;
+	border: 2px solid white;
+}
+
+.total-interests{
+	font-size: 10px;
+	font-family: 'Poppins-Regular';
+}
+
+.interested-user-2{
+	position: absolute;
+	left: 18px;
+}
+
+.interested-user-3{
+	position: absolute;
+	left: 36px;
+}
+
+.edit-event-button, .show-interest-button, .interested-button{
+	display: flex;
+	padding: 2px 8px;
+	width: 120px;
+	height: 40px;
+	background: rgba(93, 146, 215, 1);
+	color: white;
+	border: none;
+	font-size: 14px;
+	font-family: Poppins-Regular;
+	border-radius: 6px;
+	gap: 8px;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+.show-interest-button{
+	background: rgba(246, 94, 44, 1);
+	font-size: 13px;
+	font-family: Poppins-Light;
+}
+
+.show-interest-button:hover{
+	background: rgba(220, 75, 30, 1);
+}
+
+.interested-button{
+	background: rgba(51, 112, 92, 1);
+}
+
+.interested-button:hover{
+	background: rgba(41, 92, 76, 1);
+}
+
+.edit-event-button:hover{
+	background: rgba(73, 126, 195, 1);
+}
+
+.ongoing-events-card{
+	width: 296px;
+	height: 320px;
+	display: flex;
+	flex-direction: column; 
+	gap: 0px;
+}
+
+.ongoing-events-cover{
+	width: 100%;
+	height: 152px;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	background: rgba(235, 235, 235, 1);
+}
+
+.ongoing-events-card-details{
+	background: rgba(235, 235, 235, 1);
+	padding: 8px 8px 12px 8px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+
+.upcoming-events-card{
+	padding: 12px;
+	background: rgba(235, 235, 235, 1);
+	border-radius: 12px;
+	display: flex;
+	width: 324px;
+	height: 148px;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.upcoming-events-card-details{
+	width: 100%;
+}
+
+.upcoming-events-card-cover{
+	width: 112px;
+	height: 120px;
+	object-fit: cover;
+ 	display: block;
+ 	border-radius: 12px;
+}
+
+@media(max-width: 768px){
+	.main{
+		padding-left: 24px;
+		padding-right: 24px; 
+	}
+	
+	.nav-buttonbar, .nav-user-section{
+		display: none;
+	}
+	
+	.event-search-bar{
+		width: 540px;
+	}
+}
+
+
