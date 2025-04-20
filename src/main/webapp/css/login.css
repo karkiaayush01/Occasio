@@ -74,3 +74,7 @@
 	border: none;
 	background: none;
 }
+
+.signup-text:hover{
+	text-decoration: underline;
+}

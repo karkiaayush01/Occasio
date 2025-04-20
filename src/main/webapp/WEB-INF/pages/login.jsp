@@ -35,7 +35,7 @@
 					<button type="submit" style="height: 48px; font-size: 20px; color: white; background: #F65E2C; border-radius: 6px; border: none; margin-bottom: 32px">
 						Sign In
 					</button>
-					<span style="text-align: center">New to Occasio? <span style="color: rgba(37, 81, 227, 1); cursor: pointer">Sign Up</span></span>
+					<span style="text-align: center">New to Occasio? <span class="signup-text" style="color: rgba(37, 81, 227, 1); cursor: pointer">Sign Up</span></span>
 				</form>
 			</div>
 		</main>

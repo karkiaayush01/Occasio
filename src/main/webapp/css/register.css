@@ -1,10 +1,12 @@
 @import url('./globals.css');
+
 .main{
 	width: 100%;
-	height: 140vh;
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	font-family: 'Poppins-Regular';
 }
 
 .register-popover{
@@ -15,10 +17,17 @@
 
 .register-title{
 	text-align: center;
-	margin-bottom: 40px;
+	margin-top: 45px;
+	margin-bottom: 36px;
 	font-size: 56px;
 	font-weight: medium;
+	height: 56px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Poppins-Light';
 }
+
 .register-form{
 	display: flex;
 	flex-direction: column;
@@ -26,15 +35,20 @@
 }
 
 .register-headers{
-	margin-bottom: 32px;
+	margin-bottom: 28px;
+}
+
+.register-text{
+	font-family: Poppins-Light;
 }
 
 .step-progress{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-  	margin-top: 30px;
+	margin-bottom: 20px;
 }
+
 .circle{
 	width: 30px;
 	height: 30px;
@@ -47,9 +61,11 @@
 	font-weight: 400;
 	margin-right:20px;
 }
+
 .step.active .circle {
   background-color: #F65E2C;
 }
+
 .line {
   height: 1.5px;
   background-color: #000;
@@ -61,7 +77,6 @@
   margin-top: 6px;
   font-size: 14px;
   font-weight: 400;
-  
 }
 
 .step{
@@ -70,12 +85,20 @@
 	align-items: center;
 	text-align: center;
 }
+
+.register-part-1{
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 28px;
+}
+
 .form-section{
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
-	margin-bottom: 15px;
 }
+
 .form-input{
 	height: 47px;
 	border-radius: 6px;
@@ -87,6 +110,7 @@
 	padding-right: 17px;
 	width: 100%;
 }
+
 .circle3{
 	width: 95px;
 	height: 95px;
@@ -99,6 +123,7 @@
 	font-weight: 400;
 	margin-right:20px;
 	border: 1px solid black;
+	cursor: pointer;
 }
 
 .profile-circle{
@@ -106,13 +131,22 @@
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
+	margin-bottom: 20px;
 }
+
 .add-label{
 	margin-top: 6px;
   	font-size: 14px;
   	font-weight: 400;
   	margin-right:16px;
+  	color: rgba(37, 81, 227, 1);
+  	cursor: pointer;
 }
+
+.add-label:hover{
+	text-decoration: underline;
+}
+
 .password-eye{
 	position: absolute;
 	right: 10px;
@@ -120,4 +154,28 @@
 	height: 100%;
 	border: none;
 	background: none;
+}
+
+.register-continue, .register-confirm{
+	height: 48px; 
+	font-size: 20px; 
+	color: white; 
+	background: #F65E2C; 
+	border-radius: 6px; 
+	border: none; 
+	margin-bottom: 32px; 
+	cursor:pointer; 
+	width:100%;
+}
+
+.register-continue:hover, .register-confirm:hover{
+	background: rgba(220, 75, 30, 1);
+}
+
+.register-part-2, .register-confirm{
+	display: none;
+}
+
+.signin-text:hover{
+	text-decoration: underline;
 }
