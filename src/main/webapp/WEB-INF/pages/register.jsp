@@ -9,7 +9,9 @@
 			href="${pageContext.request.contextPath}/css/register.css?v=${System.currentTimeMillis()}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
-
+	
+	<!--  update this jsp to show error message stored in hashmap -->
+	
 	<body>
 		<main class="main">
 			<div class="register-popover">
@@ -92,8 +94,9 @@
 						Confirm
 					</button>
 					
-					<p style="text-align: center; margin-bottom: 30px;">Already have an account? <span class="signin-text"
-							style="color: rgba(37, 81, 227, 1); cursor: pointer">Sign in</span></p>
+					<p style="text-align: center; margin-bottom: 30px;">Already have an account?
+						<a href="${pageContext.request.contextPath}/login" class="signin-text" style="color: rgba(37, 81, 227, 1); cursor: pointer; text-decoration: none;">Sign In</a>
+					</p>
 				</form>
 			</div>
 

@@ -37,6 +37,11 @@ public class RegisterService {
 			return "Error while connecting to database";
 		}
 		
+		// Check if the email already exists
+        if (isEmailAlreadyRegistered(userModel.getEmail())) {
+            return "Email address already exists. Please use a different email.";
+        }
+		
 		String getOrgQuery = "SELECT OrgName FROM organization WHERE OrgId = ?";
 		String insertUserQuery = "INSERT INTO user (FullName, UserEmail, Role, Password, DateJoined, PhoneNumber, ProfilePicturePath, OrgId) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -77,4 +82,18 @@ public class RegisterService {
 		}
 		
 	}
+	
+	private boolean isEmailAlreadyRegistered(String email) {
+        String checkEmailQuery = "SELECT UserEmail FROM user WHERE UserEmail = ?";
+        try (PreparedStatement checkStmt = dbConn.prepareStatement(checkEmailQuery)) {
+            checkStmt.setString(1, email);
+            ResultSet resultSet = checkStmt.executeQuery();
+            return resultSet.next(); // Returns true if a user with this email exists
+        } catch (SQLException e) {
+            System.err.println("Error checking email existence: " + e.getMessage());
+            e.printStackTrace();
+            return true; // Assume email exists to prevent duplicate creation in case of error
+        }
+    }
+	
 }
