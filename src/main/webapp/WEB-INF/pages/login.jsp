@@ -35,7 +35,9 @@
 					<button type="submit" style="height: 48px; font-size: 20px; color: white; background: #F65E2C; border-radius: 6px; border: none; margin-bottom: 32px">
 						Sign In
 					</button>
-					<span style="text-align: center">New to Occasio? <span class="signup-text" style="color: rgba(37, 81, 227, 1); cursor: pointer">Sign Up</span></span>
+					<span style="text-align: center">New to Occasio?
+						<a href="${pageContext.request.contextPath}/register" class="signup-text" style="color: rgba(37, 81, 227, 1); cursor: pointer; text-decoration: none;">Sign Up</a>
+					</span>
 				</form>
 			</div>
 		</main>
