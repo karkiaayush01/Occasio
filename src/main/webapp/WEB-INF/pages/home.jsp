@@ -679,7 +679,7 @@
 
 		      reader.readAsDataURL(file); // this triggers the onload
 		    }
-		  }
+		 }
 		
 		function addImageChange(e){
 			const imageElement = document.querySelector(".add-event-cover-image");
