@@ -73,6 +73,7 @@ public class RegisterController extends HttpServlet {
         Map<String, String> errors = new HashMap<>();
         
         String realUploadPathBase = getServletContext().getRealPath(PROFILE_PIC_SUBFOLDER);
+        System.out.println("***** ABSOLUTE IMAGE SAVE PATH on Server: " + realUploadPathBase + " *****");
         if (realUploadPathBase == null) {
             System.err.println("FATAL ERROR: Could not get real path for " + PROFILE_PIC_SUBFOLDER + ". Is the WAR deployed exploded? Check server configuration.");
             errors.put("config", "Server configuration error determining image upload path.");

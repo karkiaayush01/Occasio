@@ -6,38 +6,65 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
-/**
- * @author Occasio team
- */
-@WebServlet(asyncSupported = true, urlPatterns = { "/login", "/" })
+import com.occasio.model.UserModel;
+import com.occasio.service.LoginService;
+
+@WebServlet("/login")
 public class LoginController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginController() {
-        super();
-        // TODO Auto-generated constructor stub
+    private static final long serialVersionUID = 1L;
+    private LoginService loginService;
+
+    @Override
+    public void init() throws ServletException {
+        loginService = new LoginService();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("loggedInUser") != null) {
+            response.sendRedirect(request.getContextPath() + "/home");
+            return;
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
         dispatcher.forward(request, response);
-	}
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String errorMessage = null;
 
+        if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()) {
+            errorMessage = "Email and Password are required.";
+        } else {
+            UserModel user = loginService.authenticateUser(email, password);
+
+            if (user != null) {
+                // Authentication Successful
+                HttpSession session = request.getSession(); // Get/Create session
+                session.setAttribute("loggedInUser", user); // Store user object
+                // session.setMaxInactiveInterval(60 * 30); // Optional: Set timeout
+
+                System.out.println("Login successful for: " + user.getEmail());
+                response.sendRedirect(request.getContextPath() + "/home"); // Redirect to protected area
+                return; // Stop further processing
+
+            } else {
+                // Authentication Failed
+                errorMessage = "Invalid email or password.";
+                System.out.println("Login failed for email: " + email);
+            }
+        }
+
+        // Authentication Failed or Validation Error
+        request.setAttribute("loginError", errorMessage);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
+        dispatcher.forward(request, response);
+    }
 }
