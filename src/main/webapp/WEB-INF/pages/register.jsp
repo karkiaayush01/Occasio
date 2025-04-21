@@ -43,6 +43,7 @@
 							<label class="register-label">Full name</label>
 							<input type="text" name="fullName" class="form-input">
 						</div>
+						<input type="text" value="user" name="role" style="display: none">
 						<div class="form-section">
 							<label class="org-id-label">Organization ID</label>
 							<input type="text" name="orgId" id="form-org" class="form-input">
