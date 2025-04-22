@@ -1,20 +1,20 @@
 package com.occasio.controller;
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
-import java.io.File;
+//import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.Path;  
+import java.nio.file.Paths; 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 import com.occasio.model.UserModel;
 import com.occasio.service.RegisterService;
 import com.occasio.util.ImageUtil;
-import jakarta.servlet.http.Part;
 
 /**
  * Servlet implementation class RegisterController
@@ -35,8 +34,11 @@ public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	RegisterService registerService = new RegisterService();
+	private final ImageUtil imageUtil = new ImageUtil();
 	
-	private static final String PROFILE_PIC_SUBFOLDER = "images" + File.separator + "profile_pics";
+	private static final String PROFILE_PIC_SUBFOLDER = "profile_pics";
+	
+	private static final String IMAGE_BASE_WEB_PATH = "resources/images";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -68,9 +70,12 @@ public class RegisterController extends HttpServlet {
         LocalDate dateJoined = LocalDate.now();
         String phoneNumber = request.getParameter("phoneNumber");
         String profilePictureDbPath = null;
+        String uploadedImageName = null;
         String orgIdStr = request.getParameter("orgId");
 
         Map<String, String> errors = new HashMap<>();
+        
+        ServletContext context = request.getServletContext();
         
         String realUploadPathBase = getServletContext().getRealPath(PROFILE_PIC_SUBFOLDER);
         System.out.println("***** ABSOLUTE IMAGE SAVE PATH on Server: " + realUploadPathBase + " *****");
@@ -91,46 +96,42 @@ public class RegisterController extends HttpServlet {
 
         
      // --- Handle Image Upload ---
-        try {
-            Part filePart = request.getPart("profilePicture");
-            String originalFilename = ImageUtil.getOriginalFilename(filePart);
+     		try {
+     			Part filePart = request.getPart("profilePicture");
+                 // Use the new ImageUtil to get the filename
+                 uploadedImageName = imageUtil.getImageNameFromPart(filePart);
 
-            if (originalFilename != null && !originalFilename.isEmpty() && filePart.getSize() > 0) {
-                // Generate a unique name
-                String uniqueFilename = ImageUtil.generateUniqueFilename(originalFilename);
+                 // Check if a file was actually uploaded (size > 0) and has a valid name
+                 if (filePart != null && filePart.getSize() > 0 && uploadedImageName != null && !uploadedImageName.isEmpty() && !uploadedImageName.equals("")) {
 
+                     // Use the new ImageUtil to upload the file
+                     // The rootPath argument isn't used by the provided uploadImage, pass null or empty
+                     boolean uploaded = imageUtil.uploadImage(filePart, context, PROFILE_PIC_SUBFOLDER);
 
-                File uploadDir = new File(realUploadPathBase);
-                if (!uploadDir.exists()) {
-                    if (!uploadDir.mkdirs()) { // Use mkdirs to create parent dirs if needed
-                       System.err.println("Could not create directory: " + realUploadPathBase);
-                       throw new IOException("Could not create upload directory."); // Throw error to be caught below
-                    }
-                }
+                     if (uploaded) {
+                         // Construct the relative path for DB storage and web access
+                         // Assumes files are served from webapp/resources/images/
+                         profilePictureDbPath = IMAGE_BASE_WEB_PATH + "/" + PROFILE_PIC_SUBFOLDER + "/" + uploadedImageName;
+                         profilePictureDbPath = profilePictureDbPath.replace("\\", "/"); // Ensure forward slashes
 
-                Path targetFilePath = Paths.get(realUploadPathBase, uniqueFilename);
-                try (InputStream fileContent = filePart.getInputStream()) {
-                    Files.copy(fileContent, targetFilePath, StandardCopyOption.REPLACE_EXISTING);
-                    
-                    profilePictureDbPath = PROFILE_PIC_SUBFOLDER.replace(File.separator, "/") + "/" + uniqueFilename; // Ensure forward slashes for web
-                    System.out.println("Profile picture saved to: " + targetFilePath);
-                    System.out.println("DB path set to: " + profilePictureDbPath);
-                } catch (IOException ioEx) {
-                    System.err.println("Could not save profile picture to " + targetFilePath + ": " + ioEx.getMessage());
-                    errors.put("profilePicture", "Could not save profile picture.");
-                    ioEx.printStackTrace();
-                }
+                         System.out.println("Profile picture upload successful. DB path: " + profilePictureDbPath);
+                     } else {
+                         errors.put("profilePicture", "Could not save profile picture.");
+                         System.err.println("ImageUtil.uploadImage failed for: " + uploadedImageName);
+                         uploadedImageName = null; // Nullify name if upload failed
+                     }
+                 } else {
+                     System.out.println("No profile picture uploaded or file was empty/default name.");
+                     uploadedImageName = null; // No valid image uploaded
+                 }
 
-            } else {
-                System.out.println("No profile picture uploaded or file was empty.");
-            }
-
-        } catch (IOException | ServletException e) {
-            System.err.println("Error processing uploaded file part: " + e.getMessage());
-            errors.put("profilePicture", "Error processing uploaded file.");
-            e.printStackTrace();
-        }
-        // --- End Image Upload Handling ---
+     		} catch (IOException | ServletException e) {
+     			System.err.println("Error processing uploaded file part: " + e.getMessage());
+     			errors.put("profilePicture", "Error processing uploaded file.");
+     			e.printStackTrace();
+                 uploadedImageName = null; // Nullify name on exception
+     		}
+     		// --- End Image Upload Handling ---
         
         
         
@@ -189,6 +190,8 @@ public class RegisterController extends HttpServlet {
         // If there are validation errors, forward back to the registration page
         if (!errors.isEmpty()) {
         	System.out.println("Validation Errors found, forwarding back to register page.");
+        	deleteUploadedFileOnError(context, uploadedImageName);
+        	
             request.setAttribute("errors", errors);
             request.setAttribute("fullName", fullName);
             request.setAttribute("email", email);
@@ -197,19 +200,6 @@ public class RegisterController extends HttpServlet {
             request.setAttribute("phoneNumber", phoneNumber);
             request.setAttribute("orgId", orgIdStr);
             System.out.println("ERROR!!!");
-            
-            if (profilePictureDbPath != null) {
-                System.out.println("Validation failed after image upload. Attempting to delete orphaned file: " + profilePictureDbPath);
-                
-                String filenameToDelete = Paths.get(profilePictureDbPath).getFileName().toString();
-                Path orphanPath = Paths.get(realUploadPathBase, filenameToDelete);
-                try {
-                    Files.deleteIfExists(orphanPath);
-                    System.out.println("Deleted orphaned file: " + orphanPath);
-                } catch (IOException ex) {
-                    System.err.println("Could not delete orphaned file: " + orphanPath + " - " + ex.getMessage());
-                }
-            }
             
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/register.jsp");
             dispatcher.forward(request, response);
@@ -235,17 +225,8 @@ public class RegisterController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login");
         } else {
             // Registration failed, go back to the registration page with an error message
-        	if (profilePictureDbPath != null) {
-                System.out.println("Service layer failed after image upload. Attempting to delete orphaned file: " + profilePictureDbPath);
-                String filenameToDelete = Paths.get(profilePictureDbPath).getFileName().toString();
-                Path orphanPath = Paths.get(realUploadPathBase, filenameToDelete);
-                try {
-                    Files.deleteIfExists(orphanPath);
-                    System.out.println("Deleted orphaned file: " + orphanPath);
-                } catch (IOException ex) {
-                    System.err.println("Could not delete orphaned file: " + orphanPath + " - " + ex.getMessage());
-                }
-            }
+        	System.out.println("Registration failed via service: " + registrationResult);
+            deleteUploadedFileOnError(context, uploadedImageName);
         
             request.setAttribute("registrationError", registrationResult);
             request.setAttribute("fullName", fullName);
@@ -257,6 +238,35 @@ public class RegisterController extends HttpServlet {
             request.setAttribute("orgId", orgIdStr);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/register.jsp");
             dispatcher.forward(request, response);
+        }
+    }
+	
+	/**
+     * Attempts to delete an uploaded file if an error occurred after upload.
+     * Uses the new ImageUtil to determine the path.
+     * @param uploadedFileName The name of the file that was potentially uploaded.
+     */
+    private void deleteUploadedFileOnError(ServletContext context, String uploadedFileName) {
+        if (uploadedFileName != null && !uploadedFileName.isEmpty()) {
+            try {
+                // Use the ImageUtil's path logic to find the file
+                String savePath = imageUtil.getSavePath(context, PROFILE_PIC_SUBFOLDER);
+                Path orphanPath = Paths.get(savePath, uploadedFileName);
+
+                System.out.println("Error occurred after upload. Attempting to delete orphaned file: " + orphanPath);
+                boolean deleted = Files.deleteIfExists(orphanPath);
+                if (deleted) {
+                    System.out.println("Successfully deleted orphaned file: " + orphanPath);
+                } else {
+                     System.out.println("Orphaned file not found or could not be deleted: " + orphanPath);
+                }
+            } catch (IOException ex) {
+                System.err.println("IOException occurred while trying to delete orphaned file: " + uploadedFileName + " - " + ex.getMessage());
+                ex.printStackTrace();
+            } catch (Exception e) {
+                 System.err.println("Unexpected error occurred while trying to delete orphaned file: " + uploadedFileName + " - " + e.getMessage());
+                 e.printStackTrace();
+            }
         }
     }
 
