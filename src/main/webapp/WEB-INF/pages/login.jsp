@@ -1,31 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- Add JSTL taglib --%>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Occasio</title>
+		<title>Occasio - Login</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css?v=${System.currentTimeMillis()}"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<%-- Add some basic styling for error messages --%>
+        <style>
+            .error-message {
+                color: red;
+                font-size: 0.9em;
+                text-align: center;
+                margin-bottom: 15px;
+                display: block;
+            }
+        </style>
 	</head>
 	<body>
 		<main class="main">
 			<div class="login-popover">
 				<h1 class="login-title">Occasio</h1>
-				
+
 				<div class = "sign-in-headers">
 					<h2 class="login-sign-in-text">Sign in</h2>
 					<span style="font-size: 16px; padding: 2px">Lets get you in!</span>
 				</div>
-				
-				<form class="login-form" name="login-form">
+
+                <%-- Form Tag Changes: method="post" and action --%>
+				<form class="login-form" name="login-form" method="post" action="${pageContext.request.contextPath}/login">
+
+                    <%-- Display Login Error Message --%>
+                    <c:if test="${not empty loginError}">
+                        <span class="error-message">${loginError}</span>
+                    </c:if>
+
 					<div class="form-section">
 						<label class="form-label">Email</label>
-						<input type="text" class="form-input" placeholder="example.gmail.com" name="email">
+						<%-- Add value attribute to repopulate email on error --%>
+						<input type="text" class="form-input" placeholder="example@gmail.com" name="email" value="${param.email}">
 					</div>
 					<div class="form-section">
 						<label class="form-label">Password</label>
 						<div style="position: relative; width: 100%">
-							<input type="password" id="login-password-field" class="form-input password">
+                            <%-- Add name="password" attribute --%>
+							<input type="password" id="login-password-field" class="form-input password" name="password">
 							<button class='password-eye' type='button' id="show-password-button" onclick="toggleViewPassword()">
 								<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
 							</button>
@@ -35,12 +55,14 @@
 					<button type="submit" style="height: 48px; font-size: 20px; color: white; background: #F65E2C; border-radius: 6px; border: none; margin-bottom: 32px">
 						Sign In
 					</button>
-					<span style="text-align: center">New to Occasio? <span class="signup-text" style="color: rgba(37, 81, 227, 1); cursor: pointer">Sign Up</span></span>
+					<span style="text-align: center">New to Occasio?
+						<a href="${pageContext.request.contextPath}/register" class="signup-text" style="color: rgba(37, 81, 227, 1); cursor: pointer; text-decoration: none;">Sign Up</a>
+					</span>
 				</form>
 			</div>
 		</main>
 	</body>
-	
+
 	<script>
 		function toggleViewPassword(){
 			passwordField = document.getElementById('login-password-field');
