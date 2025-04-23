@@ -28,7 +28,7 @@ import com.occasio.util.ImageUtil;
 /**
  * Servlet implementation class RegisterController
  */
-@WebServlet("/register")
+@WebServlet(asyncSupported = true, urlPatterns = { "/register" })
 @MultipartConfig
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

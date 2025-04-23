@@ -13,14 +13,14 @@ import java.io.IOException;
 import com.occasio.model.UserModel;
 import com.occasio.service.LoginService;
 
-@WebServlet("/login")
+@WebServlet(asyncSupported = true, urlPatterns="/login")
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private LoginService loginService;
+    //private LoginService loginService;
 
     @Override
     public void init() throws ServletException {
-        loginService = new LoginService();
+        
     }
 
     @Override
@@ -39,6 +39,7 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String errorMessage = null;
+        LoginService loginService = new LoginService();
 
         if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()) {
             errorMessage = "Email and Password are required.";
@@ -48,8 +49,8 @@ public class LoginController extends HttpServlet {
             if (user != null) {
                 // Authentication Successful
                 HttpSession session = request.getSession(); // Get/Create session
-                session.setAttribute("loggedInUser", user); // Store user object
-                // session.setMaxInactiveInterval(60 * 30); // Optional: Set timeout
+                session.setAttribute("username", user); // Store user object
+                session.setMaxInactiveInterval(60 * 30); // Optional: Set timeout
 
                 System.out.println("Login successful for: " + user.getEmail());
                 response.sendRedirect(request.getContextPath() + "/home"); // Redirect to protected area
