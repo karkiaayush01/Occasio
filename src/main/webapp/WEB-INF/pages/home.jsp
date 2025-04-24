@@ -531,10 +531,11 @@
 						
 						<div class="logout-confirm">
 							<p class="logout-confirm-text">Are you sure you want to logout?</p>
-							<div class="logout-actions">
-								<button class="logout-action-cancel" onclick="toggleLogoutOverlay()">Cancel</button>
-								<button class="logout-action-confirm">Confirm</button>
-							</div>
+							<form class="logout-actions" action="${pageContext.request.contextPath}/login" method="post">
+								<input type="hidden" name="action" value="logout" />
+								<button class="logout-action-cancel" type="button" onclick="toggleLogoutOverlay()">Cancel</button>
+								<button class="logout-action-confirm" type="submit">Confirm</button>
+							</form>
 						</div>
 					</div>
 				</div>

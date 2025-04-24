@@ -44,6 +44,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		// Cast the request and response to HttpServletRequest and HttpServletResponse
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
+		String action = request.getParameter("action");
 
 		// Get the requested URI
 		String uri = req.getRequestURI();
@@ -63,6 +64,9 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 				res.sendRedirect(req.getContextPath() + LOGIN);
 			}
 		} else {
+			if (uri.endsWith(LOGIN) && action.equals("logout")) {
+				chain.doFilter(request, response);
+			}
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
 				res.sendRedirect(req.getContextPath() + HOME);
 			} else {

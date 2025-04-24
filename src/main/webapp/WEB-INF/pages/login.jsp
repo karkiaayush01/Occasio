@@ -30,7 +30,8 @@
 
                 <%-- Form Tag Changes: method="post" and action --%>
 				<form class="login-form" name="login-form" method="post" action="${pageContext.request.contextPath}/login">
-
+				
+					<input type="hidden" name="action" value="login" />
                     <%-- Display Login Error Message --%>
                     <c:if test="${not empty loginError}">
                         <span class="error-message">${loginError}</span>
