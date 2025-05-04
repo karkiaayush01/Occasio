@@ -75,7 +75,7 @@
 				
 				<div class="events-card-container">
 					<div class="user-events-card">
-						<img src="${contextPath}/images/event-default.png" class="user-events-cover"/>
+						<img src="${contextPath}/resources/images/event-default.png" class="user-events-cover"/>
 						<div class="user-events-card-details">
 							<div class="user-events-card-details-title">
 								<h4 style="font-size: 16px;">Aspire 2025</h4>
@@ -112,7 +112,7 @@
 					</div>
 					
 					<div class="user-events-card">
-						<img src="${contextPath}/images/event-default.png" class="user-events-cover"/>
+						<img src="${contextPath}/resources/images/event-default.png" class="user-events-cover"/>
 						<div class="user-events-card-details">
 							<div class="user-events-card-details-title">
 								<h4 style="font-size: 16px;">Aspire 2025</h4>
@@ -149,7 +149,7 @@
 					</div>
 					
 					<div class="user-events-card">
-						<img src="${contextPath}/images/event-default.png" class="user-events-cover"/>
+						<img src="${contextPath}/resources/images/event-default.png" class="user-events-cover"/>
 						<div class="user-events-card-details">
 							<div class="user-events-card-details-title">
 								<h4 style="font-size: 16px;">Aspire 2025</h4>
@@ -192,7 +192,7 @@
 				
 				<div class="events-card-container">
 					<div class = "ongoing-events-card">
-						<img src="${contextPath}/images/event-default.png" class="ongoing-events-cover"/>
+						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
 						<div class="ongoing-events-card-details">
 							<div class="ongoing-events-card-details-title">
 								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
@@ -227,7 +227,7 @@
 					</div>
 					
 					<div class = "ongoing-events-card">
-						<img src="${contextPath}/images/event-default.png" class="ongoing-events-cover"/>
+						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
 						<div class="ongoing-events-card-details">
 							<div class="ongoing-events-card-details-title">
 								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
@@ -265,7 +265,7 @@
 					</div>
 					
 					<div class = "ongoing-events-card">
-						<img src="${contextPath}/images/event-default.png" class="ongoing-events-cover"/>
+						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
 						<div class="ongoing-events-card-details">
 							<div class="ongoing-events-card-details-title">
 								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
@@ -306,7 +306,7 @@
 				
 				<div class="events-card-container">
 					<div class="upcoming-events-card">
-						<img class="upcoming-events-card-cover" src="${contextPath}/images/event-default.png">
+						<img class="upcoming-events-card-cover" src="${contextPath}/resources/images/event-default.png">
 						<div class = "upcoming-events-card-details">
 							<h3 class="upcoming-events-card-details-title">Holi 2025</h3>
 							<div class="upcoming-events-card-info">
@@ -384,7 +384,7 @@
 							<button type="button" class="add-event-image-remove" onclick="removeAddedImage(event)">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(246, 94, 44, 1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
 							</button>
-							<img class="add-event-cover-image" src="${contextPath}/images/event-default.png"/>
+							<img class="add-event-cover-image" src="${contextPath}/resources/images/event-default.png"/>
 						</div>
 						
 						<div class="add-event-fields">
@@ -527,7 +527,7 @@
 					</svg>
 					
 					<div class="logout-items">
-						<img class="logout-image" src="${contextPath}/images/logout-image.png">
+						<img class="logout-image" src="${contextPath}/resources/images/logout-image.png">
 						
 						<div class="logout-confirm">
 							<p class="logout-confirm-text">Are you sure you want to logout?</p>
@@ -552,7 +552,7 @@
 					
 					<form class="update-profile-form">
 						<div class="update-profile-user-info">
-							<img src="${contextPath}/images/event-default.png" class="user-profile">
+							<img src="${contextPath}/reosources/images/event-default.png" class="user-profile">
 							<button class="change-profile-picture-button">Change Profile</button>
 							<p class="update-profile-display-name">Srijan Shrestha</p>
 						</div>

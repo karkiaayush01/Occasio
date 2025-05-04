@@ -118,7 +118,6 @@ package com.occasio.util;
 import java.io.File;
 import java.io.IOException;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.Part;
 
 /**
@@ -187,8 +186,8 @@ public class ImageUtil {
 	 * @return {@code true} if the file was successfully uploaded, {@code false}
 	 *         otherwise.
 	 */
-	public boolean uploadImage(Part part, ServletContext context, String saveFolder) {
-		String savePath = getSavePath(context, saveFolder);
+	public boolean uploadImage(Part part, String saveFolder) {
+		String savePath = getSavePath(saveFolder);
 		File fileSaveDir = new File(savePath);
 
 		// Ensure the directory exists
@@ -198,6 +197,7 @@ public class ImageUtil {
 				return false; // Failed to create the directory
 			}
 		}
+		
 		try {
 			// Get the image name
 			String imageName = getImageNameFromPart(part);
@@ -212,8 +212,8 @@ public class ImageUtil {
 		}
 	}
 	
-	public String getSavePath(ServletContext context, String saveFolder) {
-		String basePath = context.getRealPath("/resources/images/" + saveFolder + "/");
+	public String getSavePath(String saveFolder) {
+		String basePath = "D:/Studies/College Materials/Year 2/Sem 2 + Year Long/Advanced Programming/Coursework/Occasio/src/main/webapp/resources/images/" + saveFolder;
 	    return basePath;
 	}
 }
