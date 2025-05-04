@@ -18,6 +18,7 @@ import java.time.LocalDate;
 */
 
 public class UserModel {
+	private int userId;
 	private String fullName;
 	private String email;
 	private String role;
@@ -26,6 +27,7 @@ public class UserModel {
 	private String phoneNumber;
 	private int orgId;
 	private String profilePicturePath;
+	private String eventReviewNote;
 	
 	public UserModel() {	
 	}
@@ -50,6 +52,25 @@ public class UserModel {
 		this.orgId = orgId;
 		this.profilePicturePath = profilePicturePath;
 	}
+	
+	
+	/* Constructing user object with id */
+	public UserModel(int userId, String fullName, String email, String role, String password, String phoneNumber, int orgId, String profilePicturePath) {
+		super();
+		this.userId = userId;
+		this.fullName = fullName;
+		this.email = email;
+		this.role = role;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.orgId = orgId;
+		this.profilePicturePath = profilePicturePath;
+	}
+	
+	public int getUserId() {
+		return this.userId;
+	}
+
 
 	public String getFullName() {
 		return fullName;
@@ -113,5 +134,13 @@ public class UserModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEventReviewNote() {
+		return eventReviewNote;
+	}
+
+	public void setEventReviewNote(String eventReviewNote) {
+		this.eventReviewNote = eventReviewNote;
 	}
 }

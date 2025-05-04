@@ -106,7 +106,7 @@ public class RegisterController extends HttpServlet {
 
                      // Use the new ImageUtil to upload the file
                      // The rootPath argument isn't used by the provided uploadImage, pass null or empty
-                     boolean uploaded = imageUtil.uploadImage(filePart, context, PROFILE_PIC_SUBFOLDER);
+                     boolean uploaded = imageUtil.uploadImage(filePart, PROFILE_PIC_SUBFOLDER);
 
                      if (uploaded) {
                          // Construct the relative path for DB storage and web access
@@ -250,7 +250,7 @@ public class RegisterController extends HttpServlet {
         if (uploadedFileName != null && !uploadedFileName.isEmpty()) {
             try {
                 // Use the ImageUtil's path logic to find the file
-                String savePath = imageUtil.getSavePath(context, PROFILE_PIC_SUBFOLDER);
+                String savePath = imageUtil.getSavePath(PROFILE_PIC_SUBFOLDER);
                 Path orphanPath = Paths.get(savePath, uploadedFileName);
 
                 System.out.println("Error occurred after upload. Attempting to delete orphaned file: " + orphanPath);
