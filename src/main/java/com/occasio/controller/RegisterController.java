@@ -61,7 +61,6 @@ public class RegisterController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Hello");
 		String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -76,24 +75,7 @@ public class RegisterController extends HttpServlet {
         Map<String, String> errors = new HashMap<>();
         
         ServletContext context = request.getServletContext();
-        
-        String realUploadPathBase = getServletContext().getRealPath(PROFILE_PIC_SUBFOLDER);
-        System.out.println("***** ABSOLUTE IMAGE SAVE PATH on Server: " + realUploadPathBase + " *****");
-        if (realUploadPathBase == null) {
-            System.err.println("FATAL ERROR: Could not get real path for " + PROFILE_PIC_SUBFOLDER + ". Is the WAR deployed exploded? Check server configuration.");
-            errors.put("config", "Server configuration error determining image upload path.");
-            
-            request.setAttribute("errors", errors);
-            
-            request.setAttribute("fullName", fullName);
-            request.setAttribute("email", email);
-            request.setAttribute("orgId", orgIdStr);
-            request.setAttribute("phoneNumber", phoneNumber);
-            request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
-            return;
-        }
-        System.out.println("Attempting to save images to real path: " + realUploadPathBase);
-
+       
         
      // --- Handle Image Upload ---
      		try {
@@ -144,47 +126,36 @@ public class RegisterController extends HttpServlet {
 
         if (email == null || email.trim().isEmpty()) {
             errors.put("email", "Email is required.");
-            System.out.println("email 1");
         } else if (!isValidEmail(email)) {
             errors.put("email", "Invalid email format.");
-            System.out.println("email 2");
         }
 
         if (password == null || password.isEmpty()) {
             errors.put("password", "Password is required.");
-            System.out.println("p 1");
         } else if (password.length() < 8) {
             errors.put("password", "Password must be at least 8 characters long.");
-            System.out.println("p 2");
         }
 
         if (confirmPassword == null || confirmPassword.isEmpty()) {
             errors.put("confirmPassword", "Confirm Password is required.");
-            System.out.println("cp 1");
         } else if (password == null || !password.equals(confirmPassword)) {
             errors.put("confirmPassword", "Passwords do not match.");
-            System.out.println("cp 2");
         }
 
         if (role == null || role.trim().isEmpty()) {
             errors.put("role", "Role is required.");
-            System.out.println("r");
         }
 
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
             errors.put("phoneNumber", "Phone Number is required.");
-            System.out.println("ph 1");
         } else if (!isValidPhoneNumber(phoneNumber)) {
             errors.put("phoneNumber", "Invalid phone number format.");
-            System.out.println("ph 2");
         }
 
         if (orgIdStr == null || orgIdStr.trim().isEmpty()) {
             errors.put("orgId", "Organization ID is required.");
-            System.out.println("o 1");
         } else if (!orgIdStr.matches("\\d+")) {
             errors.put("orgId", "Organization ID must be a number.");
-            System.out.println("o 2");
         }
 
         // If there are validation errors, forward back to the registration page
@@ -217,7 +188,6 @@ public class RegisterController extends HttpServlet {
         user.setProfilePicturePath(profilePictureDbPath);
         user.setOrgId(Integer.parseInt(orgIdStr));
         
-        System.out.println("Entering register service: ");
         String registrationResult = registerService.addUser(user);
 
         if (registrationResult.startsWith("Successfully ")) {

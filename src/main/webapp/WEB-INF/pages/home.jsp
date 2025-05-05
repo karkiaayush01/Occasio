@@ -33,11 +33,19 @@
 				</div>
 				<div class="nav-user-section">
 					<div class="nav-user-profile-picture">
-						<img src="">
+						<img class="nav-user-profile-picture-img" src="${contextPath}/${userProfileImgUrl}">
 					</div>
 					<div class="nav-user-details">
-						<h3 class="nav-user-details-name">Srijan Shrestha</h3>
-						<p class="nav-user-details-email" style="font-size: 14px; color: rgba(0, 0, 0, 0.51); font-family: 'Poppins';">srijanshrestha999@gmail.com</p>
+						<h3 class="nav-user-details-name">
+							<c:if test="${not empty fullName}">
+		                        ${fullName}
+		                    </c:if>
+						</h3>
+						<p class="nav-user-details-email" style="font-size: 14px; color: rgba(0, 0, 0, 0.51); font-family: 'Poppins';">
+							<c:if test="${not empty userEmail}">
+		                        ${userEmail}
+		                    </c:if>
+						</p>
 						<div class = "nav-user-profile-actions">
 							<span class="nav-user-details-view-prof-button" style="font-size: 13px; color: rgba(37, 81, 227, 1); font-family: 'Poppins'" onclick="toggleUpdateProfileOverlay()">View Profile</span>
 							<button class="logout-button" onclick="toggleLogoutOverlay()">
@@ -373,7 +381,8 @@
 					<form class="add-event-form" action="${contextPath}/event" method="post" enctype="multipart/form-data">	
 						<input type="hidden" name="method" value="ADD" />
 						
-						<input type="file" style="display: none" id="add-event-image-uploader" onchange="handleFileChange(event, 'add')" accept="image/*"/>
+						<input type = "hidden" name="image-change" id="add-image-changed-flag" value="false" />
+						<input name="event-cover" type="file" style="display: none" id="add-event-image-uploader" onchange="handleFileChange(event, 'add')" accept="image/*"/>
 						<div class="add-event-cover-image-area" onclick="triggerAddImageUploader()">
 							<div class="add-event-upload-image-controls">
 								<svg class="add-event-upload-icon" viewBox="0 0 55 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -389,27 +398,27 @@
 						
 						<div class="add-event-fields">
 							<div class="add-event-field">
-								<label class="add-event-field-title">Event Title</label>
-								<input type="text" class="add-event-field-input" placeholder="e.g. Aspire 2025"/>
+								<label for="event-title" class="add-event-field-title">Event Title</label>
+								<input type="text" name="event-title" class="add-event-field-input" placeholder="e.g. Aspire 2025"/>
 							</div>
 							
 							<div class="add-event-field">
 								<label class="add-event-field-title">Event Duration</label>
 								<div class="add-event-date-input-fields">
 									<div class="date-input-field">
-										<label class="date-input-label">From:</label>
-										<input type="date" class="add-event-date-field-input"/>
+										<label for="start-date" class="date-input-label">From:</label>
+										<input type="date" name="start-date" class="add-event-date-field-input"/>
 									</div>
 									<div class="date-input-field">
-										<label class="date-input-label">To:</label>
-										<input type="date" class="add-event-date-field-input"/>
+										<label for="end-date" class="date-input-label">To:</label>
+										<input name="end-date" type="date" class="add-event-date-field-input"/>
 									</div>
 								</div>
 							</div>
 							
 							<div class="add-event-field">
-								<label class="add-event-field-title">Event Location</label>
-								<input type="text" class="add-event-field-input" placeholder="e.g. Brit Cafe"/>
+								<label for="event-location" class="add-event-field-title">Event Location</label>
+								<input name="event-location" type="text" class="add-event-field-input" placeholder="e.g. Brit Cafe"/>
 							</div>
 							
 							<div class="add-event-field">
@@ -428,8 +437,8 @@
 							</div>
 							
 							<div class="add-event-description-field">
-								<label class="add-event-field-title">Event Description</label>
-								<textarea class="add-event-description-field-input" placeholder="Maximum 100 words"></textarea>
+								<label for="event-description" class="add-event-field-title">Event Description</label>
+								<textarea name="event-description" class="add-event-description-field-input" placeholder="Maximum 100 words"></textarea>
 							</div>
 						</div>
 						
@@ -684,12 +693,14 @@
 		
 		function addImageChange(e){
 			const imageElement = document.querySelector(".add-event-cover-image");
+			const addedFlag = document.getElementById("add-image-changed-flag");
 			const uploadControls = document.querySelector(".add-event-upload-image-controls");
 			const deleteImageButton = document.querySelector(".add-event-image-remove");
 			uploadControls.style.display="none";
 			imageElement.style.display="block";
 			deleteImageButton.style.display = "block";
 			imageElement.src = e.target.result;
+			addedFlag.value = "true";
 		}
 		
 		function editImageChange(e){
@@ -704,6 +715,7 @@
 		
 		function removeAddedImage(e){
 			e.stopPropagation();
+			const addedFlag = document.getElementById("add-image-changed-flag");
 			const imageElement = document.querySelector(".add-event-cover-image");
 			const uploadControls = document.querySelector(".add-event-upload-image-controls");
 			const deleteImageButton = document.querySelector(".add-event-image-remove");
@@ -713,6 +725,7 @@
 			imageElement.style.display="none";
 			deleteImageButton.style.display = "none";
 			imageUploader.value = "";
+			addedFlag.value = "false";
 		}
 		
 		function removeEditedImage(e){

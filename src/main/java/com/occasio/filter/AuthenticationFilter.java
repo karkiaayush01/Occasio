@@ -55,7 +55,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		}
 
 		// Get the session and check if user is logged in
-		boolean isLoggedIn = SessionUtil.getAttribute(req, "username") != null;
+		boolean isLoggedIn = SessionUtil.getAttribute(req, "user") != null;
 
 		if (!isLoggedIn) {
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
@@ -64,7 +64,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 				res.sendRedirect(req.getContextPath() + LOGIN);
 			}
 		} else {
-			if (uri.endsWith(LOGIN) && action.equals("logout")) {
+			if (uri.endsWith(LOGIN) && action != null && action.equals("logout")) {
 				chain.doFilter(request, response);
 			}
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
