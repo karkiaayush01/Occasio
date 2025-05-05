@@ -41,6 +41,7 @@ public class LoginService {
                         // Password matches - Populate UserModel
                         user = new UserModel();
                         // int userId = rs.getInt("UserId");
+                        user.setUserId(rs.getInt("UserId"));
                         user.setFullName(rs.getString("FullName"));
                         user.setEmail(rs.getString("UserEmail"));
                         // Do NOT set the password hash in the session model object

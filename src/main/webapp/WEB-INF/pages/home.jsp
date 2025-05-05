@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 
 <html>
@@ -82,116 +83,46 @@
 				</div>
 				
 				<div class="events-card-container">
-					<div class="user-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="user-events-cover"/>
-						<div class="user-events-card-details">
-							<div class="user-events-card-details-title">
-								<h4 style="font-size: 16px;">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							<div class="user-event-card-details-info">
-								<p class="user-event-card-details-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span>9:00 AM - 2:00 PM</span>
-								</p>
-								<p class="user-event-card-details-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span>Kumari Hall</span>
-								</p>
-							</div>
-							<div class="event-card-interested">
-								<div class="interested-counts">
-									<div class="interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
+					<c:forEach var="event" items="${userEvents}">
+						<div class="user-events-card">
+							<img src="${contextPath}/${event.imagePath}" class="user-events-cover"/>
+							<div class="user-events-card-details">
+								<div class="user-events-card-details-title">
+									<h4 class="user-events-card-details-title-name" style="font-size: 16px;">${event.name}</h4>
+									<span class="view-event-details-link">View Details</span>
+								</div>
+								<div class="user-event-card-details-info">
+									<p class="user-event-card-details-info-child">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+										<span>${event.startDate} - ${event.endDate}</span>
+									</p>
+									<p class="user-event-card-details-info-child">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+										<span style="max-width: 180px; overflow: hidden; text-overflow: ellipsis;">${event.location}</span>
+									</p>
+								</div>
+								<div class="event-card-interested">
+									<div class="interested-counts">
+										<div class="interested-user-images">
+											<img src="" class="interested-user-1">
+											<img src="" class="interested-user-2">
+											<img src="" class="interested-user-3">
+										</div>
+										<div class="total-interests">+20 others are interested</div>
 									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="edit-event-button" onclick="toggleEditEventsForm()">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
-										<span>Edit Event</span>
-									</button>
+									<div class="">
+										<button class="edit-event-button" onclick="toggleEditEventsForm()">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
+											<span>Edit Event</span>
+										</button>
+									</div>
 								</div>
 							</div>
+							<!-- Add user event card here -->
 						</div>
-						<!-- Add user event card here -->
-					</div>
+					</c:forEach>
 					
-					<div class="user-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="user-events-cover"/>
-						<div class="user-events-card-details">
-							<div class="user-events-card-details-title">
-								<h4 style="font-size: 16px;">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							<div class="user-event-card-details-info">
-								<p class="user-event-card-details-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span>9:00 AM - 2:00 PM</span>
-								</p>
-								<p class="user-event-card-details-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span>Kumari Hall</span>
-								</p>
-							</div>
-							<div class="event-card-interested">
-								<div class="interested-counts">
-									<div class="interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="edit-event-button">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
-										<span>Edit Event</span>
-									</button>
-								</div>
-							</div>
-						</div>
-						<!-- Add user event card here -->
-					</div>
 					
-					<div class="user-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="user-events-cover"/>
-						<div class="user-events-card-details">
-							<div class="user-events-card-details-title">
-								<h4 style="font-size: 16px;">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							<div class="user-event-card-details-info">
-								<p class="user-event-card-details-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span>9:00 AM - 2:00 PM</span>
-								</p>
-								<p class="user-event-card-details-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span>Kumari Hall</span>
-								</p>
-							</div>
-							<div class="event-card-interested">
-								<div class="interested-counts">
-									<div class="interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="edit-event-button">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
-										<span>Edit Event</span>
-									</button>
-								</div>
-							</div>
-						</div>
-						<!-- Add user event card here -->
-					</div>
 				</div>
 			</section>
 			
@@ -422,18 +353,18 @@
 							</div>
 							
 							<div class="add-event-field">
-								<label class="add-event-field-title">Sponsors Name (if any)</label>
-								<input type="text" class="add-event-field-input" placeholder="e.g. Restaurant"/>
+								<label for="sponsor-name" class="add-event-field-title">Sponsors Name (if any)</label>
+								<input name="sponsor-name" type="text" class="add-event-field-input" placeholder="e.g. Restaurant"/>
 							</div>
 							
 							<div class="add-event-field">
-								<label class="add-event-field-title">Sponsors Contact (if any)</label>
-								<input type="text" class="add-event-field-input" placeholder="e.g. Restaurant Contact"/>
+								<label for="sponsor-contact" class="add-event-field-title">Sponsors Contact (if any)</label>
+								<input name="sponsor-contact" type="text" class="add-event-field-input" placeholder="e.g. Restaurant Contact"/>
 							</div>
 							
 							<div class="add-event-field">
-								<label class="add-event-field-title">Sponsors Email (if any)</label>
-								<input type="text" class="add-event-field-input" placeholder="e.g. Restaurant@gmail.com"/>
+								<label for="sponsor-email" class="add-event-field-title">Sponsors Email (if any)</label>
+								<input name="sponsor-email" type="text" class="add-event-field-input" placeholder="e.g. Restaurant@gmail.com"/>
 							</div>
 							
 							<div class="add-event-description-field">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2025 at 10:46 PM
+-- Generation Time: May 05, 2025 at 03:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,7 +33,7 @@ CREATE TABLE `event` (
   `StartDate` date NOT NULL,
   `PostDate` date NOT NULL,
   `Description` varchar(2000) NOT NULL,
-  `ImagePath` varchar(500) NOT NULL,
+  `ImagePath` varchar(500) DEFAULT NULL,
   `EventLocation` varchar(50) NOT NULL,
   `Restriction` varchar(50) DEFAULT NULL,
   `PostedUserId` int(10) NOT NULL,
@@ -47,7 +47,11 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`EventId`, `EventName`, `StartDate`, `PostDate`, `Description`, `ImagePath`, `EventLocation`, `Restriction`, `PostedUserId`, `Status`, `ReviewNote`, `EndDate`) VALUES
-(1, 'Navia and Chlorinde', '2025-05-05', '2025-05-05', 'I fw lesbians.', 'resources/images/event_covers/1717171788130.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-07');
+(1, 'Navia and Chlorinde', '2025-05-05', '2025-05-05', 'I fw lesbians.', 'resources/images/event_covers/1717171788130.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-07'),
+(2, 'Champions League', '2025-05-06', '2025-05-05', 'Get together for an awesome final.', 'resources/images/event_covers/backgroundimage.jpg', 'Barcelona', NULL, 1, 'pending', NULL, '2025-05-10'),
+(3, 'Test', '2025-05-07', '2025-05-05', 'test', 'resources/images/event_covers/1717171711714.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-08'),
+(8, 'My Queen', '2025-04-03', '2025-05-05', 'okay', 'resources/images/event_covers/8ca9a5b66df345366c9994e16f5bcbfb.jpg', 'Solaris', NULL, 1, 'pending', NULL, '2025-05-30'),
+(10, 'ABSOLUTE UI BREAKER TO THE MAX LIMIT RAHHHHHhhhhhhhhhhhhhhhhHHHHHHHHH', '2025-05-09', '2025-05-05', 'fdas', 'resources/images/event_covers/1720534840987.jpeg', 'fdasfaewgaewgewgeawgvaewfeaweawgawgewa', NULL, 1, 'pending', NULL, '2025-05-01');
 
 -- --------------------------------------------------------
 
@@ -118,7 +122,7 @@ CREATE TABLE `user` (
   `Password` varchar(500) NOT NULL,
   `DateJoined` date NOT NULL,
   `PhoneNumber` varchar(13) NOT NULL,
-  `ProfilePicturePath` varchar(500) NOT NULL,
+  `ProfilePicturePath` varchar(500) DEFAULT NULL,
   `OrgId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -181,7 +185,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `sponsor`

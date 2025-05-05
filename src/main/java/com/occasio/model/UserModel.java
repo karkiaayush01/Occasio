@@ -70,8 +70,11 @@ public class UserModel {
 	public int getUserId() {
 		return this.userId;
 	}
-
-
+	
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
 	public String getFullName() {
 		return fullName;
 	}
