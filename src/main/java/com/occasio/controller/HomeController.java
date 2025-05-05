@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import com.occasio.util.SessionUtil;
+import com.occasio.model.UserModel;
+
 /**
  * Servlet implementation class HomeController
  */
@@ -27,6 +30,13 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
+		request.setAttribute("fullName", user.getFullName());
+		request.setAttribute("userEmail", user.getEmail());
+		request.setAttribute("organizationId", user.getOrgId());
+		request.setAttribute("userPhoneNumber", user.getPhoneNumber());
+		request.setAttribute("userProfileImgUrl", user.getProfilePicturePath());
+		
 		request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
 	}
 

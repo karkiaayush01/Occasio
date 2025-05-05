@@ -38,44 +38,51 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String action = request.getParameter("action");
-    	if(action.equals("login")) {
-	        String email = request.getParameter("email");
-	        String password = request.getParameter("password");
-	        String errorMessage = null;
-	        LoginService loginService = new LoginService();
-	
-	        if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()) {
-	            errorMessage = "Email and Password are required.";
-	        } else {
-	            UserModel user = loginService.authenticateUser(email, password);
-	
-	            if (user != null) {
-	                // Authentication Successful
-	                SessionUtil.setAttribute(request, "username", user); 
-	
-	                System.out.println("Login successful for: " + user.getEmail());
-	                response.sendRedirect(request.getContextPath() + "/home"); // Redirect to protected area
-	                return; // Stop further processing
-	
-	            } else {
-	                // Authentication Failed
-	                errorMessage = "Invalid email or password.";
-	                System.out.println("Login failed for email: " + email);
-	            }
-	        }
-	
-	        // Authentication Failed or Validation Error
-	        request.setAttribute("loginError", errorMessage);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
-	        dispatcher.forward(request, response);
-    	}
-    	else if (action.equals("logout")) {
-    		SessionUtil.removeAttribute(request, "username");
-    		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
-    		dispatcher.forward(request, response);
-    	}
+    	
+    	if(action != null) {
+	    	if(action.equals("login")) {
+		        String email = request.getParameter("email");
+		        String password = request.getParameter("password");
+		        String errorMessage = null;
+		        LoginService loginService = new LoginService();
+		
+		        if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()) {
+		            errorMessage = "Email and Password are required.";
+		        } else {
+		            UserModel user = loginService.authenticateUser(email, password);
+		
+		            if (user != null) {
+		                // Authentication Successful
+		                SessionUtil.setAttribute(request, "user", user); 
+		
+		                System.out.println("Login successful for: " + user.getEmail());
+		                response.sendRedirect(request.getContextPath() + "/home"); // Redirect to protected area
+		                return; // Stop further processing
+		
+		            } else {
+		                // Authentication Failed
+		                errorMessage = "Invalid email or password.";
+		                System.out.println("Login failed for email: " + email);
+		            }
+		        }
+		
+		        // Authentication Failed or Validation Error
+		        request.setAttribute("loginError", errorMessage);
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
+		        dispatcher.forward(request, response);
+	    	}
+	    	else if (action.equals("logout")) {
+	    		SessionUtil.removeAttribute(request, "user");
+	    		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
+	    		dispatcher.forward(request, response);
+	    	}
+	    	else {
+	    		System.out.println("No parameter named action");
+	    	}
+    	} 
     	else {
-    		System.out.println("No parameter named action");
+    		System.out.println("Action is null");
+    		response.sendRedirect(request.getContextPath() + "/login");
     	}
     }
 }

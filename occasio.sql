@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 09:47 PM
+-- Generation Time: May 04, 2025 at 10:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,17 +30,34 @@ SET time_zone = "+00:00";
 CREATE TABLE `event` (
   `EventId` int(11) NOT NULL,
   `EventName` varchar(100) NOT NULL,
-  `EventDate` date NOT NULL,
+  `StartDate` date NOT NULL,
   `PostDate` date NOT NULL,
-  `EventDesc` varchar(2000) NOT NULL,
-  `Image` varchar(500) NOT NULL,
+  `Description` varchar(2000) NOT NULL,
+  `ImagePath` varchar(500) NOT NULL,
   `EventLocation` varchar(50) NOT NULL,
-  `Restriction` varchar(50) NOT NULL,
-  `PostedBy` varchar(30) NOT NULL,
+  `Restriction` varchar(50) DEFAULT NULL,
+  `PostedUserId` int(10) NOT NULL,
   `Status` varchar(20) NOT NULL,
-  `RevNote` varchar(500) NOT NULL,
-  `InterestedCount` int(11) NOT NULL,
+  `ReviewNote` varchar(500) DEFAULT NULL,
   `EndDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`EventId`, `EventName`, `StartDate`, `PostDate`, `Description`, `ImagePath`, `EventLocation`, `Restriction`, `PostedUserId`, `Status`, `ReviewNote`, `EndDate`) VALUES
+(1, 'Navia and Chlorinde', '2025-05-05', '2025-05-05', 'I fw lesbians.', 'resources/images/event_covers/1717171788130.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_interested_users`
+--
+
+CREATE TABLE `event_interested_users` (
+  `EventId` int(11) NOT NULL,
+  `UserId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -57,17 +74,6 @@ CREATE TABLE `event_sponsor` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_user`
---
-
-CREATE TABLE `event_user` (
-  `EventId` int(11) NOT NULL,
-  `UserId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `organization`
 --
 
@@ -78,6 +84,13 @@ CREATE TABLE `organization` (
   `Status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `organization`
+--
+
+INSERT INTO `organization` (`OrgId`, `OrgName`, `OnboardedDate`, `Status`) VALUES
+(1, 'Islington', '2025-05-04', 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -87,9 +100,8 @@ CREATE TABLE `organization` (
 CREATE TABLE `sponsor` (
   `SponsorId` int(11) NOT NULL,
   `SponsorName` varchar(50) NOT NULL,
-  `SponsorAmount` int(11) NOT NULL,
-  `SponsorEmail` varchar(150) NOT NULL,
-  `SponsorContact` int(10) NOT NULL
+  `SponsorEmail` varchar(150) DEFAULT NULL,
+  `SponsorContact` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -105,10 +117,17 @@ CREATE TABLE `user` (
   `Role` varchar(20) NOT NULL DEFAULT 'user',
   `Password` varchar(500) NOT NULL,
   `DateJoined` date NOT NULL,
-  `PhoneNumber` int(13) NOT NULL,
+  `PhoneNumber` varchar(13) NOT NULL,
   `ProfilePicturePath` varchar(500) NOT NULL,
   `OrgId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`UserId`, `FullName`, `UserEmail`, `Role`, `Password`, `DateJoined`, `PhoneNumber`, `ProfilePicturePath`, `OrgId`) VALUES
+(1, 'Aayush Karki', 'karkiaayush01@gmail.com', 'user', '$2a$12$9rz2py5e8SGiDGtBtrL7ZeiGDPJu/P7kD21SMUd.ON7NphXWbcbz.', '2025-05-04', '9824038615', 'resources/images/profile_pics/queen.webp', 1);
 
 --
 -- Indexes for dumped tables
@@ -118,7 +137,15 @@ CREATE TABLE `user` (
 -- Indexes for table `event`
 --
 ALTER TABLE `event`
-  ADD PRIMARY KEY (`EventId`);
+  ADD PRIMARY KEY (`EventId`),
+  ADD KEY `event_poster_fk` (`PostedUserId`);
+
+--
+-- Indexes for table `event_interested_users`
+--
+ALTER TABLE `event_interested_users`
+  ADD PRIMARY KEY (`EventId`,`UserId`),
+  ADD KEY `User_Event_fk` (`UserId`);
 
 --
 -- Indexes for table `event_sponsor`
@@ -126,13 +153,6 @@ ALTER TABLE `event`
 ALTER TABLE `event_sponsor`
   ADD PRIMARY KEY (`EventId`,`SponsorId`),
   ADD KEY `Sponsor_Event_fk` (`SponsorId`);
-
---
--- Indexes for table `event_user`
---
-ALTER TABLE `event_user`
-  ADD PRIMARY KEY (`EventId`,`UserId`),
-  ADD KEY `User_Event_fk` (`UserId`);
 
 --
 -- Indexes for table `organization`
@@ -161,17 +181,36 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `sponsor`
+--
+ALTER TABLE `sponsor`
+  MODIFY `SponsorId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `event`
+--
+ALTER TABLE `event`
+  ADD CONSTRAINT `event_poster_fk` FOREIGN KEY (`PostedUserId`) REFERENCES `user` (`UserId`);
+
+--
+-- Constraints for table `event_interested_users`
+--
+ALTER TABLE `event_interested_users`
+  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
+  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`);
 
 --
 -- Constraints for table `event_sponsor`
@@ -179,13 +218,6 @@ ALTER TABLE `user`
 ALTER TABLE `event_sponsor`
   ADD CONSTRAINT `Event_Sponsor_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
   ADD CONSTRAINT `Sponsor_Event_fk` FOREIGN KEY (`SponsorId`) REFERENCES `sponsor` (`SponsorId`);
-
---
--- Constraints for table `event_user`
---
-ALTER TABLE `event_user`
-  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
-  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`);
 
 --
 -- Constraints for table `user`
