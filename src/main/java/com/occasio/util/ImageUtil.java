@@ -117,7 +117,11 @@ package com.occasio.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.Part;
 
 /**
@@ -186,9 +190,12 @@ public class ImageUtil {
 	 * @return {@code true} if the file was successfully uploaded, {@code false}
 	 *         otherwise.
 	 */
-	public boolean uploadImage(Part part, String saveFolder) {
+	public boolean uploadImage(Part part, ServletContext context,  String saveFolder) {
 		String savePath = getSavePath(saveFolder);
+		String servletPath = getServletPath(context, saveFolder);
+		
 		File fileSaveDir = new File(savePath);
+		File deploymentDir = new File(servletPath);
 
 		// Ensure the directory exists
 		if (!fileSaveDir.exists()) {
@@ -198,13 +205,34 @@ public class ImageUtil {
 			}
 		}
 		
+		//Ensure deployment directory exists
+		if (!deploymentDir.exists() && !deploymentDir.mkdirs()) {
+	        System.err.println("Failed to create deployment directory: " + deploymentDir.getAbsolutePath());
+	        return false;
+	    }
+		
 		try {
 			// Get the image name
 			String imageName = getImageNameFromPart(part);
 			// Create the file path
-			String filePath = savePath + "/" + imageName;
+			String filePath = savePath + File.separator + imageName;
+			String servletSavePath = servletPath + File.separator + imageName; 
+			
+			System.out.println(servletSavePath);
 			// Write the file to the server
 			part.write(filePath);
+			
+			 // If we have a valid deployment path, copy the file there
+	        if (servletSavePath != null) {
+	            try {
+	                Files.copy(Paths.get(filePath), Paths.get(servletSavePath), 
+	                          StandardCopyOption.REPLACE_EXISTING);
+	                System.out.println("Successfully copied to deployment path: " + servletSavePath);
+	            } catch (IOException e) {
+	                System.err.println("Warning: Failed to copy to deployment path: " + e.getMessage());
+	                // Continue anyway - at least the first location was saved
+	            }
+	        }
 			return true; // Upload successful
 		} catch (IOException e) {
 			e.printStackTrace(); // Log the exception
@@ -215,5 +243,9 @@ public class ImageUtil {
 	public String getSavePath(String saveFolder) {
 		String basePath = "D:/Studies/College Materials/Year 2/Sem 2 + Year Long/Advanced Programming/Coursework/Occasio/src/main/webapp/resources/images/" + saveFolder;
 	    return basePath;
+	}
+	
+	public String getServletPath(ServletContext context, String saveFolder) {
+		return context.getRealPath("/resources/images/" + saveFolder);
 	}
 }

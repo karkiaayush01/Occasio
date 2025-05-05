@@ -273,15 +273,21 @@ body{
 
 .user-events-card{
 	display: flex;
-	max-width: 514px;
-	min-height: 152px;
+	width: 514px;
+	height: 152px;
 }
 
-.user-events-cover{
-	max-width: 220px;
-	background: rgba(235, 235, 235, 1);
-	border-top-left-radius: 12px;
-	border-bottom-left-radius: 12px;
+
+.user-events-cover {
+  width: 220px;
+  min-width: 220px;
+  height: 100%;
+  background: rgba(235, 235, 235, 1);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .user-events-card-details{
@@ -291,8 +297,8 @@ body{
 	background: rgba(235, 235, 235, 1);
 	border-top-right-radius: 12px;
   	border-bottom-right-radius: 12px;
-	width: 100%;
 	padding: 6px 12px 4px 8px;
+	overflow: hidden;
 }
 
 .user-events-card-details-title, .ongoing-events-card-details-title{
@@ -300,6 +306,14 @@ body{
 	align-items: center;
 	justify-content: space-between;
 	padding: 6px 2px 6px 0px;
+}
+
+.user-events-card-details-title-name {
+	width: 180px;
+	word-wrap: no-wrap;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .view-event-details-link{

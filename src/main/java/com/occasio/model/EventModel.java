@@ -7,62 +7,63 @@ package com.occasio.model;
 import java.time.LocalDate;
 
 public class EventModel {
-	private int eventId;
-	private String eventName;
-	private LocalDate startdate;
+	private int id;
+	private String name;
+	private LocalDate startDate;
 	private LocalDate endDate;
 	private LocalDate postDate;
-	private String eventDescription;
-	private String eventImagePath;
-	private String eventLocation;
+	private String description;
+	private String imagePath;
+	private String location;
 	private String restriction;
 	private int posterUserId;
-	private String eventStatus;
+	private String status;
 	private String reviewNote;
 	
 	public EventModel() {
 		
 	}
 	
-	public EventModel(int eventId, String eventName, LocalDate startdate, LocalDate endDate, LocalDate postDate,
-			String eventDescription, String eventImagePath, String eventLocation, String restriction, int posterUserId,
-			String eventStatus, String reviewNote) {
+	public EventModel(int id, String name, LocalDate startDate, LocalDate endDate, LocalDate postDate,
+			String description, String imagePath, String location, String restriction, int posterUserId,
+			String status, String reviewNote) {
 		super();
-		this.eventId = eventId;
-		this.eventName = eventName;
-		this.startdate = startdate;
+		this.id = id;
+		this.name = name;
+		this.startDate = startDate;
 		this.endDate = endDate;
 		this.postDate = postDate;
-		this.eventDescription = eventDescription;
-		this.eventImagePath = eventImagePath;
-		this.eventLocation = eventLocation;
+		this.description = description;
+		this.imagePath = imagePath;
+		this.location = location;
 		this.restriction = restriction;
 		this.posterUserId = posterUserId;
-		this.eventStatus = eventStatus;
+		this.status = status;
 		this.reviewNote = reviewNote;
 	}
 
-	public int getEventId() {
-		return eventId;
+	public int getId() {
+		return id;
 	}
 	
-	public void setEventId(int eventId) {
-		this.eventId = eventId;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
-	public String getEventName() {
-		return eventName;
+	public String getName() {
+		return name;
 	}
 	
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public LocalDate getStartdate() {
-		return startdate;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
-	public void setStartdate(LocalDate startdate) {
-		this.startdate = startdate;
+	
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
 	}
 	
 	public LocalDate getEndDate() {
@@ -79,26 +80,26 @@ public class EventModel {
 		this.postDate = postDate;
 	}
 	
-	public String getEventDescription() {
-		return eventDescription;
+	public String getDescription() {
+		return description;
 	}
-	public void setEventDescription(String eventDescription) {
-		this.eventDescription = eventDescription;
-	}
-	
-	public String getEventImagePath() {
-		return eventImagePath;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
-	public void setEventImagePath(String eventImagePath) {
-		this.eventImagePath = eventImagePath;
-	}
-	public String getEventLocation() {
-		return eventLocation;
+	public String getImagePath() {
+		return imagePath;
 	}
 	
-	public void setEventLocation(String eventLocation) {
-		this.eventLocation = eventLocation;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public String getLocation() {
+		return location;
+	}
+	
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 	public String getRestriction() {
@@ -117,12 +118,12 @@ public class EventModel {
 		this.posterUserId = posterUserId;
 	}
 	
-	public String getEventStatus() {
-		return eventStatus;
+	public String getStatus() {
+		return status;
 	}
 	
-	public void setEventStatus(String eventStatus) {
-		this.eventStatus = eventStatus;
+	public void setStatus(String eventStatus) {
+		this.status = eventStatus;
 	}
 
 	public String getReviewNote() {

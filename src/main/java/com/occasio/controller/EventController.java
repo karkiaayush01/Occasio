@@ -89,7 +89,7 @@ public class EventController extends HttpServlet {
 
                     // Use the new ImageUtil to upload the file
                     // The rootPath argument isn't used by the provided uploadImage, pass null or empty
-                    boolean uploaded = imageUtil.uploadImage(filePart, EVENT_IMAGE_SUBFOLDER);
+                    boolean uploaded = imageUtil.uploadImage(filePart, request.getServletContext(), EVENT_IMAGE_SUBFOLDER);
 
                     if (uploaded) {
                         // Construct the relative path for DB storage and web access
@@ -113,19 +113,16 @@ public class EventController extends HttpServlet {
 		}
 		
 		EventModel event = new EventModel();
-		event.setEventName(eventName);
-		event.setStartdate(startDate);
+		event.setName(eventName);
+		event.setStartDate(startDate);
 		event.setEndDate(endDate);
 		event.setPostDate(postedDate);
-		event.setEventLocation(eventLocation);
-		event.setEventDescription(eventDescription);
-		event.setEventImagePath(eventCoverDbPath);
+		event.setLocation(eventLocation);
+		event.setDescription(eventDescription);
+		event.setImagePath(eventCoverDbPath);
 		event.setPosterUserId(1);
-		event.setEventStatus("pending");
+		event.setStatus("pending");
 		
-		
-		System.out.println(event.getStartdate());
-		System.out.println(event.getEndDate());
 		
 		String addEventResult = eventService.addEvent(event);
 		

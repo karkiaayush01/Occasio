@@ -88,7 +88,7 @@ public class RegisterController extends HttpServlet {
 
                      // Use the new ImageUtil to upload the file
                      // The rootPath argument isn't used by the provided uploadImage, pass null or empty
-                     boolean uploaded = imageUtil.uploadImage(filePart, PROFILE_PIC_SUBFOLDER);
+                     boolean uploaded = imageUtil.uploadImage(filePart, request.getServletContext() , PROFILE_PIC_SUBFOLDER);
 
                      if (uploaded) {
                          // Construct the relative path for DB storage and web access
