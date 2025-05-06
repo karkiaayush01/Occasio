@@ -34,7 +34,7 @@
 				</div>
 				<div class="nav-user-section">
 					<div class="nav-user-profile-picture">
-						<img class="nav-user-profile-picture-img" src="${contextPath}/${userProfileImgUrl}">
+						<img class="nav-user-profile-picture-img" src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}" alt="User Pfp">
 					</div>
 					<div class="nav-user-details">
 						<h3 class="nav-user-details-name">
@@ -111,7 +111,7 @@
 										<div class="total-interests">+20 others are interested</div>
 									</div>
 									<div class="">
-										<button class="edit-event-button" onclick="toggleEditEventsForm()">
+										<button class="edit-event-button" onclick="window.location.href='${contextPath}/event?action=fetchForEdit&eventId=${event.id}'">
 											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
 											<span>Edit Event</span>
 										</button>
@@ -311,6 +311,7 @@
 					<h2 class="add-event-header">Make a new Event</h2>
 					<form class="add-event-form" action="${contextPath}/event" method="post" enctype="multipart/form-data">	
 						<input type="hidden" name="method" value="ADD" />
+						<input type="hidden" name="user_id" value="${userId}" />
 						
 						<input type = "hidden" name="image-change" id="add-image-changed-flag" value="false" />
 						<input name="event-cover" type="file" style="display: none" id="add-event-image-uploader" onchange="handleFileChange(event, 'add')" accept="image/*"/>
@@ -380,85 +381,94 @@
 				</div>
 			</div>
 			
-			<div class="edit-event-overlay">
-				<div class="edit-event-overlay-menu">
-					<button class="exit-edit-event-overlay-button" onclick="toggleEditEventsForm()">
-						<svg width="14" height="24" viewBox="0 0 14 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd" clip-rule="evenodd" d="M4.2074 12.0001L13.6354 21.4281L11.7501 23.3134L1.3794 12.9428C1.12943 12.6927 0.989014 12.3537 0.989014 12.0001C0.989014 11.6465 1.12943 11.3075 1.3794 11.0574L11.7501 0.686768L13.6354 2.5721L4.2074 12.0001Z" fill="black"/>
-						</svg>
-						<span class="exit-edit-event-overlay-button-text">Back</span>
-					</button>
-					
-					<h2 class="edit-event-header">Edit Event</h2>
-					<form class="edit-event-form" action="${contextPath}/event">
-						<input type="hidden" name="method" value="EDIT" />
-						
-						<input type="file" style="display: none" id="edit-event-image-uploader" onchange="handleFileChange(event, 'edit')" accept="image/*"/>
-						<div class="edit-event-cover-image-area" onclick="triggerEditImageUploader()">
-							<div class="edit-event-upload-image-controls">
-								<svg class="edit-event-upload-icon" viewBox="0 0 55 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M27.5625 15C34.75 15 40.5 20.75 40.5 27.9375C40.5 35.125 34.75 40.875 27.5625 40.875C20.375 40.875 14.625 35.125 14.625 27.9375C14.625 20.75 20.375 15 27.5625 15ZM27.5625 17.875C24.8938 17.875 22.3343 18.9352 20.4472 20.8222C18.5602 22.7093 17.5 25.2688 17.5 27.9375C17.5 30.6062 18.5602 33.1657 20.4472 35.0528C22.3343 36.9398 24.8938 38 27.5625 38C30.2312 38 32.7907 36.9398 34.6778 35.0528C36.5648 33.1657 37.625 30.6062 37.625 27.9375C37.625 25.2688 36.5648 22.7093 34.6778 20.8222C32.7907 18.9352 30.2312 17.875 27.5625 17.875ZM8.875 6.375H14.625L20.375 0.625H34.75L40.5 6.375H46.25C48.5375 6.375 50.7313 7.2837 52.3488 8.9012C53.9663 10.5187 54.875 12.7125 54.875 15V40.875C54.875 43.1625 53.9663 45.3563 52.3488 46.9738C50.7313 48.5913 48.5375 49.5 46.25 49.5H8.875C6.58751 49.5 4.39371 48.5913 2.7762 46.9738C1.1587 45.3563 0.25 43.1625 0.25 40.875V15C0.25 12.7125 1.1587 10.5187 2.7762 8.9012C4.39371 7.2837 6.58751 6.375 8.875 6.375ZM21.5538 3.5L15.8038 9.25H8.875C7.35001 9.25 5.88747 9.8558 4.80914 10.9341C3.7308 12.0125 3.125 13.475 3.125 15V40.875C3.125 42.4 3.7308 43.8625 4.80914 44.9409C5.88747 46.0192 7.35001 46.625 8.875 46.625H46.25C47.775 46.625 49.2375 46.0192 50.3159 44.9409C51.3942 43.8625 52 42.4 52 40.875V15C52 13.475 51.3942 12.0125 50.3159 10.9341C49.2375 9.8558 47.775 9.25 46.25 9.25H39.3213L33.5713 3.5H21.5538Z" fill="#F65E2C"/>
-								</svg>
-								<p>Upload a cover image</p>
-							</div>
-							<button type="button" class="edit-event-image-remove" onclick="removeEditedImage(event)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(246, 94, 44, 1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-							</button>
-							<img class="edit-event-cover-image" src=""/>
-						</div>
-						
-						<div class="edit-event-fields">
-							<div class="edit-event-field">
-								<label class="edit-event-field-title">Event Title</label>
-								<input type="text" class="edit-event-field-input" placeholder="e.g. Aspire 2025"/>
-							</div>
-							
-							<div class="edit-event-field">
-								<label class="edit-event-field-title">Event Duration</label>
-								<div class="edit-event-date-input-fields">
-									<div class="edit-date-input-field">
-										<label class="edit-date-input-label">From:</label>
-										<input type="date" class="edit-event-date-field-input"/>
-									</div>
-									<div class="edit-date-input-field">
-										<label class="edit-date-input-label">To:</label>
-										<input type="date" class="edit-event-date-field-input"/>
-									</div>
-								</div>
-							</div>
-							
-							<div class="edit-event-field">
-								<label class="edit-event-field-title">Event Location</label>
-								<input type="text" class="edit-event-field-input" placeholder="e.g. Brit Cafe"/>
-							</div>
-							
-							<div class="edit-event-field">
-								<label class="edit-event-field-title">Sponsors Name (if any)</label>
-								<input type="text" class="edit-event-field-input" placeholder="e.g. Restaurant"/>
-							</div>
-							
-							<div class="edit-event-field">
-								<label class="edit-event-field-title">Sponsors Contact (if any)</label>
-								<input type="text" class="edit-event-field-input" placeholder="e.g. Restaurant Contact"/>
-							</div>
-							
-							<div class="edit-event-field">
-								<label class="edit-event-field-title">Sponsors Email (if any)</label>
-								<input type="text" class="edit-event-field-input" placeholder="e.g. Restaurant@gmail.com"/>
-							</div>
-							
-							<div class="edit-event-description-field">
-								<label class="edit-event-field-title">Event Description</label>
-								<textarea class="edit-event-description-field-input" placeholder="Maximum 100 words"></textarea>
-							</div>
-						</div>
-						
-						<p class="edit-event-notice">*This information will be modified for everyone after the edit.</p>
-						
-						<button type="submit" class="confirm-edit-event-submission">Save Edit</button>
-					</form>
-				</div>
-			</div>
+			            <div class="edit-event-overlay">
+                <div class="edit-event-overlay-menu">
+                    <button class="exit-edit-event-overlay-button" onclick="toggleEditEventsForm()">
+                        <%-- ... Back button svg ... --%>
+                        <span class="exit-edit-event-overlay-button-text">Back</span>
+                    </button>
+
+                    <h2 class="edit-event-header">Edit Event</h2>
+                    <form class="edit-event-form" action="${contextPath}/event" method="post" enctype="multipart/form-data">
+                        <%-- Hidden fields for method and event ID --%>
+                        <input type="hidden" name="method" value="EDIT" />
+                        <input type="hidden" name="eventId" value="${eventToEdit.id}"> <%-- Get ID from model --%>
+
+                         <%-- Hidden field to track image changes --%>
+                        <input type="hidden" name="image-change" id="edit-image-changed-flag" value="false">
+
+                        <%-- File input for image --%>
+                        <input name="event-cover" type="file" style="display: none" id="edit-event-image-uploader" onchange="handleFileChange(event, 'edit')" accept="image/*"/>
+
+                         <%-- Image Area (added data-original-src) --%>
+                        <div class="edit-event-cover-image-area" onclick="triggerEditImageUploader()">
+                            <div class="edit-event-upload-image-controls" style="display: flex;"> <%-- Start visible --%>
+                                <%-- ... Upload icon svg ... --%>
+                                <p>Upload a cover image</p>
+                            </div>
+                            <button type="button" class="edit-event-image-remove" style="display: none;" onclick="removeEditedImage(event)">
+                                <%-- ... Trash icon svg ... --%>
+                            </button>
+                             <%-- Image tag with dynamic src and data-original-src --%>
+                            <img class="edit-event-cover-image" style="display: none;" <%-- Start hidden --%>
+                                 src="${contextPath}/${not empty eventToEdit.imagePath ? eventToEdit.imagePath : 'resources/images/event-default.png'}"
+                                 data-original-src="${contextPath}/${not empty eventToEdit.imagePath ? eventToEdit.imagePath : 'resources/images/event-default.png'}"/>
+                        </div>
+
+                        <%-- Input Fields (added value attributes) --%>
+                        <div class="edit-event-fields">
+                            <div class="edit-event-field">
+                                <label class="edit-event-field-title">Event Title</label>
+                                <input name="event-title" type="text" class="edit-event-field-input" placeholder="e.g. Aspire 2025" value="<c:out value='${eventToEdit.name}'/>"/>
+                            </div>
+
+                            <div class="edit-event-field">
+                                <label class="edit-event-field-title">Event Duration</label>
+                                <div class="edit-event-date-input-fields">
+                                    <div class="edit-date-input-field">
+                                        <label class="edit-date-input-label">From:</label>
+                                         <%-- NOTE: value for date needs yyyy-MM-dd format --%>
+                                        <input name="start-date" type="date" class="edit-event-date-field-input" value="${eventToEdit.startDate}"/>
+                                    </div>
+                                    <div class="edit-date-input-field">
+                                        <label class="edit-date-input-label">To:</label>
+                                        <input name="end-date" type="date" class="edit-event-date-field-input" value="${eventToEdit.endDate}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="edit-event-field">
+                                <label class="edit-event-field-title">Event Location</label>
+                                <input name="event-location" type="text" class="edit-event-field-input" placeholder="e.g. Brit Cafe" value="<c:out value='${eventToEdit.location}'/>"/>
+                            </div>
+
+                             <%-- Sponsor fields with pre-population --%>
+                            <div class="edit-event-field">
+                                <label for="sponsor-name" class="edit-event-field-title">Sponsors Name (if any)</label>
+                                <input name="sponsor-name" type="text" class="edit-event-field-input" placeholder="e.g. Restaurant" value="<c:out value='${eventToEdit.sponsorName}'/>"/>
+                            </div>
+
+                            <div class="edit-event-field">
+                                <label for="sponsor-contact" class="edit-event-field-title">Sponsors Contact (if any)</label>
+                                <input name="sponsor-contact" type="text" class="edit-event-field-input" placeholder="e.g. Restaurant Contact" value="<c:out value='${eventToEdit.sponsorContact}'/>"/>
+                            </div>
+
+                            <div class="edit-event-field">
+                                <label for="sponsor-email" class="edit-event-field-title">Sponsors Email (if any)</label>
+                                <input name="sponsor-email" type="email" class="edit-event-field-input" placeholder="e.g. Restaurant@gmail.com" value="<c:out value='${eventToEdit.sponsorEmail}'/>"/> <%-- Changed type to email --%>
+                            </div>
+
+                            <div class="edit-event-description-field">
+                                <label class="edit-event-field-title">Event Description</label>
+                                <textarea name="event-description" class="edit-event-description-field-input" placeholder="Maximum 100 words"><c:out value='${eventToEdit.description}'/></textarea>
+                            </div>
+                        </div>
+
+                        <p class="edit-event-notice">*This information will be modified for everyone after the edit.</p>
+                        <button type="submit" class="confirm-edit-event-submission">Save Edit</button>
+                    </form>
+                </div>
+            </div>
 			
 			<div class="logout-overlay" onclick="handleLogoutOverlayClick(event)">
 				<div class="logout-container">
@@ -482,52 +492,71 @@
 			</div>
 			
 			<div class="update-profile-overlay">
-				<div class="update-profile-container">
-					<button class="update-profile-back" onclick="toggleUpdateProfileOverlay()">
-						<svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd" clip-rule="evenodd" d="M3.4574 11.9999L12.8854 21.4279L11.0001 23.3132L0.629396 12.9425C0.379434 12.6925 0.239014 12.3534 0.239014 11.9999C0.239014 11.6463 0.379434 11.3072 0.629396 11.0572L11.0001 0.686523L12.8854 2.57186L3.4574 11.9999Z" fill="black"/>
-						</svg>
-						<span>Back</span>
-					</button>
-					
-					<form class="update-profile-form">
-						<div class="update-profile-user-info">
-							<img src="${contextPath}/reosources/images/event-default.png" class="user-profile">
-							<button class="change-profile-picture-button">Change Profile</button>
-							<p class="update-profile-display-name">Srijan Shrestha</p>
-						</div>
-						
-						<div class="update-profile-input-forms">
-							<div class="update-profile-form-section">
-								<label class="update-profile-input-label">Full Name</label>
-								<input name="fullName" type="text" class="update-profile-input-field"/>
-							</div>
-							
-							<div class="update-profile-form-section">
-								<label class="update-profile-input-label">Email</label>
-								<input name="email" type="text" class="update-profile-input-field"/>
-							</div>
-							
-							<div class="update-profile-form-section">
-								<label class="update-profile-input-label">Phone Number</label>
-								<input name="phoneNumber" type="text" class="update-profile-input-field"/>
-							</div>
-							
-							<div class="update-profile-form-section">
-								<label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
-								<input name="fullName" type="text" class="update-profile-input-field"/>
-							</div>
-							
-							<div class="update-profile-form-section">
-								<label class="update-profile-input-label">Password</label>
-								<input name="fullName" type="text" class="update-profile-input-field"/>
-							</div>
-						</div>
-						
-						<button type="submit" class="update-profile-submit">Save Edit</button>
-					</form>
-				</div>
-			</div>
+                <div class="update-profile-container">
+                    <button class="update-profile-back" onclick="toggleUpdateProfileOverlay()">
+                        <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.4574 11.9999L12.8854 21.4279L11.0001 23.3132L0.629396 12.9425C0.379434 12.6925 0.239014 12.3534 0.239014 11.9999C0.239014 11.6463 0.379434 11.3072 0.629396 11.0572L11.0001 0.686523L12.8854 2.57186L3.4574 11.9999Z" fill="black"/>
+                        </svg>
+                        <span>Back</span>
+                    </button>
+
+                    <%-- CHANGE 1: Modify the <form> tag --%>
+                    <form class="update-profile-form"
+                          action="${contextPath}/userProfile"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        <div class="update-profile-user-info">
+                            <%-- CHANGE 2: Modify the <img> tag src for dynamic display + fallback --%>
+                            <img src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}"
+                                 class="user-profile" alt="Current User Profile Picture" data-original-src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}">
+
+                            <%-- CHANGE 3: Add the hidden file input --%>
+                            <input type="file" name="profilePictureFile" id="profilePictureUpload" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
+
+                            <%-- CHANGE 4: Modify the "Change Profile" button type and add onclick --%>
+                            <button type="button" class="change-profile-picture-button" onclick="document.getElementById('profilePictureUpload').click();">Change Profile</button>
+
+                             <%-- CHANGE 5: Make the display name dynamic --%>
+                            <p class="update-profile-display-name"><c:out value="${fullName}"/></p>
+                        </div>
+
+                        <div class="update-profile-input-forms">
+                            <div class="update-profile-form-section">
+                                <label class="update-profile-input-label">Full Name</label>
+                                <%-- CHANGE 6a: Add value attribute --%>
+                                <input name="fullName" type="text" class="update-profile-input-field" value="<c:out value='${fullName}'/>"/>
+                            </div>
+
+                            <div class="update-profile-form-section">
+                                <label class="update-profile-input-label">Email</label>
+                                <%-- CHANGE 6b: Add value attribute, change type --%>
+                                <input name="email" type="email" class="update-profile-input-field" value="<c:out value='${userEmail}'/>"/>
+                            </div>
+
+                            <div class="update-profile-form-section">
+                                <label class="update-profile-input-label">Phone Number</label>
+                                <%-- CHANGE 6c: Add value attribute, change type --%>
+                                <input name="phoneNumber" type="tel" class="update-profile-input-field" value="<c:out value='${userPhoneNumber}'/>"/>
+                            </div>
+
+                            <div class="update-profile-form-section">
+                                <label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
+                                <%-- CHANGE 6d: Correct name, add value, add readonly --%>
+                                <input name="organizationId" type="text" class="update-profile-input-field" value="<c:out value='${organizationId}'/>" readonly/>
+                            </div>
+
+                            <div class="update-profile-form-section">
+                                <label class="update-profile-input-label">New Password</label> <%-- Changed label --%>
+                                <%-- CHANGE 6e: Correct name, change type, add placeholder --%>
+                                <input name="password" type="password" class="update-profile-input-field" placeholder="Leave blank to keep current password"/>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="update-profile-submit">Save Edit</button>
+                    </form>
+                </div>
+            </div>
 		</main>
 	</body>
 	
@@ -575,16 +604,31 @@
 			const updateProfileElement = document.querySelector(".update-profile-overlay");
 			const container = document.querySelector(".update-profile-container");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
-			mobileNavOverlayElement.style.display = "none"; //Hide the mobile nav if it was visible
-			
+			mobileNavOverlayElement.style.display = "none"; // Always hide mobile nav when profile appears
+
 			if(updateProfileElement.style.visibility == "visible"){
-				container.classList.toggle('active');
-				setTimeout(function(){
+				container.classList.remove('active');
+				setTimeout(() => {
 					updateProfileElement.style.visibility = "hidden";
 				}, 400);
 			} else {
+				// Added logic to reset image on open
+				const profileImage = updateProfileElement.querySelector('.user-profile');
+                const fileInput = document.getElementById('profilePictureUpload');
+				if (profileImage) {
+					const originalSrc = profileImage.getAttribute('data-original-src');
+					if (originalSrc) {
+						profileImage.src = originalSrc;
+					}
+				}
+                if(fileInput) {
+                    fileInput.value = "";
+                }
+
 				updateProfileElement.style.visibility = "visible";
-				container.classList.toggle('active');
+                setTimeout(() => {
+                    container.classList.add('active');
+                }, 10);
 			}
 		}
 		
@@ -671,5 +715,117 @@
 			deleteImageButton.style.display = "none";
 			imageUploader.value = "";
 		}
+		
+		function previewProfilePicture(event) {
+            const file = event.target.files[0];
+            const imagePreview = document.querySelector('.update-profile-overlay .user-profile');
+
+            if (file && imagePreview) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            }
+        }
+		
+		document.addEventListener('DOMContentLoaded', (event) => {
+            // Check if event data was passed for editing
+            <c:if test="${not empty eventToEdit}">
+                console.log('Event data found for edit, opening overlay.');
+
+                // Select elements within the EDIT overlay specifically
+                const editOverlay = document.querySelector(".edit-event-overlay");
+                const editImagePreview = editOverlay.querySelector('.edit-event-cover-image');
+                const uploadControls = editOverlay.querySelector(".edit-event-upload-image-controls");
+                const deleteImageButton = editOverlay.querySelector(".edit-event-image-remove");
+                const fileInput = document.getElementById('edit-event-image-uploader');
+                const imageChangedFlag = document.getElementById('edit-image-changed-flag'); // Assuming you add this flag
+
+                // Reset the edit image preview to the fetched image
+                if (editImagePreview) {
+                    const originalSrc = editImagePreview.getAttribute('data-original-src');
+                    if (originalSrc) {
+                         editImagePreview.src = originalSrc;
+
+                         // Show/hide image controls based on whether it's the default image
+                        if (!originalSrc.endsWith('event-default.png')) { // Check if it's NOT the default
+                            editImagePreview.style.display = 'block';
+                            if(uploadControls) uploadControls.style.display = 'none';
+                            if(deleteImageButton) deleteImageButton.style.display = 'block';
+                        } else { // It IS the default image
+                            editImagePreview.style.display = 'none';
+                             if(uploadControls) uploadControls.style.display = 'flex';
+                             if(deleteImageButton) deleteImageButton.style.display = 'none';
+                        }
+                    } else { // No original source found (shouldn't happen if data-attribute is set)
+                         editImagePreview.style.display = 'none';
+                         if(uploadControls) uploadControls.style.display = 'flex';
+                         if(deleteImageButton) deleteImageButton.style.display = 'none';
+                    }
+                }
+
+                // Clear the file input in case of refresh issues
+                if(fileInput) fileInput.value = "";
+
+                 // Reset the image changed flag
+                if(imageChangedFlag) imageChangedFlag.value = "false";
+
+                toggleEditEventsForm(); // Open the edit overlay
+            </c:if>
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const errorMsg = urlParams.get('error');
+            const failedEventId = urlParams.get('failedEventId');
+
+            if (errorMsg && failedEventId && document.getElementById('edit-event-form')) { // Check if edit form exists
+                 alert("Error updating event: " + decodeURIComponent(errorMsg));
+                 const formEventIdInput = document.querySelector('.edit-event-form input[name="eventId"]');
+                 if (formEventIdInput && formEventIdInput.value === failedEventId) {
+                    // Ensure the overlay is visible if it wasn't already opened by eventToEdit check
+                    const editOverlay = document.querySelector(".edit-event-overlay");
+                    if (editOverlay.style.visibility !== 'visible') {
+                         toggleEditEventsForm();
+                    }
+                 }
+            } else if (errorMsg) {
+                 alert("Error: " + decodeURIComponent(errorMsg));
+            }
+
+        });
+		
+		function setEditImageChanged(changed) {
+            const flag = document.getElementById('edit-image-changed-flag');
+            if(flag) flag.value = changed ? 'true' : 'false';
+       	}
+		
+		function editImageChange(e){
+			const imageElement = document.querySelector(".edit-event-cover-image");
+			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
+			const deleteImageButton = document.querySelector(".edit-event-image-remove");
+			uploadControls.style.display="none";
+			imageElement.style.display="block";
+			deleteImageButton.style.display = "block";
+			imageElement.src = e.target.result;
+            setEditImageChanged(true);
+		}
+
+		function removeEditedImage(e){
+			e.stopPropagation();
+			const imageElement = document.querySelector(".edit-event-cover-image");
+			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
+			const deleteImageButton = document.querySelector(".edit-event-image-remove");
+			const imageUploader = document.getElementById('edit-event-image-uploader');
+			imageElement.src=""; // Clear preview
+            // Show upload controls, hide image/delete button
+			uploadControls.style.display="flex";
+			imageElement.style.display="none";
+			deleteImageButton.style.display = "none";
+			imageUploader.value = ""; // Clear the file input
+            setEditImageChanged(true); // Mark as changed (to remove image path on server)
+		}
+		
 	</script>
 </html>
