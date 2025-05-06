@@ -19,14 +19,18 @@ public class EventModel {
 	private int posterUserId;
 	private String status;
 	private String reviewNote;
+	private String sponsorName;
+	private String sponsorContact;
+	private String sponsorEmail;
 	
 	public EventModel() {
 		
 	}
 	
 	public EventModel(int id, String name, LocalDate startDate, LocalDate endDate, LocalDate postDate,
-			String description, String imagePath, String location, String restriction, int posterUserId,
-			String status, String reviewNote) {
+            String description, String imagePath, String location, String restriction, int posterUserId,
+            String status, String reviewNote, String sponsorName, String sponsorContact, String sponsorEmail) 
+	{
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,6 +44,9 @@ public class EventModel {
 		this.posterUserId = posterUserId;
 		this.status = status;
 		this.reviewNote = reviewNote;
+		this.sponsorName = sponsorName;
+		this.sponsorContact = sponsorContact;
+		this.sponsorEmail = sponsorEmail;
 	}
 
 	public int getId() {
@@ -134,6 +141,27 @@ public class EventModel {
 		this.reviewNote = reviewNote;
 	}
 	
-	
+	public String getSponsorName() {
+	    return sponsorName;
+	}
 
+	public void setSponsorName(String sponsorName) {
+	    this.sponsorName = sponsorName;
+	}
+
+	public String getSponsorContact() {
+	    return sponsorContact;
+	}
+
+	public void setSponsorContact(String sponsorContact) {
+	    this.sponsorContact = sponsorContact;
+	}
+	
+	public String getSponsorEmail() {
+	    return sponsorEmail;
+	}
+
+	public void setSponsorEmail(String sponsorEmail) {
+	    this.sponsorEmail = sponsorEmail;
+	}
 }
