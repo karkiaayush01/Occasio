@@ -241,7 +241,7 @@ public class ImageUtil {
 	}
 	
 	public String getSavePath(String saveFolder) {
-		String basePath = "D:/Studies/College Materials/Year 2/Sem 2 + Year Long/Advanced Programming/Coursework/Occasio/src/main/webapp/resources/images/" + saveFolder;
+		String basePath = "D:/Arpeet/College/Islington/Year2/Sem4/Advanced Programming/Occasio/src/main/webapp/resources/images/" + saveFolder;
 	    return basePath;
 	}
 	
