@@ -253,6 +253,8 @@ body{
     justify-content: center;
     text-align: left;
     gap: 20px;
+    padding-top: 16px;
+   
 
 }
 .desc-event-div{
@@ -279,6 +281,7 @@ body{
     justify-content: center;
     text-align: left;
     gap: 20px;
+    padding-top: 16px;
 }
 .org-event{
 	display: flex;
