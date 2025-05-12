@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -15,8 +16,14 @@ import java.util.ArrayList;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 
 import com.occasio.util.ImageUtil;
+import com.occasio.util.SessionUtil;
 import com.occasio.util.SessionUtil;
 import com.occasio.model.EventModel;
 import com.occasio.model.UserModel;
@@ -43,6 +50,11 @@ public class EventController extends HttpServlet {
         if (currentUser == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sessionExpired");
             return;
+        }
+        
+        if(action==null || "".equals(action)) {
+        	request.getRequestDispatcher("/WEB-INF/pages/eventdetails.jsp").forward(request, response);
+        	return;
         }
 
 		if ("fetchForEdit".equals(action)) {

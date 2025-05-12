@@ -49,10 +49,10 @@
 					</div>
 				</section>
 			</header>
-
+			<div class= "main-event">
 			<section class="event-interest">
 				<div class="event-picture">
-					<img src="${pageContext.request.contextPath}/images/event-default.png" class="events-cover" />
+					<img src="${pageContext.request.contextPath}/resources/images/event-default.png" class="events-cover" />
 				</div>
 				<div class="event-details-text">
 					<div class="event-title-div">
@@ -71,12 +71,72 @@
 							<button class="show-interest-button">Confirm Interest</button>
 						</div>
 					</div>
+					
 				</div>
 			</section>
-				<section>
-					<div>
+				<section class = "details-section">
+					<div class= "detail-event-div">
+						<p class = "details-event"> Event Details</p>
+					</div>
+					 <div class="detail-item">
+       					 <div class="detail-label">
+          					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.0757 20.82C11.9124 20.9372 11.7166 21.0003 11.5156 21.0003C11.3147 21.0003 11.1189 20.9372 10.9556 20.82C6.12665 17.378 1.00165 10.298 6.18265 5.182C7.60499 3.78285 9.52049 2.99912 11.5156 3C13.5156 3 15.4346 3.785 16.8486 5.181C22.0297 10.297 16.9047 17.376 12.0757 20.82Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5156 12C12.0461 12 12.5548 11.7893 12.9298 11.4142C13.3049 11.0391 13.5156 10.5304 13.5156 10C13.5156 9.46957 13.3049 8.96086 12.9298 8.58579C12.5548 8.21071 12.0461 8 11.5156 8C10.9852 8 10.4765 8.21071 10.1014 8.58579C9.72634 8.96086 9.51562 9.46957 9.51562 10C9.51562 10.5304 9.72634 11.0391 10.1014 11.4142C10.4765 11.7893 10.9852 12 11.5156 12Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+
+         					 <span class = "venue-text">Venue</span>
+         					 <address class="detail-value">Kumari Hall</address>
+       					 </div>
+        				
+     				 </div>
+     				 
+     				 <div class="event-date">
+       					 <div class="calender-label">
+          					<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_331_209)"><path d="M19.2656 2.46821H16.4219V1.15571C16.422 0.981663 16.353 0.814697 16.23 0.691544C16.107 0.568391 15.9401 0.49914 15.7661 0.499024C15.592 0.498908 15.425 0.567937 15.3019 0.690925C15.1787 0.813914 15.1095 0.980788 15.1094 1.15484V2.46821H11.1719V1.15571C11.1719 1.06953 11.155 0.984184 11.1221 0.904542C11.0892 0.8249 11.0409 0.752523 10.98 0.691544C10.9191 0.630565 10.8468 0.582178 10.7672 0.549145C10.6876 0.516112 10.6022 0.499081 10.5161 0.499024C10.342 0.498908 10.175 0.567937 10.0519 0.690925C9.92874 0.813914 9.85949 0.980788 9.85938 1.15484V2.46821H5.92188V1.15571C5.92193 1.06953 5.90501 0.984184 5.87209 0.904542C5.83916 0.8249 5.79087 0.752523 5.72997 0.691544C5.66908 0.630565 5.59676 0.582178 5.51717 0.549145C5.43757 0.516112 5.35224 0.499081 5.26606 0.499024C5.09201 0.498908 4.92505 0.567937 4.8019 0.690925C4.67874 0.813914 4.60949 0.980788 4.60938 1.15484V2.46821H1.76562C1.30165 2.46821 0.856661 2.65247 0.528497 2.98046C0.200334 3.30846 0.015857 3.75336 0.015625 4.21734V19.7486C0.015625 20.2127 0.199999 20.6578 0.528188 20.986C0.856377 21.3142 1.3015 21.4986 1.76562 21.4986H19.2656C19.7298 21.4986 20.1749 21.3142 20.5031 20.986C20.8312 20.6578 21.0156 20.2127 21.0156 19.7486V4.21734C21.0154 3.75336 20.8309 3.30846 20.5028 2.98046C20.1746 2.65247 19.7296 2.46821 19.2656 2.46821ZM19.7031 19.7495C19.7031 19.8653 19.6572 19.9765 19.5753 20.0585C19.4934 20.1405 19.3824 20.1867 19.2665 20.187H1.76562C1.64959 20.187 1.53831 20.1409 1.45627 20.0588C1.37422 19.9768 1.32812 19.8655 1.32812 19.7495V4.21821C1.32836 4.10233 1.37455 3.99128 1.45657 3.90942C1.5386 3.82756 1.64974 3.78159 1.76562 3.78159H4.60938V5.09409C4.60926 5.26813 4.67829 5.4351 4.80128 5.55825C4.92427 5.68141 5.09114 5.75066 5.26519 5.75077C5.43924 5.75089 5.6062 5.68186 5.72935 5.55887C5.85251 5.43588 5.92176 5.26901 5.92188 5.09496V3.78159H9.85938V5.09409C9.85926 5.26813 9.92829 5.4351 10.0513 5.55825C10.1743 5.68141 10.3411 5.75066 10.5152 5.75077C10.6892 5.75089 10.8562 5.68186 10.9794 5.55887C11.1025 5.43588 11.1718 5.26901 11.1719 5.09496V3.78159H15.1094V5.09409C15.1093 5.26813 15.1783 5.4351 15.3013 5.55825C15.4243 5.68141 15.5911 5.75066 15.7652 5.75077C15.9392 5.75089 16.1062 5.68186 16.2294 5.55887C16.3525 5.43588 16.4218 5.26901 16.4219 5.09496V3.78159H19.2656C19.3814 3.78182 19.4923 3.82789 19.5741 3.90973C19.6559 3.99156 19.702 4.10248 19.7023 4.21821L19.7031 19.7495Z" fill="black"/><path d="M4.60938 8.375H7.23438V10.3438H4.60938V8.375ZM4.60938 11.6562H7.23438V13.625H4.60938V11.6562ZM4.60938 14.9375H7.23438V16.9062H4.60938V14.9375ZM9.20312 14.9375H11.8281V16.9062H9.20312V14.9375ZM9.20312 11.6562H11.8281V13.625H9.20312V11.6562ZM9.20312 8.375H11.8281V10.3438H9.20312V8.375ZM13.7969 14.9375H16.4219V16.9062H13.7969V14.9375ZM13.7969 11.6562H16.4219V13.625H13.7969V11.6562ZM13.7969 8.375H16.4219V10.3438H13.7969V8.375Z" fill="black"/></g><defs><clipPath id="clip0_331_209"><rect width="21" height="21" fill="white" transform="translate(0.5 0.5)"/></clipPath></defs>
+							</svg>
+         					 <span class = "date-text">Date</span>
+         					 <time class="date-num" datetime= "2025-05-12"> 2025/05/12 - 2025/05/14 </time>
+       					 </div>
+        				
+     				 </div>
+     				 <div class="event-time">
+       					 <div class="time-label">
+          					<svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.0157 0.416992C15.3086 0.416992 19.599 4.70745 19.599 10.0003C19.599 15.2932 15.3086 19.5837 10.0157 19.5837C4.72283 19.5837 0.432373 15.2932 0.432373 10.0003C0.432373 4.70745 4.72283 0.416992 10.0157 0.416992ZM10.0157 2.33366C7.98238 2.33366 6.03233 3.14139 4.59455 4.57917C3.15678 6.01695 2.34904 7.967 2.34904 10.0003C2.34904 12.0337 3.15678 13.9837 4.59455 15.4215C6.03233 16.8593 7.98238 17.667 10.0157 17.667C12.049 17.667 13.9991 16.8593 15.4369 15.4215C16.8746 13.9837 17.6824 12.0337 17.6824 10.0003C17.6824 7.967 16.8746 6.01695 15.4369 4.57917C13.9991 3.14139 12.049 2.33366 10.0157 2.33366ZM10.0157 4.25033C10.2504 4.25036 10.477 4.33653 10.6524 4.49251C10.8278 4.64849 10.9399 4.86342 10.9673 5.09653L10.974 5.20866V9.60358L13.5682 12.1978C13.7401 12.3702 13.8399 12.6017 13.8473 12.845C13.8548 13.0884 13.7693 13.3255 13.6083 13.5081C13.4472 13.6907 13.2227 13.8052 12.9803 13.8283C12.738 13.8514 12.4959 13.7813 12.3032 13.6324L12.2132 13.5529L9.33816 10.6779C9.18922 10.5288 9.09356 10.3348 9.066 10.1259L9.05737 10.0003V5.20866C9.05737 4.95449 9.15834 4.71074 9.33806 4.53101C9.51779 4.35129 9.76154 4.25033 10.0157 4.25033Z" fill="black"/>
+							</svg>
+          					
+         					 <span class = "time-text">Time</span>
+         					 <time class="time-num" > 4:00pm - 6:00pm </time>
+       					 </div>
+        				
+     				 </div>
+				</section>
+				<section class= "description-section">
+					<div class= "desc-event-div">
+						<p class = "desc-event"> Event Description</p>
+					</div>
+					<div class= event-desc>
+						<p class = "event-desc-para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non justo ac ante vestibulum hendrerit. Vivamus vel eros vitae nibh hendrerit lacinia. Nullam vitae velit eget odio tincidunt tristique. Proin tincidunt leo ac velit vulputate, at tincidunt risus viverra. Suspendisse potenti. Cras dapibus era </p>
+					</div>
+				
+				</section>
+				<section class = "organized-section">
+					<div class= "org-event">
+						<p> Organized by </p>
+						<p class = "Org-name"> Shreejesh Pathak </p>
+					</div>
+					<div class= "org-event-sponsor">
+						<p> Sponsored by </p>
+						<p class = "org-sponsor"> Islington College </p>
+					</div>
+					<div class= "org-event-email">
+						<p> Sponsor's Email </p>
+						<p> islingtoncollege@gmail.com </p>
+					</div>
+					<div class= "org-event-contact">
+						<p> Sponsor contact </p>
+						<p> 9812345678 </p>
 					</div>
 				</section>
+			</div>
 		</main>
 		<div class="logout-overlay">
 				<div class="logout-container">
@@ -85,7 +145,7 @@
 					</svg>
 					
 					<div class="logout-items">
-						<img class="logout-image" src="${pageContext.request.contextPath}/images/logout-image.png">
+						<img class="logout-image" src="${pageContext.request.contextPath}/resources/images/logout-image.png">
 						
 						<div class="logout-confirm">
 							<p class="logout-confirm-text">Are you sure you want to logout?</p>
