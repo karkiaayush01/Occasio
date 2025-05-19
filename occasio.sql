@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 03:53 PM
+-- Generation Time: May 19, 2025 at 06:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,19 +39,25 @@ CREATE TABLE `event` (
   `PostedUserId` int(10) NOT NULL,
   `Status` varchar(20) NOT NULL,
   `ReviewNote` varchar(500) DEFAULT NULL,
-  `EndDate` date NOT NULL
+  `EndDate` date NOT NULL,
+  `SponsorName` varchar(50) DEFAULT NULL,
+  `SponsorContact` varchar(15) DEFAULT NULL,
+  `SponsorEmail` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`EventId`, `EventName`, `StartDate`, `PostDate`, `Description`, `ImagePath`, `EventLocation`, `Restriction`, `PostedUserId`, `Status`, `ReviewNote`, `EndDate`) VALUES
-(1, 'Navia and Chlorinde', '2025-05-05', '2025-05-05', 'I fw lesbians.', 'resources/images/event_covers/1717171788130.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-07'),
-(2, 'Champions League', '2025-05-06', '2025-05-05', 'Get together for an awesome final.', 'resources/images/event_covers/backgroundimage.jpg', 'Barcelona', NULL, 1, 'pending', NULL, '2025-05-10'),
-(3, 'Test', '2025-05-07', '2025-05-05', 'test', 'resources/images/event_covers/1717171711714.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-08'),
-(8, 'My Queen', '2025-04-03', '2025-05-05', 'okay', 'resources/images/event_covers/8ca9a5b66df345366c9994e16f5bcbfb.jpg', 'Solaris', NULL, 1, 'pending', NULL, '2025-05-30'),
-(10, 'ABSOLUTE UI BREAKER TO THE MAX LIMIT RAHHHHHhhhhhhhhhhhhhhhhHHHHHHHHH', '2025-05-09', '2025-05-05', 'fdas', 'resources/images/event_covers/1720534840987.jpeg', 'fdasfaewgaewgewgeawgvaewfeaweawgawgewa', NULL, 1, 'pending', NULL, '2025-05-01');
+INSERT INTO `event` (`EventId`, `EventName`, `StartDate`, `PostDate`, `Description`, `ImagePath`, `EventLocation`, `Restriction`, `PostedUserId`, `Status`, `ReviewNote`, `EndDate`, `SponsorName`, `SponsorContact`, `SponsorEmail`) VALUES
+(1, 'Sigewinne', '2025-05-05', '2025-05-05', 'WWWW', 'resources/images/event_covers/1718880014073.jpg', 'Marineford', NULL, 1, 'pending', NULL, '2025-05-07', '', '', ''),
+(2, 'Champions League', '2025-05-06', '2025-05-05', 'Get together for an awesome final.', 'resources/images/event_covers/backgroundimage.jpg', 'Barcelona', NULL, 1, 'pending', NULL, '2025-05-10', '', '', ''),
+(3, 'Test', '2025-05-07', '2025-05-05', 'test', 'resources/images/event_covers/1717171711714.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-08', '', '', ''),
+(8, 'My Queen', '2025-04-03', '2025-05-05', 'okay', 'resources/images/event_covers/8ca9a5b66df345366c9994e16f5bcbfb.jpg', 'Solaris', NULL, 1, 'pending', NULL, '2025-05-30', '', '', ''),
+(10, 'ABSOLUTE UI BREAKER TO THE MAX LIMIT RAHHHHHhhhhhhhhhhhhhhhhHHHHHHHHH', '2025-05-09', '2025-05-05', 'fdas', 'resources/images/event_covers/1720534840987.jpeg', 'fdasfaewgaewgewgeawgvaewfeaweawgawgewa', NULL, 1, 'pending', NULL, '2025-05-01', '', '', ''),
+(16, 'Test 3', '2025-05-04', '2025-05-06', 'Test 2', 'resources/images/event_covers/Screenshot (4139).png', 'Test 4', NULL, 4, 'pending', NULL, '2025-05-06', 'Coca-cola', 'no', ''),
+(17, 'Neuv and Chlorinde', '2025-05-07', '2025-05-07', 'dnsnvkdnkns', 'resources/images/event_covers/290570419_349674360477901_3582246089466682745_n.jpeg', 'Solaris', NULL, 9, 'pending', NULL, '2025-05-08', 'bajeko sekuwa', 'bkjb', 'karkiaayush01@gmail.com'),
+(18, ';l,', '2025-05-02', '2025-05-08', 'dsfgvbnm', 'resources/images/event_covers/290570419_349674360477901_3582246089466682745_n.jpeg', ',m ,. vhb n', NULL, 4, 'pending', NULL, '2025-05-09', 'asdfgvb', '', '');
 
 -- --------------------------------------------------------
 
@@ -131,7 +137,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserId`, `FullName`, `UserEmail`, `Role`, `Password`, `DateJoined`, `PhoneNumber`, `ProfilePicturePath`, `OrgId`) VALUES
-(1, 'Aayush Karki', 'karkiaayush01@gmail.com', 'user', '$2a$12$9rz2py5e8SGiDGtBtrL7ZeiGDPJu/P7kD21SMUd.ON7NphXWbcbz.', '2025-05-04', '9824038615', 'resources/images/profile_pics/queen.webp', 1);
+(1, 'Aayus Karki', 'karkiaayush01@gmail.co', 'admin', '$2a$12$47Pou2IDTl7hlK/QW6nxQ.hWMi2f090zThInb4v5rehVs4/ba1MxK', '2025-05-04', '9824386150', 'resources/images/profile_pics/290570419_349674360477901_3582246089466682745_n.jpeg', 1),
+(4, 'Arpeet Neupaneb', 'neupanearpeet@gmail.com', 'user', '$2a$12$Hho2U.05u7nC.igo.6XdVOc7vLhuUx2lNnU0bh0z5.q79QsOH4cUa', '2025-05-06', '9803649735', 'resources/images/profile_pics/Screenshot (4140).png', 1),
+(7, 'Arpit Neupane', 'neupanearpit@gmail.com', 'user', '$2a$12$SlDrmFEygRyUnh4UoGbHJ.ywygNu/IPmDpb7EgD3mF7FAXAXa5vgi', '2025-05-06', '9803649735', NULL, 1),
+(8, 'Admin', 'admin@test.test', 'admin', '$2a$12$AH7iivmSKyZpsmdq/PHod.EYn3UQw.TKKXqceHCodBPXaSHzfUpkq', '2025-05-07', '9824038615', 'resources/images/profile_pics/DALL·E 2025-03-06 21.58.33 - A digital illustration of a silhouette of a person with a visible microchip or neural implant inside their brain. The silhouette should be dark and fu.png', 1),
+(9, 'rabina lamaaaaa', 'rabina12@gmail.com', 'user', '$2a$12$eivtGJ/1YvFGQwlu6YaGgeBoTX4/DdSAFIPiKdszFpQzVO.O9wE0O', '2025-05-07', '098765432', 'resources/images/profile_pics/2303230606-KVvUXgt2.jpeg', 1);
 
 --
 -- Indexes for dumped tables
@@ -185,7 +195,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `sponsor`
@@ -197,7 +207,7 @@ ALTER TABLE `sponsor`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

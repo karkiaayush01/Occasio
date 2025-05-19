@@ -1,18 +1,36 @@
 @import url('./globals.css');
 
+body {
+  overflow: hidden;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Chrome, Edge, Safari */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .main{
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-family: 'Poppins-Regular';
 }
 
+.main * {
+	z-index: 50;
+}
+
 .register-popover{
 	width: 406px;
 	min-width: 406px;
 	max-width: 406px;
+	background: rgba(255,255,255,0.3);
+	backdrop-filter: blur(4px);  
+	padding: 20px 32px 32px 32px;
+	border-radius: 12px;
 }
 
 .register-title{
@@ -36,10 +54,12 @@
 
 .register-headers{
 	margin-bottom: 28px;
+	font-family: Poppins-Light;
 }
 
 .register-text{
-	font-family: Poppins-Light;
+	font-size: 20px;
+	padding: 2px;
 }
 
 .step-progress{
@@ -192,7 +212,7 @@
 	background: #F65E2C; 
 	border-radius: 6px; 
 	border: none; 
-	margin-bottom: 32px; 
+	margin-bottom: 24px; 
 	cursor:pointer; 
 	width:100%;
 }
@@ -208,3 +228,10 @@
 .signin-text:hover{
 	text-decoration: underline;
 }
+
+#particles-js{ z-index: 10; position:absolute; width: 100%; height: 100%; background-color: #fc825a; background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; }  
+.count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } 
+.js-count-particles{ font-size: 1.1em; } 
+#stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } 
+#stats{ border-radius: 3px 3px 0 0; overflow: hidden; } 
+.count-particles{ border-radius: 0 0 3px 3px; }
