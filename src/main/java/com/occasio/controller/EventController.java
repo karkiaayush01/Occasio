@@ -44,6 +44,11 @@ public class EventController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login?error=sessionExpired");
             return;
         }
+        
+        if(action==null || "".equals(action)) {
+        	request.getRequestDispatcher("/WEB-INF/pages/eventdetails.jsp").forward(request, response);
+        	return;
+        }
 
 		if ("fetchForEdit".equals(action)) {
 			try {
