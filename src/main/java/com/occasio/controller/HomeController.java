@@ -43,8 +43,8 @@ public class HomeController extends HttpServlet {
 		request.setAttribute("userPhoneNumber", user.getPhoneNumber());
 		request.setAttribute("userProfileImgUrl", user.getProfilePicturePath());
 		
-		ArrayList<EventModel> userEvents = eventService.getEventsByUser(user.getUserId());
-		request.setAttribute("userEvents", userEvents);
+		ArrayList<EventModel> ongoingEvents = eventService.getOngoingEvents(user.getUserId(), user.getOrgId());
+		request.setAttribute("ongoingEvents", ongoingEvents);
 		
 		request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
 	}

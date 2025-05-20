@@ -415,44 +415,58 @@ body{
 	font-size: 12px;
 }
 
-.event-card-interested{
-	display: flex;
-	padding: 4px 0px;
+.event-card-interested {
+  display: flex;
+  padding: 4px 0px;
+  justify-content: space-between;
 }
 
-.interested-counts{
-	display: flex;
-	align-items: center;
-	position: relative;
+.interested-counts {
+  display: flex;
+  align-items: center;
 }
 
-.interested-user-images{
-	width: 100px; 
-	display: flex; 
-	align-items: center;
+.interested-user-images {
+  position: relative;
+  height: 28px;
+  /* Use a spacer width based on max number of images possible */
+  width: 64px; /* 28px first image + 18px second image + 18px third image */
+  min-width: 64px;
+  margin-right: 4px;
 }
 
-.interested-user-images img{
-	background: rgba(217, 217, 217, 1);
-	border-radius: 50%;
-	width: 28px;
-	height: 28px;
-	border: 2px solid white;
-	z-index: 10;
+.interested-user-images img {
+  background: rgba(217, 217, 217, 1);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border: 2px solid white;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
 }
 
-.total-interests{
-	font-size: 10px;
-	font-family: 'Poppins-Regular';
+.interested-user-1 {
+  left: 0;
+  z-index: 3;
 }
 
-.interested-user-2{
-	position: absolute;
-	left: 18px;
+.interested-user-2 {
+  left: 18px;
+  z-index: 2;
+}
+
+.interested-user-3 {
+  left: 36px;
+  z-index: 1;
+}
+
+.total-interests {
+  font-size: 10px;
+  font-family: 'Poppins-Regular';
 }
 
 .interested-user-3{
-	position: absolute;
 	left: 36px;
 }
 
@@ -509,6 +523,7 @@ body{
 	border-top-left-radius: 12px;
 	border-top-right-radius: 12px;
 	background: rgba(225, 225, 225, 1);
+	object-fit: cover;
 }
 
 .ongoing-events-card-details{
