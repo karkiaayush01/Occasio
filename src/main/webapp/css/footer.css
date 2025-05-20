@@ -1,0 +1,69 @@
+.footer-main{
+    background-color: #F6F6F6;
+    
+}
+.footer-content{
+    max-width: 75%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+.footer-occasio{
+    font-size: 32px;
+    color: #F65E2C;
+    font-family: Poppins;
+    
+    
+}
+.footer-text{
+    font-size: 32px;
+    font-weight: 500;
+    font-family: Poppins;
+}
+.footer-mail{
+    padding-top: 15px;
+}
+.footer-mail-content{
+    font-size:14px;
+    font-family: Poppins;
+    
+}
+.footer-heading{
+    
+    width: 250px;
+}
+
+.footer-nav{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.nav-button1{
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-family: Poppins-Regular;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+.nav-button1:hover{
+    color: rgba(246, 94, 44, 1);
+    text-decoration: underline;
+}
+.footer-student-name{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    font-size: 18px;
+    font-family: Poppins-Regular;
+}
+
+.copyright{
+    font-family: Poppins;
+    margin-top: 50px;
+}

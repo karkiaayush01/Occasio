@@ -173,6 +173,11 @@ body::-webkit-scrollbar {
 	border-radius: 50%;
 	display: none;
 	object-fit: cover;
+	z-index: 10;
+}
+
+.camera-icon{
+	z-index: 0;
 }
 
 .profile-circle{

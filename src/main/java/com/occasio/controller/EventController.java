@@ -81,12 +81,12 @@ public class EventController extends HttpServlet {
 			// If fetch was successful, repopulate necessary home attributes and forward
 			System.out.println("Repopulating home attributes before forwarding.");
 			populateHomeAttributes(request);
-			request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/pages/myEvents.jsp").forward(request, response);
 
 		} else {
 			System.out.println("GET request to /event with invalid or missing action: " + action);
 			// Redirect to home or show an error page
-			response.sendRedirect(request.getContextPath() + "/home?error=invalidAction");
+			response.sendRedirect(request.getContextPath() + "/myEvents?error=invalidAction");
 		}
 	}
 
@@ -166,7 +166,7 @@ public class EventController extends HttpServlet {
 
 		if (addEventResult.startsWith("Successfully")) {
 			System.out.println("Added event successfully");
-			response.sendRedirect(request.getContextPath() + "/home?eventAdd=success");
+			response.sendRedirect(request.getContextPath() + "/myEvents?eventAdd=success");
 		} else {
 			System.err.println("Failed to add event: " + addEventResult);
 			redirectToHomeWithError(request, response, addEventResult); // Pass service error message
@@ -260,7 +260,7 @@ public class EventController extends HttpServlet {
 
 		if (updateResult.startsWith("Successfully")) {
 			System.out.println("Updated event successfully");
-			response.sendRedirect(request.getContextPath() + "/home?eventUpdate=success");
+			response.sendRedirect(request.getContextPath() + "/myEvents?eventUpdate=success");
 		} else {
 			System.err.println("Failed to update event: " + updateResult);
 			 redirectToHomeWithError(request, response, updateResult, eventId); // Pass service error message
@@ -303,7 +303,7 @@ public class EventController extends HttpServlet {
 
 	private void redirectToHomeWithError(HttpServletRequest request, HttpServletResponse response, String errorMessage, int eventId) throws IOException {
 		String encodedError = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
-		String redirectUrl = request.getContextPath() + "/home?error=" + encodedError;
+		String redirectUrl = request.getContextPath() + "/myEvents?error=" + encodedError;
 		 if (eventId > 0) {
 			 // If edit failed, add parameter to potentially re-open edit form with error later
 			 // The JSP's DOMContentLoaded needs to check for 'error' and 'failedEventId'

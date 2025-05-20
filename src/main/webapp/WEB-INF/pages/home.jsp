@@ -12,6 +12,9 @@
 		<!-- Set contextpath variable for reuse -->
 		<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 		<link rel="stylesheet" href="${contextPath}/css/home.css?v=${System.currentTimeMillis()}" />
+		<link rel="stylesheet" href="${contextPath}/css/logout.css?v=${System.currentTimeMillis()}" />
+		<link rel="stylesheet" href="${contextPath}/css/footer.css?v=${System.currentTimeMillis()}" />
+		<link rel="stylesheet" href="${contextPath}/css/updateProfile.css?v=${System.currentTimeMillis()}" />
 	</head>
 
 	<body>
@@ -64,7 +67,7 @@
 				</div>
 			</section>
 			
-			<div class="scroll-marker" id="#my-events" style="height: 1px; margin: 0;"></div>
+			
 			<div class = "my-events-landing">
 				<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
 					<h1 class="my-events-landing-header">Organize. Engage. Enjoy.</h1>
@@ -73,9 +76,9 @@
 					</svg>
 					<p style="text-align: center; max-width: 580px; font-family: Poppins-Regular;">Ready to host your own event?</p>
 					<p style="text-align: center; max-width: 580px; font-family: Poppins-Regular; margin-bottom: 30px;">Create and manage your events with ease. Invite others, track participation, and stay organized all with Occasio</p>
-					<button class="my-events-landing-redirect-button">
+					<a class="my-events-landing-redirect-button" href="${contextPath}/myEvents">
 						My Events
-					</button>
+					</a>
 				</div>
 			</div>
 			
@@ -90,59 +93,6 @@
 					<input class="search-bar-input" type="text" placeholder="Search for college events"/>
 				</div>	
 			</form>
-			
-			<section class="user-events">
-				<h3 class="event-section-title">My Events</h3>
-				<div class="events-actions">
-					<button class="events-actions-add" onclick="toggleAddEventsForm()">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-						<span class="events-actions-add-text">Add New Event</span>
-					</button>
-				</div>
-				
-				<div class="events-card-container">
-					<c:forEach var="event" items="${userEvents}">
-						<div class="user-events-card">
-							<img src="${contextPath}/${event.imagePath}" class="user-events-cover"/>
-							<div class="user-events-card-details">
-								<div class="user-events-card-details-title">
-									<h4 class="user-events-card-details-title-name" style="font-size: 16px;">${event.name}</h4>
-									<span class="view-event-details-link">View Details</span>
-								</div>
-								<div class="user-event-card-details-info">
-									<p class="user-event-card-details-info-child">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-										<span>${event.startDate} - ${event.endDate}</span>
-									</p>
-									<p class="user-event-card-details-info-child">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-										<span style="max-width: 180px; overflow: hidden; text-overflow: ellipsis;">${event.location}</span>
-									</p>
-								</div>
-								<div class="event-card-interested">
-									<div class="interested-counts">
-										<div class="interested-user-images">
-											<img src="" class="interested-user-1">
-											<img src="" class="interested-user-2">
-											<img src="" class="interested-user-3">
-										</div>
-										<div class="total-interests">+20 others are interested</div>
-									</div>
-									<div class="">
-										<button class="edit-event-button" onclick="window.location.href='${contextPath}/event?action=fetchForEdit&eventId=${event.id}'">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
-											<span>Edit Event</span>
-										</button>
-									</div>
-								</div>
-							</div>
-							<!-- Add user event card here -->
-						</div>
-					</c:forEach>
-					
-					
-				</div>
-			</section>
 			
 			<section class="ongoing-events">
 				<h3 class="event-section-title">Ongoing Events</h3>
@@ -317,177 +267,6 @@
 				</div>
 			</div>
 			
-			<div class="add-event-overlay">
-				<div class="add-event-overlay-menu">
-					<button class="exit-add-event-overlay-button" onclick="toggleAddEventsForm()">
-						<svg width="14" height="24" viewBox="0 0 14 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd" clip-rule="evenodd" d="M4.2074 12.0001L13.6354 21.4281L11.7501 23.3134L1.3794 12.9428C1.12943 12.6927 0.989014 12.3537 0.989014 12.0001C0.989014 11.6465 1.12943 11.3075 1.3794 11.0574L11.7501 0.686768L13.6354 2.5721L4.2074 12.0001Z" fill="black"/>
-						</svg>
-						<span class="exit-add-event-overlay-button-text">Back</span>
-					</button>
-					
-					<h2 class="add-event-header">Make a new Event</h2>
-					<form class="add-event-form" action="${contextPath}/event" method="post" enctype="multipart/form-data">	
-						<input type="hidden" name="method" value="ADD" />
-						<input type="hidden" name="user_id" value="${userId}" />
-						
-						<input type = "hidden" name="image-change" id="add-image-changed-flag" value="false" />
-						<input name="event-cover" type="file" style="display: none" id="add-event-image-uploader" onchange="handleFileChange(event, 'add')" accept="image/*"/>
-						<div class="add-event-cover-image-area" onclick="triggerAddImageUploader()">
-							<div class="add-event-upload-image-controls">
-								<svg class="add-event-upload-icon" viewBox="0 0 55 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M27.5625 15C34.75 15 40.5 20.75 40.5 27.9375C40.5 35.125 34.75 40.875 27.5625 40.875C20.375 40.875 14.625 35.125 14.625 27.9375C14.625 20.75 20.375 15 27.5625 15ZM27.5625 17.875C24.8938 17.875 22.3343 18.9352 20.4472 20.8222C18.5602 22.7093 17.5 25.2688 17.5 27.9375C17.5 30.6062 18.5602 33.1657 20.4472 35.0528C22.3343 36.9398 24.8938 38 27.5625 38C30.2312 38 32.7907 36.9398 34.6778 35.0528C36.5648 33.1657 37.625 30.6062 37.625 27.9375C37.625 25.2688 36.5648 22.7093 34.6778 20.8222C32.7907 18.9352 30.2312 17.875 27.5625 17.875ZM8.875 6.375H14.625L20.375 0.625H34.75L40.5 6.375H46.25C48.5375 6.375 50.7313 7.2837 52.3488 8.9012C53.9663 10.5187 54.875 12.7125 54.875 15V40.875C54.875 43.1625 53.9663 45.3563 52.3488 46.9738C50.7313 48.5913 48.5375 49.5 46.25 49.5H8.875C6.58751 49.5 4.39371 48.5913 2.7762 46.9738C1.1587 45.3563 0.25 43.1625 0.25 40.875V15C0.25 12.7125 1.1587 10.5187 2.7762 8.9012C4.39371 7.2837 6.58751 6.375 8.875 6.375ZM21.5538 3.5L15.8038 9.25H8.875C7.35001 9.25 5.88747 9.8558 4.80914 10.9341C3.7308 12.0125 3.125 13.475 3.125 15V40.875C3.125 42.4 3.7308 43.8625 4.80914 44.9409C5.88747 46.0192 7.35001 46.625 8.875 46.625H46.25C47.775 46.625 49.2375 46.0192 50.3159 44.9409C51.3942 43.8625 52 42.4 52 40.875V15C52 13.475 51.3942 12.0125 50.3159 10.9341C49.2375 9.8558 47.775 9.25 46.25 9.25H39.3213L33.5713 3.5H21.5538Z" fill="#F65E2C"/>
-								</svg>
-								<p>Upload a cover image</p>
-							</div>
-							<button type="button" class="add-event-image-remove" onclick="removeAddedImage(event)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(246, 94, 44, 1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-							</button>
-							<img class="add-event-cover-image" src="${contextPath}/resources/images/event-default.png"/>
-						</div>
-						
-						<div class="add-event-fields">
-							<div class="add-event-field">
-								<label for="event-title" class="add-event-field-title">Event Title</label>
-								<input type="text" name="event-title" class="add-event-field-input" placeholder="e.g. Aspire 2025"/>
-							</div>
-							
-							<div class="add-event-field">
-								<label class="add-event-field-title">Event Duration</label>
-								<div class="add-event-date-input-fields">
-									<div class="date-input-field">
-										<label for="start-date" class="date-input-label">From:</label>
-										<input type="date" name="start-date" class="add-event-date-field-input"/>
-									</div>
-									<div class="date-input-field">
-										<label for="end-date" class="date-input-label">To:</label>
-										<input name="end-date" type="date" class="add-event-date-field-input"/>
-									</div>
-								</div>
-							</div>
-							
-							<div class="add-event-field">
-								<label for="event-location" class="add-event-field-title">Event Location</label>
-								<input name="event-location" type="text" class="add-event-field-input" placeholder="e.g. Brit Cafe"/>
-							</div>
-							
-							<div class="add-event-field">
-								<label for="sponsor-name" class="add-event-field-title">Sponsors Name (if any)</label>
-								<input name="sponsor-name" type="text" class="add-event-field-input" placeholder="e.g. Restaurant"/>
-							</div>
-							
-							<div class="add-event-field">
-								<label for="sponsor-contact" class="add-event-field-title">Sponsors Contact (if any)</label>
-								<input name="sponsor-contact" type="text" class="add-event-field-input" placeholder="e.g. Restaurant Contact"/>
-							</div>
-							
-							<div class="add-event-field">
-								<label for="sponsor-email" class="add-event-field-title">Sponsors Email (if any)</label>
-								<input name="sponsor-email" type="text" class="add-event-field-input" placeholder="e.g. Restaurant@gmail.com"/>
-							</div>
-							
-							<div class="add-event-description-field">
-								<label for="event-description" class="add-event-field-title">Event Description</label>
-								<textarea name="event-description" class="add-event-description-field-input" placeholder="Maximum 100 words"></textarea>
-							</div>
-						</div>
-						
-						<p class="add-event-notice">*This event must be accepted by the admin to be seen in the home page.</p>
-						
-						<button type="submit" class="confirm-event-submission">Add New Event</button>
-					</form>
-				</div>
-			</div>
-			
-			            <div class="edit-event-overlay">
-                <div class="edit-event-overlay-menu">
-                    <button class="exit-edit-event-overlay-button" onclick="toggleEditEventsForm()">
-                        <%-- ... Back button svg ... --%>
-                        <span class="exit-edit-event-overlay-button-text">Back</span>
-                    </button>
-
-                    <h2 class="edit-event-header">Edit Event</h2>
-                    <form class="edit-event-form" action="${contextPath}/event" method="post" enctype="multipart/form-data">
-                        <%-- Hidden fields for method and event ID --%>
-                        <input type="hidden" name="method" value="EDIT" />
-                        <input type="hidden" name="eventId" value="${eventToEdit.id}"> <%-- Get ID from model --%>
-
-                         <%-- Hidden field to track image changes --%>
-                        <input type="hidden" name="image-change" id="edit-image-changed-flag" value="false">
-
-                        <%-- File input for image --%>
-                        <input name="event-cover" type="file" style="display: none" id="edit-event-image-uploader" onchange="handleFileChange(event, 'edit')" accept="image/*"/>
-
-                         <%-- Image Area (added data-original-src) --%>
-                        <div class="edit-event-cover-image-area" onclick="triggerEditImageUploader()">
-                            <div class="edit-event-upload-image-controls" style="display: flex;"> <%-- Start visible --%>
-                                <%-- ... Upload icon svg ... --%>
-                                <p>Upload a cover image</p>
-                            </div>
-                            <button type="button" class="edit-event-image-remove" style="display: none;" onclick="removeEditedImage(event)">
-                                <%-- ... Trash icon svg ... --%>
-                            </button>
-                             <%-- Image tag with dynamic src and data-original-src --%>
-                            <img class="edit-event-cover-image" style="display: none;" <%-- Start hidden --%>
-                                 src="${contextPath}/${not empty eventToEdit.imagePath ? eventToEdit.imagePath : 'resources/images/event-default.png'}"
-                                 data-original-src="${contextPath}/${not empty eventToEdit.imagePath ? eventToEdit.imagePath : 'resources/images/event-default.png'}"/>
-                        </div>
-
-                        <%-- Input Fields (added value attributes) --%>
-                        <div class="edit-event-fields">
-                            <div class="edit-event-field">
-                                <label class="edit-event-field-title">Event Title</label>
-                                <input name="event-title" type="text" class="edit-event-field-input" placeholder="e.g. Aspire 2025" value="<c:out value='${eventToEdit.name}'/>"/>
-                            </div>
-
-                            <div class="edit-event-field">
-                                <label class="edit-event-field-title">Event Duration</label>
-                                <div class="edit-event-date-input-fields">
-                                    <div class="edit-date-input-field">
-                                        <label class="edit-date-input-label">From:</label>
-                                         <%-- NOTE: value for date needs yyyy-MM-dd format --%>
-                                        <input name="start-date" type="date" class="edit-event-date-field-input" value="${eventToEdit.startDate}"/>
-                                    </div>
-                                    <div class="edit-date-input-field">
-                                        <label class="edit-date-input-label">To:</label>
-                                        <input name="end-date" type="date" class="edit-event-date-field-input" value="${eventToEdit.endDate}"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="edit-event-field">
-                                <label class="edit-event-field-title">Event Location</label>
-                                <input name="event-location" type="text" class="edit-event-field-input" placeholder="e.g. Brit Cafe" value="<c:out value='${eventToEdit.location}'/>"/>
-                            </div>
-
-                             <%-- Sponsor fields with pre-population --%>
-                            <div class="edit-event-field">
-                                <label for="sponsor-name" class="edit-event-field-title">Sponsors Name (if any)</label>
-                                <input name="sponsor-name" type="text" class="edit-event-field-input" placeholder="e.g. Restaurant" value="<c:out value='${eventToEdit.sponsorName}'/>"/>
-                            </div>
-
-                            <div class="edit-event-field">
-                                <label for="sponsor-contact" class="edit-event-field-title">Sponsors Contact (if any)</label>
-                                <input name="sponsor-contact" type="text" class="edit-event-field-input" placeholder="e.g. Restaurant Contact" value="<c:out value='${eventToEdit.sponsorContact}'/>"/>
-                            </div>
-
-                            <div class="edit-event-field">
-                                <label for="sponsor-email" class="edit-event-field-title">Sponsors Email (if any)</label>
-                                <input name="sponsor-email" type="email" class="edit-event-field-input" placeholder="e.g. Restaurant@gmail.com" value="<c:out value='${eventToEdit.sponsorEmail}'/>"/> <%-- Changed type to email --%>
-                            </div>
-
-                            <div class="edit-event-description-field">
-                                <label class="edit-event-field-title">Event Description</label>
-                                <textarea name="event-description" class="edit-event-description-field-input" placeholder="Maximum 100 words"><c:out value='${eventToEdit.description}'/></textarea>
-                            </div>
-                        </div>
-
-                        <p class="edit-event-notice">*This information will be modified for everyone after the edit.</p>
-                        <button type="submit" class="confirm-edit-event-submission">Save Edit</button>
-                    </form>
-                </div>
-            </div>
-			
 			<div class="logout-overlay" onclick="handleLogoutOverlayClick(event)">
 				<div class="logout-container">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="logout-warning-icon" xmlns="http://www.w3.org/2000/svg">
@@ -576,6 +355,38 @@
                 </div>
             </div>
 		</main>
+		
+		<footer class = " footer-main">
+           <div class = footer-content>
+               <div class = "footer-heading">
+                   <span class = " footer-occasio"> Occasio</span>
+                   <p class= footer-text>Organize.</p>
+                   <p class= footer-text>Engage. Enjoy.</p>
+                   <p class = footer-text>With Occasio.</p>
+                   <div class = footer-mail>
+                       <p class = footer-mail-content>Occasio@gmail.com</p>
+                       <p class = footer-mail-content>Islington,Nepal</p>
+                   </div>
+               </div>
+               <div class = "footer-nav-main">
+                   <div class = "footer-nav">
+                       <a class= "nav-button1" href="${contextPath}/home">Home</a>
+                       <a class = "nav-button1" href="${contextPath}/myEvents">My Events</a>
+                       <a class = "nav-button1" href="${contextPath}/aboutUs">About Us</a>
+                       <p class= " copyright"> @Copyright2025. All Rights Reserved</p>
+                   </div>
+               </div>
+               <div class = footer-student-name-main>
+                   <div class = footer-student-name>
+                       <p class = "name-of-student">Shreejesh Pathak</p>
+                       <p class = "name-of-student">Srijan Shrestha</p>
+                       <p class = "name-of-student">Aayush Karki</p>
+                       <p class = "name-of-student">Arpit Neupane</p>
+                       <p class = "name-of-student">Paras Kumar Yadav</p>
+                   </div>
+               </div>
+           </div>
+		</footer>
 	</body>
 	
 	<script>

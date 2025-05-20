@@ -1,0 +1,912 @@
+@import url('./globals.css');
+
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background: rgb(240, 240, 240, 1);
+}
+
+.main{
+	padding-left: 82px;
+	padding-right: 82px; 
+	position: relative;
+	background: rgb(240, 240, 240, 1);
+}
+
+.my-events-nav{
+	padding-top: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 94px;
+	gap: 60px;
+	margin-bottom: 16px;
+	position: sticky;
+	top: 0;
+	background: rgb(240, 240, 240, 1);
+	z-index: 30;
+}
+
+.nav-title{
+	font-size: 40px; 
+	color: rgba(246, 94, 44, 1);
+}
+
+.nav-buttonbar{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 1 1 0%;
+	max-width: 624px;
+}
+
+.nav-button{
+	background: none;
+	border: none;
+	font-size: 20px;
+	font-family: Poppins;
+	cursor: pointer;
+	text-decoration: none;
+	color: black;
+}
+
+.nav-button:hover{
+	color: rgba(246, 94, 44, 1);
+	text-decoration: underline;
+}
+
+.nav-user-section, .mobile-nav-user-section{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.nav-user-profile-picture{
+	background: rgba(217, 217, 217, 1);
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+}
+
+.nav-user-profile-picture-img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.nav-user-details-name{
+	font-size: 20px;
+}
+
+.nav-user-profile-actions{
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.logout-button{
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: rgba(239, 51, 51, 1);
+}
+
+.logout-button:hover{
+	text-decoration: underline;
+}
+
+.nav-user-details-view-prof-button:hover{
+	font-size: 13px; 
+	color: rgba(37, 81, 227, 1); 
+	font-family: 'Poppins';
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.mobile-nav-overlay{
+	display: none;
+	position: fixed;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.18);
+	top: 0;
+	left: 0;
+	z-index: 50;
+}
+
+.mobile-nav{
+	display: none;
+	position: relative;
+}
+
+.mobile-nav-button{
+	background: none;
+	cursor: pointer;
+	padding: 6px;
+	border-radius: 8px;
+	border: none;
+}
+
+.mobile-nav-button:hover{
+	background: #e5e7eb;
+}
+
+.mobile-nav-menu{
+	position: absolute;
+	width: 280px;
+	height: 320px;
+	background: white;
+	right: 32px;
+	top: 32px;
+	border-radius: 12px;
+	padding: 24px 0px;
+}
+
+.mobile-nav-close-button{
+	position: absolute; 
+	padding: 6px;
+	top: 8px;
+	right: 8px;
+	border: none;
+	background: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.mobile-nav-close-button:hover{
+	background: #e5e7eb;
+}
+
+.mobile-nav-menu-lists{
+	display: flex; 
+	flex-direction: column;
+	gap: 16px;
+	width: 92px;
+	margin-left: 28px;
+	margin-bottom: 24px;
+}
+
+.mobile-nav-menu-button{
+	height: 32px;
+	text-align: left;
+	font-family: Poppins-Regular;
+	font-size: 18px;
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+.mobile-nav-menu-button:hover{
+	text-decoration: underline;
+	color: rgba(246, 94, 44, 1); 
+}
+
+.mobile-nav-user-section{
+	padding: 0px 12px;
+}
+
+.mobile-nav-user-details-name{
+	font-size: 16px;
+}
+
+
+
+.ongoing-events-card-large-container{
+	width: 100%;
+	display: flex;
+	overflow-x: auto;
+	gap: 32px;
+	scrollbar-width: none;
+  	-ms-overflow-style: none;
+}
+
+.ongoing-events-large-card{
+	width: 48%;
+	display: flex;
+	height: 296px;
+	border-radius: 6px;
+}
+
+.ongoing-events-large-cover{
+	height: 100%;
+	width: 48%;
+	object-fit: cover;
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+}
+
+.events-card-container{
+	width: 100%;
+	display: flex;
+	overflow-x: auto;
+	gap: 32px;
+	scrollbar-width: none;
+  	-ms-overflow-style: none;
+}
+
+.events-card-container::-webkit-scrollbar{
+	display: none;
+}
+
+.user-events, .ongoing-events, .upcoming-events{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 24px; 
+	margin-bottom: 32px;
+}
+
+.event-section-title{
+	font-size: 32px;
+	text-align: center;
+	font-family: Poppins-Regular;
+	margin-bottom: 40px;
+}
+
+.add-event-actions{
+	background: white;
+	height: 96px;
+	width: 420px;
+	display: flex;
+	padding: 20px 24px;
+	border-radius: 12px;
+	justify-content: space-between;
+}
+
+.add-event-actions-info{
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.personal-event-count{
+	background: rgba(255, 238, 232, 1);
+	color: rgba(246, 94, 44, 1);
+	border-radius: 16px; 
+	padding: 2px 8px;
+	font-size: 12px; 
+	font-family: Poppins;
+}
+
+.add-event-actions-help-text{
+	font-size: 14px;
+	color: rgba(102, 112, 133, 1);
+	font-family: Poppins;
+}
+
+.events-actions-add, .empty-user-events-add-event-button{
+	display: flex;
+	align-items: center;
+	padding: 8px 15px;
+	border-radius: 6px;
+	background: rgba(246, 94, 44, 1);
+	color: white;
+	border: none;
+	gap: 8px;
+	height: 48px;
+	font-size: 16px;
+	font-family: 'Poppins-Light';
+	cursor: pointer;
+}
+
+.events-actions-add:hover, .empty-user-events-add-event-button:hover{
+	background: rgba(220, 75, 30, 1);
+}
+
+.empty-user-events{
+	height: 60vh; 
+	display: flex;
+	flex-direction: column; 
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+}
+
+.empty-user-events-search-icon-container{
+	height: 48px;
+	width: 48px;
+	border-radius: 100%;
+	background: rgba(255, 238, 232, 1);
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+}
+
+.empty-user-events-text-details{
+	text-align: center;
+}
+
+.empty-user-events-text-details-title{
+	margin-bottom: 8px;
+}
+
+.empty-user-events-text-details-desc{
+	font-family: Poppins;
+	font-size: 14px; 
+	color: rgba(102, 112, 133, 1);
+	max-width: 348px;
+}
+
+.user-events-card{
+	display: flex;
+	width: 514px;
+	height: 184px;
+}
+
+
+.user-events-cover {
+  width: 220px;
+  min-width: 220px;
+  height: 100%;
+  background: rgba(200, 200, 200, 1);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.user-events-card-details{
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	background: rgba(225, 225, 225, 1);
+	border-top-right-radius: 12px;
+  	border-bottom-right-radius: 12px;
+	padding: 6px 12px 4px 8px;
+	overflow: hidden;
+}
+
+.user-events-card-details-title, .ongoing-events-card-details-title{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 6px 2px 6px 0px;
+}
+
+.user-events-card-details-title-name {
+	width: 180px;
+	word-wrap: no-wrap;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.view-event-details-link{
+	font-size: 12px;
+	color: rgba(37, 81, 227, 1);
+	font-family: 'Poppins';
+	cursor: pointer;
+}
+
+.view-event-details-link:hover{
+	text-decoration: underline;
+}
+
+.user-event-card-details-info, .ongoing-events-card-info, .upcoming-events-card-info{
+	display: flex;
+	flex-direction: column; 
+	gap: 4px;
+	padding: 2px 0px;
+}
+
+.user-event-card-details-info-child, .ongoing-events-card-info-child, .upcoming-events-card-info-child{
+	display: flex; 
+	align-items: center;
+	gap: 8px;
+	color: rgba(75, 85, 99, 1)
+}
+
+.user-event-card-details-info-child, .ongoing-events-card-info-child, .upcoming-events-card-info-child span{
+	font-family: 'Poppins-Regular';
+	font-size: 12px;
+}
+
+.user-event-card-details-status{
+	font-size: 12px;
+	background: rgb(100,223,101, 0.5);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	align-items: center;
+	border-radius: 15px;
+	padding: 0px 8px;
+	align-self: flex-start;
+}
+
+.user-event-card-details-status-badge-indicator{
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+}
+
+.user-event-card-details-status.pending{
+	background: rgb(254, 249, 195);
+	color: 	rgb(234, 179, 8);
+	
+	.user-event-card-details-status-badge-indicator{
+		background: rgb(234, 179, 8);
+	}
+}
+
+.user-event-card-details-status.approved{
+	background: rgb(220, 252, 231);
+	color: 	rgb(34, 197, 94);
+	
+	.user-event-card-details-status-badge-indicator{
+		background: rgb(34, 197, 94);
+	}
+}
+
+.user-event-card-details-status.rejected{
+	background: rgb(254, 226, 226);
+	color: 	rgb(239, 68, 68);
+	
+	.user-event-card-details-status-badge-indicator{
+		background: rgb(239, 68, 68);
+	}
+}
+
+.event-card-interested{
+	display: flex;
+	padding: 4px 0px;
+}
+
+.interested-counts-large{
+	display: flex;
+	align-items: center;
+	position: relative;
+	justify-content: flex-start;
+	gap: 4px;
+}
+
+.interested-counts{
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.interested-user-images-large{
+	width: 70px; 
+	display: flex; 
+	align-items: center;
+}
+
+.interested-user-images{
+	width: 100px; 
+	display: flex; 
+	align-items: center;
+}
+
+.interested-user-images-large img{
+	background: rgba(217, 217, 217, 1);
+	border-radius: 50%;
+	width: 28px;
+	height: 28px;
+	border: 2px solid white;
+	z-index: 10;
+}
+
+.interested-user-images img{
+	background: rgba(217, 217, 217, 1);
+	border-radius: 50%;
+	width: 28px;
+	height: 28px;
+	border: 2px solid white;
+	z-index: 10;
+}
+
+.total-interests{
+	font-size: 10px;
+	font-family: 'Poppins-Regular';
+}
+
+.interested-user-2{
+	position: absolute;
+	left: 18px;
+}
+
+.interested-user-3{
+	position: absolute;
+	left: 36px;
+}
+
+.edit-event-button, .show-interest-button, .interested-button{
+	display: flex;
+	padding: 2px 8px;
+	width: 120px;
+	height: 40px;
+	background: rgba(93, 146, 215, 1);
+	color: white;
+	border: none;
+	font-size: 14px;
+	font-family: Poppins-Regular;
+	border-radius: 6px;
+	gap: 8px;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+.show-interest-button{
+	background: rgba(246, 94, 44, 1);
+	font-size: 13px;
+	font-family: Poppins-Light;
+}
+
+.show-interest-button:hover{
+	background: rgba(220, 75, 30, 1);
+}
+
+.interested-button{
+	background: rgba(51, 112, 92, 1);
+}
+
+.interested-button:hover{
+	background: rgba(41, 92, 76, 1);
+}
+
+.edit-event-button:hover{
+	background: rgba(73, 126, 195, 1);
+}
+
+.ongoing-events-card{
+	width: 296px;
+	height: 320px;
+	display: flex;
+	flex-direction: column; 
+	gap: 0px;
+}
+
+.ongoing-events-cover{
+	width: 100%;
+	height: 152px;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	background: rgba(225, 225, 225, 1);
+}
+
+.ongoing-events-large-card-details{
+	background: rgba(225, 225, 225, 1);
+	padding: 8px 8px 12px 24px;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.ongoing-events-card-details{
+	background: rgba(225, 225, 225, 1);
+	padding: 8px 8px 12px 8px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+
+.upcoming-events-card{
+	padding: 12px;
+	background: rgba(225, 225, 225, 1);
+	border-radius: 12px;
+	display: flex;
+	width: 324px;
+	height: 148px;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.add-event-overlay, .edit-event-overlay{
+	visibility: hidden;
+	display: flex;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.18);
+	backdrop-filter: blur(1px);  
+	top: 0;
+	left: 0;
+	z-index: 50;
+}
+
+.add-event-overlay-menu, .edit-event-overlay-menu{
+	background: white;
+	width: 80%;
+	height: 90%;
+	border-radius: 12px;
+	position: relative;
+	display: flex;
+	flex-direction: column; 
+	padding: 44px;
+	gap: 32px;
+	align-items: center;
+	padding: 40px 0px 20px 0px;
+}
+
+.exit-add-event-overlay-button, .exit-edit-event-overlay-button{
+	position: absolute; 
+	top: 40px;
+	left: 40px;
+	display: flex;
+	align-items: center; 
+	gap: 8px;
+	background: none;
+	cursor: pointer;
+	border: none;
+	color: rgba(37, 81, 227, 1);
+	font-size: 18px;
+	font-family: Poppins-Regular;
+}
+
+.exit-add-event-overlay-button:hover, .exit-edit-event-overlay-button:hover{
+	text-decoration: underline;
+}
+
+.add-event-form, .edit-event-form{
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: center;
+	width: 90%;
+	overflow-y: hidden;
+	max-width: 800px;
+}
+
+.add-event-cover-image-area, .edit-event-cover-image-area{
+	height: 136px;
+	width: 380px;
+	border: 2px solid black;
+	border-radius: 12px;
+	cursor: pointer;
+	position: relative;
+}
+
+.add-event-upload-image-controls, .edit-event-upload-image-controls{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	gap: 20px;
+	height: 100%;
+	width: 100%;
+	border-radius: 12px;
+	color: rgba(125, 125, 125, 1);
+	font-family: Poppins-Regular;
+	padding: 20px 0px 12px 0px;
+	cursor: pointer;
+}
+
+.add-event-upload-image-controls:hover,  .edit-event-upload-image-controls:hover{
+	color: rgba(246, 94, 44, 1);
+}
+
+.add-event-cover-image, .edit-event-cover-image{
+	height: 100%;
+	width:  100%;
+	object-fit: cover;
+	display: none;
+	border-radius: 12px;
+}
+
+.add-event-image-remove, .edit-event-image-remove{
+	position: absolute;
+	border: none;
+	background: none;
+	border-radius: 6px;
+	padding: 2px;
+	top: 0px;
+	right: 0px;
+	cursor: pointer;
+	background: white;
+	border-top-right-radius: 12px;
+	display: none;
+}
+
+.add-event-image-remove:hover{
+	background: rgba(235,235,235,1);
+}
+
+.add-event-upload-icon, .edit-event-upload-icon{
+	width:55;
+	height:50;
+}
+
+.add-event-fields, .edit-event-fields{
+	display: flex;
+	flex-direction: row;
+	column-gap: 32px;
+  	row-gap: 16px;
+	width: 100%;
+	flex-wrap: wrap;
+	overflow-y: auto;
+	height: auto;
+	padding: 2px;
+	margin-bottom: -4px;
+	justify-content: space-between;
+}
+
+.add-event-field, .edit-event-field{
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 47%;
+	font-family: Poppins-Regular;
+}
+
+.add-event-field-input, .edit-event-field-input{
+	background: rgba(235, 235, 235, 1);
+	height: 48px;
+	border-radius: 6px; 
+	border: none;
+	padding: 0px 8px;
+	font-family: Poppins-Regular;
+}
+
+.add-event-date-input-fields, .edit-event-date-input-fields{
+	display: flex; 
+	gap: 16px;
+}
+
+.date-input-field, .edit-date-input-field{
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	width: 50%;
+}
+
+.date-input-label, .edit-date-input-label{
+	font-size: 12px;
+}
+
+.add-event-date-field-input, .edit-event-date-field-input{
+	background: rgba(235, 235, 235, 1);
+	height: 28px;
+	border-radius: 6px; 
+	border: none;
+	padding: 0px 8px;
+	font-family: Poppins-Regular;
+}
+
+.add-event-description-field, .edit-event-description-field{
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 100%;
+	font-family: Poppins-Regular;
+}
+
+.add-event-description-field-input, .edit-event-description-field-input{
+	background: rgba(235, 235, 235, 1);
+	height: 136px;
+	border-radius: 6px; 
+	border: none;
+	padding: 16px;
+	width: 100%;
+	resize: none;
+	font-family: Poppins-Regular;
+}
+
+.add-event-notice, .edit-event-notice{
+	align-self: flex-start;
+	font-family: Poppins;
+	font-size: 12px;
+}
+
+.confirm-event-submission, .confirm-edit-event-submission{
+	display: flex;
+	align-items: center;
+	padding: 8px 15px;
+	border-radius: 6px;
+	background: rgba(246, 94, 44, 1);
+	color: white;
+	border: none;
+	gap: 8px;
+	height: 48px;
+	font-size: 16px;
+	font-family: 'Poppins-Light';
+	cursor: pointer;
+}
+
+.confirm-event-submission:hover, .confirm-edit-event-submission:hover{
+	background: rgba(220, 75, 30, 1);
+}
+
+@media(max-width: 786px){
+	.main{
+		padding-left: 24px;
+		padding-right: 24px; 
+	}
+	
+	.nav-buttonbar, .nav-user-section{
+		display: none;
+	}
+	
+	
+	.mobile-nav{
+		display: block;
+	}
+	
+	.add-event-fields, .edit-event-fields{
+		display: flex;
+		flex-direction: column;
+	  	column-gap: 8px;
+  		row-gap: 8px;
+		width: auto;
+		flex-wrap: nowrap;
+		overflow-y: auto;
+		height: auto;
+		padding: 2px;
+		margin-bottom: -4px;
+		justify-content: space-between;
+		min-width: 380px;
+	}
+	
+	.add-event-field, .edit-event-field{
+		width: 100%;
+	}
+}
+
+@media(max-width: 480px){
+	
+	.add-event-header, .edit-event-header{
+		font-size: 16px;
+	}
+	
+	.add-event-fields, .edit-event-fields{
+		width: 90%;
+		min-width: 90%;
+	}
+	
+	.exit-add-event-overlay-button, .exit-edit-event-overlay-button{
+		top: 40px;
+		left: 24px;
+	} 
+	
+	.exit-add-event-overlay-button-text, .exit-edit-event-overlay-button-text{
+		display: none;
+	}
+	
+	.add-event-cover-image-area, .edit-event-cover-image-area{
+		height: 136px;
+		width: 240px;
+	}
+	
+	.add-event-upload-icon, .edit-event-upload-icon{
+		width:48;
+		height:48;
+	}
+	
+	.date-input-field, .edit-date-input-field{
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		width: 47%;
+	}
+	
+	.update-profile-container{
+		width: 100vw;
+	}
+	
+	.update-profile-form{
+		width: 90%;
+		overflow-y: auto;
+	}
+}
+
+

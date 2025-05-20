@@ -229,11 +229,16 @@
 			document.getElementById('image').click();
 		})
 	
-		document.querySelector(".add-label").addEventListener('click', function(){
-			document.getElementById('image').click();
-		})
+		const addLabel = document.querySelector(".add-label");
+		addLabel?.addEventListener('click', handleImageSelectorClick(event));
+		
+		function handleImageSelectorClick(e) {
+			e.stopPropagation();
+		  document.getElementById('image').click();
+		}
 	
 		function handlePictureChange(event) { // Removed 'type' parameter, wasn't used
+			event.stopPropagation();
 			const file = event.target.files[0];
 			if (file) {
 			  const reader = new FileReader();
