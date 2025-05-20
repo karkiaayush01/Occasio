@@ -1,0 +1,389 @@
+@import url('./globals.css');
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+body{
+	padding-top: 10px;
+}
+
+.main{
+	padding-left: 0px;
+	padding-right: 0px;
+	
+}
+.main-event{
+	max-width: 532px;
+	margin: auto;
+	margin-top: 22px;
+}
+.event-nav{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 84px;
+	gap: 60px;
+	margin-bottom: 16px;
+	
+}
+.nav-user-section{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin-right: 97px;
+}
+
+.nav-user-profile-picture{
+	background: rgba(217, 217, 217, 1);
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	
+}
+
+.nav-user-details-name{
+	font-size: 20px;
+}
+
+.nav-user-profile-actions{
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.logout-button{
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: rgba(239, 51, 51, 1);
+}
+
+.logout-button:hover{
+	text-decoration: underline;
+}
+.nav-user-details-view-prof-button:hover{
+	font-size: 13px; 
+	color: rgba(37, 81, 227, 1); 
+	font-family: 'Poppins';
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+  .back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 400;
+    background: none;
+    border: none;
+    cursor: pointer;
+	margin-left: 80px;
+  }
+  .event-details-text{
+  	display: flex;
+ 	align-items: center;
+  	justify-content: space-between;
+  	gap: 0px 40px;
+  	margin-top: 3px;
+  	
+  }
+  .event-picture{
+    border-radius: 6px;
+    object-fit: contain;
+    align-items: center;
+    width : 100%;
+  }
+  .events-cover{
+  	width: 100%;
+  	object-fit: contain;
+  }
+  .event-interest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+}
+  .event-card-interested{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 6px 10px;
+	gap: 20px 20px;
+    
+}
+.event-title-div{
+	margin-right: auto;
+	
+}
+.event-title{
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 32px;
+}
+.interested-counts{
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	position: relative;
+}
+
+.interested-user-images{
+	width: 100px; 
+	display: flex; 
+	align-items: center;
+}
+
+.interested-user-images img{
+	background: rgba(217, 217, 217, 1);
+	border-radius: 50%;
+	width: 28px;
+	height: 28px;
+	border: 2px solid white;
+	z-index: 10;
+	margin-left:35px;
+}
+
+.total-interests{
+	font-size: 10px;
+	font-family: 'Poppins-Regular';
+	color: rgba(0, 0, 0, 1);
+    width: 70px;
+    text-align:left;
+}
+.interested-user-1{
+	position:absolute;
+	
+}
+.interested-user-2{
+	position: absolute;
+	left: 18px;
+}
+
+.interested-user-3{
+	position: absolute;
+	left: 36px;
+}
+
+.show-interest-button{
+	background: rgba(246, 94, 44, 1);
+	font-size: 13px;
+	font-family: Poppins-Light;
+	display: flex;
+	padding: 2px 8px;
+	width: 130px;
+	height: 40px;
+	color: white;
+	border: none;
+	font-size: 14px;
+	border-radius: 6px;
+	gap: 8px;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+}
+.show-interest-button:hover{
+	background: rgba(220, 75, 30, 1);
+}
+.details-section{
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: left;
+    gap: 20px;
+    margin-top: 15px;
+   
+
+}
+.details-event-div{
+	margin-right: auto;
+}
+.details-event{
+	font-size: 20px;
+    font-weight: 400;
+}
+.detail-item{
+	margin-top: 8px;
+}
+.detail-label{
+	display: flex;
+	gap: 10px;
+}
+.venue-text{
+	margin-right: 15px;
+}
+
+.calender-label{
+	display: flex;
+	gap: 14px;
+}
+.date-text{
+	margin-right: 10px;
+}
+.date-num{
+	margin-left: 10px;
+}
+.event-date{
+	margin-top: 8px;
+}
+.event-time{
+	margin-top: 8px;
+}
+.time-label{
+	display: flex;
+	gap: 14px;
+}
+.time-text{
+	margin-right: 10px;
+}
+.time-num{
+	margin-left: 10px;
+}
+.description-section{
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: left;
+    gap: 20px;
+    padding-top: 16px;
+   
+
+}
+.desc-event-div{
+	margin-right: auto;
+	padding: 16px;
+	padding-left: 0px;
+}
+.desc-event{
+	font-size: 20px;
+    font-weight: 400;
+}
+.event-desc{
+	background-color: #EBEBEB;
+	border-radius: 12px;
+	
+}
+.event-desc-para{
+	padding: 16px;
+	padding-top: 8px;
+}
+.organized-section{
+	flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: left;
+    gap: 20px;
+    padding-top: 16px;
+}
+.org-event{
+	display: flex;
+	gap: 80px;
+	padding-top: 8px;
+}
+.org-event-sponsor{
+	display: flex;
+	gap: 77px;
+	padding-top: 8px;
+}
+.org-event-email{
+	display: flex;
+	gap: 64px;
+	padding-top: 8px;
+}
+.org-event-contact{
+	display: flex;
+	gap: 56px;
+	padding-top: 8px;
+}
+.logout-overlay{
+	visibility: hidden;
+	display: flex;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.18);
+	top: 0;
+	left: 0;
+	z-index: 50;
+}
+.logout-container{
+	background: rgba(246, 246, 246, 1);
+	width: 400px;
+	height: 480px;
+	border-radius: 6px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 16px 24px 40px 24px;
+}
+
+.logout-warning-icon{
+	margin-left: 356px;
+}
+
+.logout-items{
+	width: 276px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin-top: auto;
+}
+
+.logout-image{
+	width: 100%;
+	height: 100%;
+}
+
+.logout-confirm{
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.logout-confirm-text{
+	font-family: 'Poppins-Regular';
+}
+
+.logout-actions{
+	width: 100%;
+	display: flex;
+	gap: 32px;
+	justify-content: space-between;
+}
+
+.logout-actions button{
+	width: 120px;
+	height: 40px;
+	border-radius: 6px;
+	color: white;
+	border: none;
+	font-family: Poppins;
+	cursor: pointer;
+}
+
+.logout-action-cancel{
+	background: rgba(193, 193, 193, 1);
+}
+
+.logout-action-cancel:hover{
+	background: rgba(160, 160, 160, 1);
+}
+
+.logout-action-confirm{
+	background: rgba(239, 51, 51, 1);
+}
+
+.logout-action-confirm:hover{
+	background: rgba(200, 30, 30, 1);
+}

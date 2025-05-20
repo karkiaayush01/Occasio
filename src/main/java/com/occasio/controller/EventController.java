@@ -44,6 +44,11 @@ public class EventController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login?error=sessionExpired");
             return;
         }
+        
+        if(action==null || "".equals(action)) {
+        	request.getRequestDispatcher("/WEB-INF/pages/eventdetails.jsp").forward(request, response);
+        	return;
+        }
 
 		if ("fetchForEdit".equals(action)) {
 			try {
@@ -81,12 +86,12 @@ public class EventController extends HttpServlet {
 			// If fetch was successful, repopulate necessary home attributes and forward
 			System.out.println("Repopulating home attributes before forwarding.");
 			populateHomeAttributes(request);
-			request.getRequestDispatcher("/WEB-INF/pages/myEvents.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
 
 		} else {
 			System.out.println("GET request to /event with invalid or missing action: " + action);
 			// Redirect to home or show an error page
-			response.sendRedirect(request.getContextPath() + "/myEvents?error=invalidAction");
+			response.sendRedirect(request.getContextPath() + "/home?error=invalidAction");
 		}
 	}
 
@@ -112,8 +117,37 @@ public class EventController extends HttpServlet {
 		System.out.println("Handling Add Event for User ID: " + currentUser.getUserId());
 
 		String eventName = request.getParameter("event-title");
+		String method = request.getParameter("method");
+        UserModel currentUser = (UserModel) SessionUtil.getAttribute(request, "user"); // Get current user
+
+         // Ensure user is logged in for any event modification
+        if (currentUser == null) {
+            response.sendRedirect(request.getContextPath() + "/login?error=sessionExpired");
+            return;
+        }
+
+		if ("EDIT".equalsIgnoreCase(method)) {
+			handleEditEvent(request, response, currentUser); // Pass user for auth check maybe later
+		} else {
+			handleAddEvent(request, response, currentUser);
+		}
+	}
+
+	private void handleAddEvent(HttpServletRequest request, HttpServletResponse response, UserModel currentUser) throws ServletException, IOException {
+		System.out.println("Handling Add Event for User ID: " + currentUser.getUserId());
+
+		String eventName = request.getParameter("event-title");
 		String startDateStr = request.getParameter("start-date");
 		String endDateStr = request.getParameter("end-date");
+		String eventLocation = request.getParameter("event-location");
+		String eventDescription = request.getParameter("event-description");
+//		String restriction = request.getParameter("restriction");
+		String imageChanged = request.getParameter("image-change");
+
+		String sponsorName = request.getParameter("sponsor-name");
+		String sponsorContact = request.getParameter("sponsor-contact");
+		String sponsorEmail = request.getParameter("sponsor-email");
+
 		String eventLocation = request.getParameter("event-location");
 		String eventDescription = request.getParameter("event-description");
 //		String restriction = request.getParameter("restriction");
