@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Occasio - Admin Dashboard</title>
+		<title>Occasio - Super Admin Dashboard</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<!-- Set contextpath variable for reuse -->
@@ -23,10 +23,8 @@
 				
 				<div class="side-bar-sub-menu">
 					<div class="side-bar-sub-menu-items">
-						<button id="statisticTabButton" class = "side-bar-sub-menu-items-item active" onClick="window.location.href='${contextPath}/dashboard'">Dashboard</button>
-						<button id="userManagementTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/userManagement'">User Management</button>
-						<button id="eventRequestsTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/eventRequest'">Event Requests</button>
-						<button id="eventRequestsTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/home'">Go To Application</button>
+						<button id="statisticTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/superDashboard'">Super Dashboard</button>
+						<button id="userManagementTabButton" class = "side-bar-sub-menu-items-item active" onClick="window.location.href='${contextPath}/organizations'">Organizations</button>
 					</div>
 				</div>
 			</div>
@@ -57,135 +55,56 @@
 					</div>
 				</div>
 				
-				<div class = "statistics-tab">
-					<h2 style="margin-bottom: 32px;">Dashboard</h2>
-					<div class = "stats-list">
-						<div class="stat-card">
-							<div class="stat-card-style-bar"></div>
-							<div class="stat-card-data-container">
-								<div class="stat-card-data">
-									<p class="stat-card-data-title">Ongoing Events</p>
-									<h3 class="stat-card-data-number">126</h3>
-								</div>
-							</div>
-						</div>
-						<div class="stat-card">
-							<div class="stat-card-style-bar"></div>
-							<div class="stat-card-data-container">
-								<div class="stat-card-data">
-									<p class="stat-card-data-title">Upcoming Events</p>
-									<h3 class="stat-card-data-number">13</h3>
-								</div>
-							</div>
-						</div>
-						<div class="stat-card">
-							<div class="stat-card-style-bar"></div>
-							<div class="stat-card-data-container">
-								<div class="stat-card-data">
-									<p class="stat-card-data-title">Completed Events</p>
-									<h3 class="stat-card-data-number">120</h3>
-								</div>
-							</div>
-						</div>
-						<div class="stat-card">
-							<div class="stat-card-style-bar"></div>
-							<div class="stat-card-data-container">
-								<div class="stat-card-data">
-									<p class="stat-card-data-title">Total Users</p>
-									<h3 class="stat-card-data-number">89</h3>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="user-management-tab" style="flex-grow: 1">
+					<div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+						<h2>Organizations</h2>
+						<button class="add-organization-button" onclick="toggleCreateOrganizationForm()">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+							<span class="events-actions-add-text">Add Organization</span>
+						</button>
+					</div>	
 					
-					<div class="chart">
-						<img src="${contextPath}/resources/images/chart.svg"/>
-					</div>
-					
-					<div class="stat-tables">
-						<div class="top-interested-events">
-							<h3 class="top-interested-events-title">Top Interested Events</h3>
+					<div class = "table-scroll-wrapper">
+						<table class="users-table">
+							<thead>
+								<tr class="users-table-headers">
+									<th style="min-width: 100px; max-width: 100px; padding-left: 8px;">Org Id</th>
+									<th style="min-width: 250px; max-width: 250px">Org Name</th>
+									<th style="min-width: 200px; max-width: 200px">Onboarded Date</th>
+									<th style="min-width: 150px; max-width: 150px">Status</th>
+									<th style="min-width: 200px; max-width: 200px">Admin Name</th>
+									<th style="min-width: 100px; max-width: 100px">Actions</th>
+								</tr>
+							</thead>
 							
-							<div class="top-interested-events-list">
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-							</div>
-						</div>
+							<tbody>
+								<tr class="users-table-data">
+									<td style="width: 100px; display: flex; align-items: center; gap: 12px;">
+										<p style="text-overflow: ellipsis; overflow: hidden;">1</p>
+									</td>
+									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
+									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">2025-5-26</td>
+									<td style="min-width: 150px; max-width: 150px; text-overflow: ellipsis; overflow: hidden;">Active</td>
+									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Admin</td>
+									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
+										<div class="user-actions">
+											<button class="delete-user-button" onClick="toggleDeleteOrgModal(0)">
+												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+												</svg>
+											</button>
+											
+											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
+												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+												</svg>
+											</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 						
-						<div class="most-engaged-users">
-							<div class="most-engaged-users-desc">
-								<p class="most-engaged-users-desc-title">Most Engaged Users</p>
-								<p class="most-engaged-users-desc-text">Number of times interested in an event</p>
-							</div>
-							
-							<div class="most-engaged-users-list">
-								<div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div>
-								<div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div><div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div><div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div><div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -280,20 +199,20 @@
 			
 			<div class="user-management-overlay" id="user-delete-overlay">
 				<form class="user-delete-container">
-					<input type="hidden" name="userId" id="deleteUserIdField" value="" />
+					<input type="hidden" name="orgId" id="deleteOrgIdField" value="" />
 					<div class="user-delete-container-info">
-						<h2 class="user-delete-container-info-heading">Delete User</h2>
-						<p class="user-delete-container-info-text">Are you sure you want to delete this user? This action cannot be undone.</p>
+						<h2 class="user-delete-container-info-heading">Delete Organization</h2>
+						<p class="user-delete-container-info-text">Are you sure you want to delete this organization? This action cannot be undone.</p>
 					</div>
 					<div class="user-delete-controls">
-						<button class="user-delete-button cancel" type="button" onClick="toggleDeleteUserModal()">Cancel</button>
+						<button class="user-delete-button cancel" type="button" onClick="toggleDeleteOrgModal()">Cancel</button>
 						<button class="user-delete-button confirm" type="submit">Confirm</button>
 					</div>
 				</form>
 			</div>
 			
 			<div class="user-management-overlay" id="user-edit-overlay">
-				<div class="user-edit-container">
+				<div class="user-edit-container" style="height: 400px">
 					<button class="user-edit-container-back" onclick="toggleUpdateUserModal()">
                         <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M3.4574 11.9999L12.8854 21.4279L11.0001 23.3132L0.629396 12.9425C0.379434 12.6925 0.239014 12.3534 0.239014 11.9999C0.239014 11.6463 0.379434 11.3072 0.629396 11.0572L11.0001 0.686523L12.8854 2.57186L3.4574 11.9999Z" fill="black"/>
@@ -301,26 +220,51 @@
                         <span>Back</span>
                     </button>
                     <div class="user-edit-container-content">
-						<h2 class="user-edit-container-title">Edit User</h2>
+						<h2 class="user-edit-container-title">Edit Organization</h2>
 						<form class="user-edit-form">
-							<input type="hidden" name="userId" id="updateUserIdField" value="" />
+							<input type="hidden" name="orgId" id="updateOrgIdField" value="" />
 							<div class="user-edit-form-section">
-								<label for="fullName" class="user-edit-form-section-label">Full Name</label>
-								<input type="text" name="fullName" class="user-edit-form-section-input" placeholder="John Doe"/>
+								<label for="fullName" class="user-edit-form-section-label">Organization Name</label>
+								<input type="text" name="fullName" class="user-edit-form-section-input" placeholder="Occasio"/>
 							</div>
 							<div class="user-edit-form-section">
-								<label for="email" class="user-edit-form-section-label">Email</label>
-								<input type="text" name="email" class="user-edit-form-section-input" placeholder="example@gmail.com"/>
-							</div>
-							<div class="user-edit-form-section">
-								<label for="email" class="user-edit-form-section-label">Phone Number</label>
-								<input type="text" name="email" class="user-edit-form-section-input" placeholder="9812345678"/>
-							</div>
-							<div class="user-edit-form-section">
-								<label for="password" class="user-edit-form-section-label">Reset Password</label>
-								<input type="text" name="email" class="user-edit-form-section-input"/>
+								<label for="email" class="user-edit-form-section-label">Admin Name</label>
+								<input type="text" name="email" class="user-edit-form-section-input" placeholder="John Doe"/>
 							</div>
 							<button type="submit" class="user-edit-form-submit">Save Edit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+			<div class="user-management-overlay" id="org-edit-overlay">
+				<div class="user-edit-container">
+					<button class="user-edit-container-back" onclick="toggleCreateOrganizationForm()">
+                        <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.4574 11.9999L12.8854 21.4279L11.0001 23.3132L0.629396 12.9425C0.379434 12.6925 0.239014 12.3534 0.239014 11.9999C0.239014 11.6463 0.379434 11.3072 0.629396 11.0572L11.0001 0.686523L12.8854 2.57186L3.4574 11.9999Z" fill="black"/>
+                        </svg>
+                        <span>Back</span>
+                    </button>
+                    <div class="user-edit-container-content">
+						<h2 class="user-edit-container-title">Create Organization</h2>
+						<form class="user-edit-form">
+							<div class="user-edit-form-section">
+								<label for="orgName" class="user-edit-form-section-label">Organizaton Name</label>
+								<input type="text" name="orgName" class="user-edit-form-section-input" placeholder="Occasio"/>
+							</div>
+							<div class="user-edit-form-section">
+								<label for="adminName" class="user-edit-form-section-label">Admin Name</label>
+								<input type="text" name="adminName" class="user-edit-form-section-input" placeholder="John Doe"/>
+							</div>
+							<div class="user-edit-form-section">
+								<label for="adminEmail" class="user-edit-form-section-label">Admin Email</label>
+								<input type="text" name="adminEmail" class="user-edit-form-section-input" placeholder="example@gmail.com"/>
+							</div>
+							<div class="user-edit-form-section">
+								<label for="adminPassword" class="user-edit-form-section-label">Admin Password</label>
+								<input type="text" name="adminPassword" class="user-edit-form-section-input"/>
+							</div>
+							<button type="submit" class="user-edit-form-submit">Create</button>
 						</form>
 					</div>
 				</div>
@@ -347,30 +291,40 @@
 			}
 		}
 		
-		function toggleDeleteUserModal(userId = 0){
+		function toggleDeleteOrgModal(userId = 0){
 			const deleteOverlay = document.getElementById("user-delete-overlay");
-			const userIdInputField = document.getElementById("deleteUserIdField");
+			const orgIdInputField = document.getElementById("deleteOrgIdField");
 			if(deleteOverlay.style.visibility == "hidden" || deleteOverlay.style.visibility == ""){
 				deleteOverlay.style.visibility = "visible";
-				userIdInputField.value = userId.toString();
+				orgIdInputField.value = userId.toString();
 			} 
 			else{
 				deleteOverlay.style.visibility = "hidden";
-				userIdInputField.value="";
+				orgIdInputField.value="";
 			}
 		}
 		
 		//populate the fields based on userId from here 
-		function toggleUpdateUserModal(userId = 0){
+		function toggleUpdateUserModal(orgId = 0){
 			const updateOverlay = document.getElementById("user-edit-overlay");
-			const userIdInputField = document.getElementById("updateUserIdField");
+			const orgIdInputField = document.getElementById("updateOrgIdField");
 			if(updateOverlay.style.visibility == "hidden" || updateOverlay.style.visibility == ""){
 				updateOverlay.style.visibility = "visible";
-				userIdInputField.value = userId.toString();
+				orgIdInputField.value = userId.toString();
 			} 
 			else{
 				updateOverlay.style.visibility = "hidden";
-				userIdInputField.value="";
+				orgIdInputField.value="";
+			}
+		}
+		
+		function toggleCreateOrganizationForm() {
+			const updateOverlay = document.getElementById("org-edit-overlay");
+			if(updateOverlay.style.visibility == "hidden" || updateOverlay.style.visibility == ""){
+				updateOverlay.style.visibility = "visible";
+			} 
+			else{
+				updateOverlay.style.visibility = "hidden";
 			}
 		}
 	</script>

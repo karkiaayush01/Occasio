@@ -11,16 +11,16 @@ import com.occasio.model.UserModel;
 import com.occasio.util.SessionUtil;
 
 /**
- * Servlet implementation class DashboardController
+ * Servlet implementation class OrganizationController
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/dashboard" })
-public class DashboardController extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/organizations" })
+public class OrganizationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DashboardController() {
+    public OrganizationController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,7 +38,7 @@ public class DashboardController extends HttpServlet {
 		request.setAttribute("userPhoneNumber", user.getPhoneNumber());
 		request.setAttribute("userProfileImgUrl", user.getProfilePicturePath());
 		
-		request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/organizations.jsp").forward(request, response);
 	}
 
 	/**

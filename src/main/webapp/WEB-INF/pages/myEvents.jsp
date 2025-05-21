@@ -73,7 +73,94 @@
 					<div class="add-event-actions">
 						<div class="add-event-actions-children">
 							<div class = "add-event-actions-info">
-								<h3>Your Events</h3>
+								<h3>Your Current Events</h3>
+								<p class="personal-event-count">${userEvents.size()} ${userEvents.size() == 1? "Event" : "Events"}</p>
+							</div>
+							<p class="add-event-actions-help-text">Keep track of your events</p>
+						</div>
+						<button class="events-actions-add" onclick="toggleAddEventsForm()">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+							<span class="events-actions-add-text">Add Event</span>
+						</button>
+					</div>
+					
+					<div class="events-card-container">
+						<c:forEach var="event" items="${userEvents}">
+							<div class="user-events-card">
+								<img src="${contextPath}/${not empty event.imagePath? event.imagePath : 'resources/images/event-default.png'}" class="user-events-cover"/>
+								<div class="user-events-card-details">
+									<div class="user-events-card-details-title">
+										<h4 class="user-events-card-details-title-name" style="font-size: 16px;">${event.name}</h4>
+										<span class="view-event-details-link">View Details</span>
+									</div>
+									<div class="user-event-card-details-info">
+										<p class="user-event-card-details-info-child">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+											<span>${event.startDate} - ${event.endDate}</span>
+										</p>
+										<p class="user-event-card-details-info-child">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+											<span style="max-width: 180px; overflow: hidden; text-overflow: ellipsis;">${event.location}</span>
+										</p>
+									</div>
+									<div class="user-event-card-details-status ${event.status}">
+										<div class="user-event-card-details-status-badge-indicator"></div>
+										<p class="user-event-card-details-status-data">${event.status}<p>
+									</div>
+									<div class="event-card-interested">
+										<div class="interested-counts">
+											<div class="interested-user-images">
+												<img src="" class="interested-user-1">
+												<img src="" class="interested-user-2">
+												<img src="" class="interested-user-3">
+											</div>
+											<div class="total-interests">+20 others are interested</div>
+										</div>
+										<div class="">
+											<button class="edit-event-button" onclick="window.location.href='${contextPath}/event?action=fetchForEdit&eventId=${event.id}'">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
+												<span>Edit Event</span>
+											</button>
+										</div>
+									</div>
+								</div>
+								<!-- Add user event card here -->
+							</div>
+						</c:forEach>
+						
+						
+					</div>
+				</section>
+			</c:if>
+			
+			<c:if test="${empty userEvents}">
+				<section class="empty-user-events">
+					<h1>Your Ongoing and Upcoming Events</h1>
+					<div class="empty-user-events-search-icon-container">
+						<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M19.5 19L15.15 14.65M17.5 9C17.5 13.4183 13.9183 17 9.5 17C5.08172 17 1.5 13.4183 1.5 9C1.5 4.58172 5.08172 1 9.5 1C13.9183 1 17.5 4.58172 17.5 9Z" stroke="#F65E2C" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+					
+					<div class="empty-user-events-text-details">
+						<h4 class="empty-user-events-text-details-title">No Events Found</h4>
+						<p class="empty-user-events-text-details-desc">You haven't hosted any events yet.  Start by exploring or creating your first event!</p>
+					</div>
+					
+					<button class="empty-user-events-add-event-button" onclick="toggleAddEventsForm()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+						<span class="events-actions-add-text">Add Event</span>
+					</button>
+				</section>
+			</c:if>
+			
+			<c:if test="${not empty pastEvents}">
+				<section class="user-events">
+
+					<div class="add-event-actions">
+						<div class="add-event-actions-children">
+							<div class = "add-event-actions-info">
+								<h3>Your Past Events</h3>
 								<p class="personal-event-count">${userEvents.size()} ${userEvents.size() == 1? "Event" : "Events"}</p>
 							</div>
 							<p class="add-event-actions-help-text">Keep track of your events</p>
@@ -133,8 +220,9 @@
 				</section>
 			</c:if>
 			
-			<c:if test="${empty userEvents}">
+			<c:if test="${empty pastEvents}">
 				<section class="empty-user-events">
+					<h1>Your Past Events</h1>
 					<div class="empty-user-events-search-icon-container">
 						<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M19.5 19L15.15 14.65M17.5 9C17.5 13.4183 13.9183 17 9.5 17C5.08172 17 1.5 13.4183 1.5 9C1.5 4.58172 5.08172 1 9.5 1C13.9183 1 17.5 4.58172 17.5 9Z" stroke="#F65E2C" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -143,7 +231,7 @@
 					
 					<div class="empty-user-events-text-details">
 						<h4 class="empty-user-events-text-details-title">No Events Found</h4>
-						<p class="empty-user-events-text-details-desc">You haven't hosted any events yet.  Start by exploring or creating your first event!</p>
+						<p class="empty-user-events-text-details-desc">You haven't hosted any events that have been completed.  Start by exploring or creating events!</p>
 					</div>
 					
 					<button class="empty-user-events-add-event-button" onclick="toggleAddEventsForm()">
@@ -153,7 +241,7 @@
 				</section>
 			</c:if>
 			
-			<section class="ongoing-events">
+			<!--  section class="ongoing-events">
 				<h3 class="event-section-title">Ongoing Events</h3>
 				
 				<div class="ongoing-events-card-large-container">
@@ -335,7 +423,7 @@
 						</div>
 					</div>
 				</div>
-			</section>
+			</section -->
 			
 			<div class = "mobile-nav-overlay">
 				<div class="mobile-nav-menu">
@@ -532,7 +620,7 @@
 				
 			<div class="edit-event-overlay">
                 <div class="edit-event-overlay-menu">
-                    <button class="exit-edit-event-overlay-button" onclick="toggleEditEventsForm()">
+                    <button class="exit-edit-event-overlay-button"  onclick="window.location.href='${contextPath}/myEvents'">
                         <%-- ... Back button svg ... --%>
                         <span class="exit-edit-event-overlay-button-text">Back</span>
                     </button>

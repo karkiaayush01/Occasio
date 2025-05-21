@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2025 at 06:30 AM
+-- Generation Time: May 21, 2025 at 10:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,9 +55,12 @@ INSERT INTO `event` (`EventId`, `EventName`, `StartDate`, `PostDate`, `Descripti
 (3, 'Test', '2025-05-07', '2025-05-05', 'test', 'resources/images/event_covers/1717171711714.jpg', 'Fontaine', NULL, 1, 'pending', NULL, '2025-05-08', '', '', ''),
 (8, 'My Queen', '2025-04-03', '2025-05-05', 'okay', 'resources/images/event_covers/8ca9a5b66df345366c9994e16f5bcbfb.jpg', 'Solaris', NULL, 1, 'pending', NULL, '2025-05-30', '', '', ''),
 (10, 'ABSOLUTE UI BREAKER TO THE MAX LIMIT RAHHHHHhhhhhhhhhhhhhhhhHHHHHHHHH', '2025-05-09', '2025-05-05', 'fdas', 'resources/images/event_covers/1720534840987.jpeg', 'fdasfaewgaewgewgeawgvaewfeaweawgawgewa', NULL, 1, 'pending', NULL, '2025-05-01', '', '', ''),
-(16, 'Test 3', '2025-05-04', '2025-05-06', 'Test 2', 'resources/images/event_covers/Screenshot (4139).png', 'Test 4', NULL, 4, 'pending', NULL, '2025-05-06', 'Coca-cola', 'no', ''),
+(16, 'Test 3', '2025-05-04', '2025-05-06', 'Test 2', 'resources/images/event_covers/Cantarella Apple @Yaoyaobae.jpg', 'Test 4', NULL, 4, 'pending', NULL, '2025-05-06', 'Coca-cola', 'no', ''),
 (17, 'Neuv and Chlorinde', '2025-05-07', '2025-05-07', 'dnsnvkdnkns', 'resources/images/event_covers/290570419_349674360477901_3582246089466682745_n.jpeg', 'Solaris', NULL, 9, 'pending', NULL, '2025-05-08', 'bajeko sekuwa', 'bkjb', 'karkiaayush01@gmail.com'),
-(18, ';l,', '2025-05-02', '2025-05-08', 'dsfgvbnm', 'resources/images/event_covers/290570419_349674360477901_3582246089466682745_n.jpeg', ',m ,. vhb n', NULL, 4, 'pending', NULL, '2025-05-09', 'asdfgvb', '', '');
+(18, ';l,', '2025-05-02', '2025-05-08', 'dsfgvbnm', 'resources/images/event_covers/290570419_349674360477901_3582246089466682745_n.jpeg', ',m ,. vhb n', NULL, 4, 'pending', NULL, '2025-05-09', 'asdfgvb', '', ''),
+(19, 'Tea', '2025-05-19', '2025-05-19', 'Let\'s gooo', 'resources/images/event_covers/Cantarella Tea 1.jpg', 'Fisalia Family', NULL, 10, 'pending', NULL, '2025-05-19', 'Cantarella', '', ''),
+(20, 'WuWa 1.3', '2025-05-20', '2025-05-20', 'adsfafdasf', 'resources/images/event_covers/1.3.jpg', 'Solaris', NULL, 10, 'pending', NULL, '2025-05-24', 'Coca-cola', '', ''),
+(21, 'Test no img', '2025-05-20', '2025-05-20', 'fuck you', '', 'test center', NULL, 10, 'pending', NULL, '2025-05-21', 'tester', '', '');
 
 -- --------------------------------------------------------
 
@@ -69,6 +72,16 @@ CREATE TABLE `event_interested_users` (
   `EventId` int(11) NOT NULL,
   `UserId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `event_interested_users`
+--
+
+INSERT INTO `event_interested_users` (`EventId`, `UserId`) VALUES
+(8, 1),
+(8, 4),
+(8, 7),
+(8, 10);
 
 -- --------------------------------------------------------
 
@@ -99,6 +112,7 @@ CREATE TABLE `organization` (
 --
 
 INSERT INTO `organization` (`OrgId`, `OrgName`, `OnboardedDate`, `Status`) VALUES
+(0, 'Super Organization', '2025-05-01', 'Active'),
 (1, 'Islington', '2025-05-04', 'Active');
 
 -- --------------------------------------------------------
@@ -137,11 +151,13 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserId`, `FullName`, `UserEmail`, `Role`, `Password`, `DateJoined`, `PhoneNumber`, `ProfilePicturePath`, `OrgId`) VALUES
-(1, 'Aayus Karki', 'karkiaayush01@gmail.co', 'admin', '$2a$12$47Pou2IDTl7hlK/QW6nxQ.hWMi2f090zThInb4v5rehVs4/ba1MxK', '2025-05-04', '9824386150', 'resources/images/profile_pics/290570419_349674360477901_3582246089466682745_n.jpeg', 1),
-(4, 'Arpeet Neupaneb', 'neupanearpeet@gmail.com', 'user', '$2a$12$Hho2U.05u7nC.igo.6XdVOc7vLhuUx2lNnU0bh0z5.q79QsOH4cUa', '2025-05-06', '9803649735', 'resources/images/profile_pics/Screenshot (4140).png', 1),
+(1, 'Aayush Karki', 'karkiaayush01@gmail.co', 'admin', '$2a$12$47Pou2IDTl7hlK/QW6nxQ.hWMi2f090zThInb4v5rehVs4/ba1MxK', '2025-05-04', '9824386150', 'resources/images/profile_pics/290570419_349674360477901_3582246089466682745_n.jpeg', 1),
+(4, 'Arpeet Neupaneb', 'neupanearpeet@gmail.com', 'user', '$2a$12$Hho2U.05u7nC.igo.6XdVOc7vLhuUx2lNnU0bh0z5.q79QsOH4cUa', '2025-05-06', '9803649735', 'resources/images/profile_pics/Brant Sparkle.jpg', 1),
 (7, 'Arpit Neupane', 'neupanearpit@gmail.com', 'user', '$2a$12$SlDrmFEygRyUnh4UoGbHJ.ywygNu/IPmDpb7EgD3mF7FAXAXa5vgi', '2025-05-06', '9803649735', NULL, 1),
-(8, 'Admin', 'admin@test.test', 'admin', '$2a$12$AH7iivmSKyZpsmdq/PHod.EYn3UQw.TKKXqceHCodBPXaSHzfUpkq', '2025-05-07', '9824038615', 'resources/images/profile_pics/DALL·E 2025-03-06 21.58.33 - A digital illustration of a silhouette of a person with a visible microchip or neural implant inside their brain. The silhouette should be dark and fu.png', 1),
-(9, 'rabina lamaaaaa', 'rabina12@gmail.com', 'user', '$2a$12$eivtGJ/1YvFGQwlu6YaGgeBoTX4/DdSAFIPiKdszFpQzVO.O9wE0O', '2025-05-07', '098765432', 'resources/images/profile_pics/2303230606-KVvUXgt2.jpeg', 1);
+(8, 'Admin', 'admin@test.test', 'admin', '$2a$12$AH7iivmSKyZpsmdq/PHod.EYn3UQw.TKKXqceHCodBPXaSHzfUpkq', '2025-05-07', '9824038615', '', 1),
+(9, 'rabina lamaaaaa', 'rabina12@gmail.com', 'user', '$2a$12$eivtGJ/1YvFGQwlu6YaGgeBoTX4/DdSAFIPiKdszFpQzVO.O9wE0O', '2025-05-07', '098765432', 'resources/images/profile_pics/2303230606-KVvUXgt2.jpeg', 1),
+(10, 'Aayush Karki', 'karkiaayush001@gmail.com', 'user', '$2a$12$EBBYREI2bwMDDc.3TqkoOuhb7z/2rc1VwsL9fjP4rUvpI9yL6dLOm', '2025-05-19', '9824038615', 'resources/images/profile_pics/Cantarella PV V2.jpg', 1),
+(11, 'Super Admin', 'superadmin@occasio.com', 'superAdmin', '$2a$12$Ua06eiI.Td9Gw1L13F3DRO.9r73SUcip87EoFSktaJPAJpCpQd4Wm', '2025-05-21', '9824038615', 'resources/images/profile_pics/event-default.png', 0);
 
 --
 -- Indexes for dumped tables
@@ -195,7 +211,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `sponsor`
@@ -207,7 +223,7 @@ ALTER TABLE `sponsor`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -217,27 +233,27 @@ ALTER TABLE `user`
 -- Constraints for table `event`
 --
 ALTER TABLE `event`
-  ADD CONSTRAINT `event_poster_fk` FOREIGN KEY (`PostedUserId`) REFERENCES `user` (`UserId`);
+  ADD CONSTRAINT `event_poster_fk` FOREIGN KEY (`PostedUserId`) REFERENCES `user` (`UserId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `event_interested_users`
 --
 ALTER TABLE `event_interested_users`
-  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
-  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`);
+  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `event_sponsor`
 --
 ALTER TABLE `event_sponsor`
-  ADD CONSTRAINT `Event_Sponsor_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
-  ADD CONSTRAINT `Sponsor_Event_fk` FOREIGN KEY (`SponsorId`) REFERENCES `sponsor` (`SponsorId`);
+  ADD CONSTRAINT `Event_Sponsor_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `Sponsor_Event_fk` FOREIGN KEY (`SponsorId`) REFERENCES `sponsor` (`SponsorId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `OrgId` FOREIGN KEY (`OrgId`) REFERENCES `organization` (`OrgId`);
+  ADD CONSTRAINT `OrgId` FOREIGN KEY (`OrgId`) REFERENCES `organization` (`OrgId`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

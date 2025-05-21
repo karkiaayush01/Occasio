@@ -98,114 +98,71 @@
 				<h3 class="event-section-title">Ongoing Events</h3>
 				
 				<div class="events-card-container">
-					<div class = "ongoing-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
-						<div class="ongoing-events-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info">
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span class="event-card-time-label">9:00 AM - 2:00 PM</span>
+					<c:forEach var="event" items="${ongoingEvents}">
+						<div class = "ongoing-events-card">
+							<img src="${contextPath}/${not empty event.imagePath ? event.imagePath : '/resources/images/event-default.png'}" class="ongoing-events-cover"/>
+							<div class="ongoing-events-card-details">
+								<div class="ongoing-events-card-details-title">
+									<h4 class="event-card-title" style="font-size: 16px">${event.name}</h4>
+									<span class="view-event-details-link">View Details</span>
 								</div>
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span class="event-card-location-label">Kumari Hall</span>
-								</div>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts" >
-									<div class = "interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
+								
+								<div class="ongoing-events-card-info">
+									<div class="ongoing-events-card-info-child">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+										<span class="event-card-time-label">${event.startDate} - ${event.endDate}</span>
 									</div>
-									<div class="total-interests">+20 others are interested</div>
+									<div class="ongoing-events-card-info-child">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+										<span class="event-card-location-label">${event.location}</span>
+									</div>
 								</div>
-								<div class="">
-									<button class="show-interest-button">Confirm Interest</button>
+								
+								<div class="event-card-interested">
+									<div class="interested-counts" >
+										<c:if test="${not empty event.interestedUsers.interestedUsersPicturePaths}">
+											<div class = "interested-user-images">
+												<c:forEach var="imagePath" items="${event.interestedUsers.interestedUsersPicturePaths}" varStatus="status">
+												    <c:if test="${status.index < 3}">
+												        <img src="${contextPath}/${not empty imagePath ? imagePath : 'resources/images/default-profile.png'}" class="interested-user-${status.index + 1}">
+												    </c:if>
+												</c:forEach>
+											</div>
+										</c:if>
+										
+										<c:choose>
+											<c:when test="${event.interestedUsers.totalInterestedCount > 3}">
+												<div class="total-interests">+ ${event.interestedUsers.totalInterestedCount - 3} others are interested</div>
+											</c:when>
+											
+											<c:when test="${event.interestedUsers.totalInterestedCount == 0}">
+												<div class="total-interests">No one interested so far</div>
+											</c:when>
+											
+											<c:when test="${event.interestedUsers.totalInterestedCount <= 3}">
+												<div class="total-interests"> are interested</div>
+											</c:when>
+										</c:choose>								
+									</div>
+									<div class="">
+										<c:choose>
+											<c:when test="${event.interested}">
+												<button class="interested-button">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+													Interested
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button class="show-interest-button">
+													Confirm Interest
+												</button>
+											</c:otherwise>
+										</c:choose>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					
-					<div class = "ongoing-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
-						<div class="ongoing-events-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info">
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span class="event-card-time-label">9:00 AM - 2:00 PM</span>
-								</div>
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span class="event-card-location-label">Kumari Hall</span>
-								</div>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts" >
-									<div class = "interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="interested-button">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
-										Interested
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class = "ongoing-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
-						<div class="ongoing-events-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info">
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span class="event-card-time-label">9:00 AM - 2:00 PM</span>
-								</div>
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span class="event-card-location-label">Kumari Hall</span>
-								</div>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts" >
-									<div class = "interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="show-interest-button">Confirm Interest</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+					</c:forEach>		
 			</section>
 			
 			<section class="upcoming-events">

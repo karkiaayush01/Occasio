@@ -3,15 +3,14 @@ package com.occasio.service;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import com.occasio.config.DbConfig;
 import com.occasio.model.EventModel;
+import com.occasio.model.InterestedModel;
 
 public class EventService {
 	private Connection dbConn;
@@ -176,7 +175,7 @@ public class EventService {
 		ArrayList<EventModel> userEvents = new ArrayList<>();
 		
 		if(this.dbConn == null) {
-			System.err.println("Database connection not found.");
+			System.err.println("Error while fetching user events: Database connection not found.");
 			return null;
 		}
 		
@@ -218,6 +217,99 @@ public class EventService {
 		return userEvents;
 	}
 	
+	public InterestedModel getInterestedUsersForEvent(int eventId, int postedUserId) {
+		InterestedModel totalInterested = new InterestedModel();
+		
+		String getInterestedQuery = "SELECT i.UserId, u.ProfilePicturePath FROM event_interested_users i JOIN user u ON i.UserId = u.UserId WHERE i.eventId = ?";
+		
+		try(PreparedStatement getInterestedStmt = dbConn.prepareStatement(getInterestedQuery)){
+			getInterestedStmt.setInt(1, eventId);
+			
+			ResultSet rs = getInterestedStmt.executeQuery();
+			int totalUsersCount = 0;
+			ArrayList<String> interestedUserImages = new ArrayList<String>();
+			
+			while(rs.next()) {
+				totalUsersCount++;
+				if(totalUsersCount < 4) {
+					interestedUserImages.add(rs.getString("ProfilePicturePath"));
+				}
+			}
+			
+			totalInterested.setEventId(eventId);
+			totalInterested.setInterestedUsersPicturePaths(interestedUserImages);
+			totalInterested.setTotalInterestedCount(totalUsersCount);
+		}
+		catch(SQLException e) {
+			System.err.println("Error found while getting interested user for event: " + String.valueOf(eventId) + e);
+		}
+		
+		return totalInterested;
+	}
+	
+	public ArrayList<EventModel> getOngoingEvents(int userId, int orgId){
+		ArrayList<EventModel> ongoingEvents = new ArrayList<>();
+		
+		if(this.dbConn == null) {
+			System.err.println("Error while fetching ongoing events: Database connection not found.");
+			return null;
+		}
+
+		/*
+		 * After getting the organizationId, all the ongoing events for this orgainzation are retrieved.
+		 * This includes any event where startDate is earlier and end date is later than current date.
+		 * The events must be aproved
+		 */
+		
+		LocalDate currentDate = LocalDate.now();
+		
+		String getOngoingEventsQuery = "SELECT e.*, i.UserId AS Interested FROM event e JOIN user u ON e.PostedUserId = u.UserId LEFT JOIN event_interested_users i ON e.EventId = i.EventId AND i.UserId = ? WHERE u.OrgId = ?  AND e.Status = ? AND StartDate <= ? AND EndDate >= ?";
+		
+		try(PreparedStatement getOngoingEventsStmt = dbConn.prepareStatement(getOngoingEventsQuery)){
+			getOngoingEventsStmt.setInt(1, userId);
+			getOngoingEventsStmt.setInt(2, orgId);
+			getOngoingEventsStmt.setString(3, "pending");
+			getOngoingEventsStmt.setDate(4, Date.valueOf(currentDate));
+			getOngoingEventsStmt.setDate(5, Date.valueOf(currentDate));
+			
+			ResultSet rs = getOngoingEventsStmt.executeQuery();
+			
+			while(rs.next()) {
+				EventModel event = new EventModel();
+				
+				event.setId(rs.getInt("EventId"));
+				event.setName(rs.getString("EventName"));
+				event.setStartDate(rs.getDate("StartDate").toLocalDate());
+				event.setEndDate(rs.getDate("EndDate").toLocalDate());
+				event.setPostDate(rs.getDate("PostDate").toLocalDate());
+				event.setLocation(rs.getString("EventLocation"));
+				event.setDescription(rs.getString("Description"));
+				event.setImagePath(rs.getString("ImagePath"));
+				event.setRestriction(rs.getString("Restriction"));
+				event.setPosterUserId(rs.getInt("PostedUserId"));
+				event.setStatus(rs.getString("Status"));
+				event.setReviewNote(rs.getString("ReviewNote"));
+				
+				event.setSponsorName(rs.getString("SponsorName"));
+	            event.setSponsorContact(rs.getString("SponsorContact"));
+	            event.setSponsorEmail(rs.getString("SponsorEmail"));
+	            
+	            Boolean isInterested = rs.getObject("Interested") != null;
+	            event.setInterested(isInterested);
+	            
+	            InterestedModel interestedUsers = getInterestedUsersForEvent(rs.getInt("EventId"), rs.getInt("PostedUserId"));
+				event.setInterestedUsers(interestedUsers);
+	            
+				ongoingEvents.add(event);
+			}
+		}
+		catch(SQLException e) {
+			System.err.println("Error found while getting ongoing events:" + e);
+		}
+		
+		return ongoingEvents;
+	}
+	
     private String validateEventData(EventModel event, boolean isUpdate) {
         if (event.getName() == null || event.getName().trim().isEmpty()) return "Event Title cannot be empty.";
         if (event.getStartDate() == null) return "Start Date cannot be empty.";
@@ -246,5 +338,4 @@ public class EventService {
 
         return null;
     }
-	
 }

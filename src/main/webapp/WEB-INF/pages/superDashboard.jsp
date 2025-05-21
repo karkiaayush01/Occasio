@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Occasio - Admin Dashboard</title>
+		<title>Occasio - Super Admin Dashboard</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<!-- Set contextpath variable for reuse -->
@@ -23,10 +23,8 @@
 				
 				<div class="side-bar-sub-menu">
 					<div class="side-bar-sub-menu-items">
-						<button id="statisticTabButton" class = "side-bar-sub-menu-items-item active" onClick="window.location.href='${contextPath}/dashboard'">Dashboard</button>
-						<button id="userManagementTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/userManagement'">User Management</button>
-						<button id="eventRequestsTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/eventRequest'">Event Requests</button>
-						<button id="eventRequestsTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/home'">Go To Application</button>
+						<button id="statisticTabButton" class = "side-bar-sub-menu-items-item active" onClick="window.location.href='${contextPath}/superDashboard'">Super Dashboard</button>
+						<button id="userManagementTabButton" class = "side-bar-sub-menu-items-item" onClick="window.location.href='${contextPath}/organizations'">Organizations</button>
 					</div>
 				</div>
 			</div>
@@ -58,13 +56,13 @@
 				</div>
 				
 				<div class = "statistics-tab">
-					<h2 style="margin-bottom: 32px;">Dashboard</h2>
+					<h2 style="margin-bottom: 32px;">Dashboard (All orgs)</h2>
 					<div class = "stats-list">
 						<div class="stat-card">
 							<div class="stat-card-style-bar"></div>
 							<div class="stat-card-data-container">
 								<div class="stat-card-data">
-									<p class="stat-card-data-title">Ongoing Events</p>
+									<p class="stat-card-data-title">Total Orgs</p>
 									<h3 class="stat-card-data-number">126</h3>
 								</div>
 							</div>
@@ -73,7 +71,7 @@
 							<div class="stat-card-style-bar"></div>
 							<div class="stat-card-data-container">
 								<div class="stat-card-data">
-									<p class="stat-card-data-title">Upcoming Events</p>
+									<p class="stat-card-data-title">Total Users</p>
 									<h3 class="stat-card-data-number">13</h3>
 								</div>
 							</div>
@@ -91,7 +89,7 @@
 							<div class="stat-card-style-bar"></div>
 							<div class="stat-card-data-container">
 								<div class="stat-card-data">
-									<p class="stat-card-data-title">Total Users</p>
+									<p class="stat-card-data-title">Events Due</p>
 									<h3 class="stat-card-data-number">89</h3>
 								</div>
 							</div>
@@ -99,93 +97,7 @@
 					</div>
 					
 					<div class="chart">
-						<img src="${contextPath}/resources/images/chart.svg"/>
-					</div>
-					
-					<div class="stat-tables">
-						<div class="top-interested-events">
-							<h3 class="top-interested-events-title">Top Interested Events</h3>
-							
-							<div class="top-interested-events-list">
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-								<div class="top-interested-events-data">
-									<p>Aspire</p>
-									<p>382</p>
-								</div>
-							</div>
-						</div>
-						
-						<div class="most-engaged-users">
-							<div class="most-engaged-users-desc">
-								<p class="most-engaged-users-desc-title">Most Engaged Users</p>
-								<p class="most-engaged-users-desc-text">Number of times interested in an event</p>
-							</div>
-							
-							<div class="most-engaged-users-list">
-								<div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div>
-								<div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div><div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div><div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div><div class="most-engaged-users-data">
-									<div class="most-engaged-users-data-info">
-										<img class="most-engaged-users-data-img" src="${contextPath}/resources/images/profile_pics/queen.webp" />
-										<div class="most-engaged-users-data-texts">
-											<p class="most-engaged-users-data-texts-name">Srijan Shrestha</p>
-											<p class="most-engaged-users-data-texts-email">srijanshrestha@gmail.com</p>
-										</div>
-									</div>
-									<p class="most-engaged-users-data-stats">234</p>
-								</div>
-							</div>
-						</div>
+						<img src="${contextPath}/resources/images/orgChart.svg"/>
 					</div>
 				</div>
 			</div>

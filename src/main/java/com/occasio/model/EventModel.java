@@ -22,6 +22,8 @@ public class EventModel {
 	private String sponsorName;
 	private String sponsorContact;
 	private String sponsorEmail;
+	private Boolean interested;
+	private InterestedModel interestedUsers;
 	
 	public EventModel() {
 		
@@ -163,5 +165,21 @@ public class EventModel {
 
 	public void setSponsorEmail(String sponsorEmail) {
 	    this.sponsorEmail = sponsorEmail;
+	}
+	
+	public Boolean getInterested() {
+		return interested;
+	}
+	
+	public void setInterested(Boolean interested) {
+	    this.interested = interested;
+	}
+
+	public InterestedModel getInterestedUsers() {
+		return interestedUsers;
+	}
+
+	public void setInterestedUsers(InterestedModel interestedUsers) {
+		this.interestedUsers = interestedUsers;
 	}
 }
