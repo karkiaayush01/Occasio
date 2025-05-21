@@ -87,7 +87,7 @@
 					<div class="events-card-container">
 						<c:forEach var="event" items="${userEvents}">
 							<div class="user-events-card">
-								<img src="${contextPath}/${event.imagePath}" class="user-events-cover"/>
+								<img src="${contextPath}/${not empty event.imagePath? event.imagePath : 'resources/images/event-default.png'}" class="user-events-cover"/>
 								<div class="user-events-card-details">
 									<div class="user-events-card-details-title">
 										<h4 class="user-events-card-details-title-name" style="font-size: 16px;">${event.name}</h4>

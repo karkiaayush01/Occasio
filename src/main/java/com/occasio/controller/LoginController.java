@@ -55,12 +55,13 @@ public class LoginController extends HttpServlet {
 		                // Authentication Successful
 		                SessionUtil.setAttribute(request, "user", user); 
 		
-		                if(user.getRole().equals("user")) {
-		                	response.sendRedirect(request.getContextPath() + "/home"); // Redirect to protected area
-		                	return;
-		                }
-		                else if (user.getRole().equals("admin")){
+		                if(user.getRole().equals("admin")) {
 		                	response.sendRedirect(request.getContextPath() + "/dashboard");
+		                	return;
+		                	
+		                }
+		                else{
+		                	response.sendRedirect(request.getContextPath() + "/home"); // Redirect to protected area
 		                	return;
 		                }
 		

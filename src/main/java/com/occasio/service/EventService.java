@@ -254,7 +254,7 @@ public class EventService {
 			System.err.println("Error while fetching ongoing events: Database connection not found.");
 			return null;
 		}
-		
+
 		/*
 		 * After getting the organizationId, all the ongoing events for this orgainzation are retrieved.
 		 * This includes any event where startDate is earlier and end date is later than current date.

@@ -341,6 +341,7 @@ body{
 	height: 40px;
 	border-radius: 50%;
 	object-fit: cover;
+	border: 1px solid rgba(128, 128, 128, 0.5);
 }
 
 .user-actions{
@@ -348,20 +349,21 @@ body{
 	gap: 4px;
 }
 
-.delete-user-button, .edit-user-button{
+.delete-user-button, .edit-user-button, .approve-event-table-button, .reject-event-table-button{
 	padding: 8px;
 	height: 40px;
 	border: none;
 	background: none;
 	cursor: pointer;
 	border-radius: 8px;
+	max-width: 40px;
 }
 
-.delete-user-button:hover{
+.delete-user-button:hover, .reject-event-table-button:hover{
 	background: rgb(254, 226, 226);
 }
 
-.delete-user-button:hover svg path {
+.delete-user-button:hover svg path, .reject-event-table-button:hover svg path {
 	stroke: rgb(239, 68, 68);
 }
 
@@ -373,3 +375,206 @@ body{
 	stroke: rgb(59, 130, 246);
 }
 
+.approve-event-table-button:hover{
+	background: rgb(220, 252, 231);
+}
+
+.approve-event-table-button:hover svg path {
+	stroke: rgb(34, 197, 94);
+}
+
+.user-management-overlay, .event-management-overlay{
+	display: flex;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.18);
+	top: 0;
+	left: 0;
+	z-index: 50;
+	backdrop-filter: blur(1px);
+}
+
+#user-delete-overlay, #reject-event-overlay, #approve-event-overlay, #user-edit-overlay, #org-edit-overlay{
+	visibility: hidden;
+}
+
+
+.user-delete-container, .reject-event-container, .approve-event-container{
+	background: white;
+	padding: 24px; 
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+}
+
+.user-delete-container-info-heading, .reject-event-container-info-heading, .approve-event-container-heading{
+	font-family: Poppins-Regular;
+	margin-bottom: 8px;
+	font-size: 18px;
+}
+
+.user-delete-container-info-text, .approve-event-container-info-text{
+	font-family: Poppins-Regular;
+	color: rgba(102, 112, 133, 1);
+	font-size: 14px;
+	margin-bottom: 24px;
+	max-width: 352px;
+}
+
+.user-delete-controls, .reject-event-controls, .approve-event-controls{
+	display: flex;
+	height: 52px;
+	gap: 12px;
+}
+
+.user-delete-button, .reject-event-button, .approve-event-button{
+	border-radius: 8px;
+	font-family: Poppins-Regular;
+	flex: 1;
+	cursor: pointer;
+}
+
+.user-delete-button.cancel, .reject-event-button.cancel, .approve-event-button.cancel{
+	border: 2px solid rgba(208, 213, 221, 1);
+	color: black;
+	background: white;
+}
+
+.user-delete-button.cancel:hover, .reject-event-button.cancel:hover, .approve-event-button.cancel:hover{
+	background: #f0f0f0;
+}
+
+.user-delete-button.confirm, .reject-event-button.confirm{
+	border: none;
+	background: rgba(239, 51, 51, 1);
+	color: white;
+}
+
+.user-delete-button.confirm:hover, .reject-event-button.confirm:hover{
+	background: rgba(200, 30, 30, 1);
+}
+
+.approve-event-button.confirm{
+	background: rgb(34, 197, 94);
+	color: white;
+	border: none;
+}
+
+.approve-event-button.confirm:hover{
+	background: rgb(22, 163, 74);
+}
+
+.user-edit-container{
+	background: white;
+	border: none;
+	position: relative;
+	height: 80%;
+	width: 80%;
+	max-width: 500px;
+	border-radius: 12px;
+}
+
+.user-edit-container-content{
+	display: flex;
+	padding: 40px 80px;
+	flex-direction: column;
+	gap: 50px;
+	width: 100%;
+	height: 100%;
+}
+
+.user-edit-container-back{
+	display: flex;
+	gap: 8px;
+	font-family: Poppins-Regular;
+	font-size: 18px;
+	position: absolute;
+	top: 40px;
+	left: 40px;
+	background: none;
+	border: none;
+	align-items: center;
+	cursor: pointer;
+}
+
+.user-edit-container-back:hover{
+	text-decoration: underline;
+}
+
+.user-edit-container-title{
+	font-size: 24px;
+	font-family: Poppins-Light;
+	flex: 0;
+	text-align: center;
+}
+
+.user-edit-form{
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.user-edit-form-section-label{
+	margin-bottom: 8px;
+}
+
+.user-edit-form-section-input{
+	background: rgba(235, 235, 235, 1);
+	width: 100%;
+	height: 48px;
+	border: none;
+	background: rgba(235, 235, 235, 1);
+	border-radius: 6px;
+	padding-left: 12px;
+	font-family: Poppins-Regular;
+}
+
+.user-edit-form-submit{
+	margin-top: 18px;
+	background: rgba(246, 94, 44, 1);
+	color: white;
+	height: 40px;
+	width: 120px;
+	align-self: center;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.user-edit-form-submit:hover{
+	background: rgba(220, 75, 30, 1);
+}
+
+.reject-event-container-info-textarea{
+	width: 340px;
+	height: 120px;
+	margin-bottom: 20px;
+	border-radius: 6px;
+	border: 2px solid rgba(128,128,128,0.5);
+	resize: vertical;
+	padding: 10px;
+	font-family: Poppins-Regular;
+}
+
+.add-organization-button{
+	display: flex;
+	align-items: center;
+	padding: 8px 15px;
+	border-radius: 6px;
+	background: rgba(246, 94, 44, 1);
+	color: white;
+	border: none;
+	gap: 8px;
+	height: 48px;
+	font-size: 16px;
+	font-family: 'Poppins-Light';
+	cursor: pointer;
+}
+
+.add-organization-button:hover{
+	background: rgba(220, 75, 30, 1);
+}

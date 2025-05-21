@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.occasio.util.SessionUtil;
 import com.occasio.model.UserModel;
@@ -27,16 +28,33 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	private static final List<String> LOGIN_ROUTES = List.of("/login", "/register");
+	private static final List<String> USER_ROUTES = List.of("/home", "/myEvents", "/aboutUs", "/eventDetails");
+	private static final List<String> ADMIN_ROUTES = List.of("/dashboard", "/userManagement", "/eventRequest");
+	private static final List<String> SUPER_ADMIN_ROUTES = List.of("/superDashboard", "/organizations");
+	
 	private static final String LOGIN = "/login";
-	private static final String REGISTER = "/register";
-	private static final String HOME = "/home";
-	private static final String DASHBOARD = "/dashboard";
-	//private static final String ROOT = "/";
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// Initialization logic, if required
+	}
+	
+	private boolean endsWithAny(String uri, List<String> routes) {
+	    for (String route : routes) {
+	        if (uri.endsWith(route)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	private boolean doesNotMatchAnyRoute(String uri) {
+	    return LOGIN_ROUTES.stream().noneMatch(uri::endsWith) &&
+	           USER_ROUTES.stream().noneMatch(uri::endsWith) &&
+	           ADMIN_ROUTES.stream().noneMatch(uri::endsWith) &&
+	           SUPER_ADMIN_ROUTES.stream().noneMatch(uri::endsWith);
 	}
 
 	@Override
@@ -51,7 +69,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		// Get the requested URI
 		String uri = req.getRequestURI();
 
-		if (uri.endsWith(".css") || uri.endsWith(".ttf")) {
+		if (uri.endsWith(".css") || uri.endsWith(".ttf") || uri.endsWith(".js") || uri.endsWith(".svg") || uri.endsWith(".png") || uri.endsWith(".jpg")) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -62,7 +80,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		UserModel user = (UserModel) SessionUtil.getAttribute(req, "user");
 		
 		if (!isLoggedIn) {
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
+			if (this.endsWithAny(uri, LOGIN_ROUTES)) {
 				chain.doFilter(request, response);
 			} else {
 				res.sendRedirect(req.getContextPath() + LOGIN);
@@ -74,17 +92,24 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 			}
 			
 			if(user.getRole().equals("admin")) {
-				if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.endsWith(HOME)) {
-					res.sendRedirect(req.getContextPath() + DASHBOARD);
-				} else {
+				if (this.endsWithAny(uri, ADMIN_ROUTES) || this.endsWithAny(uri, USER_ROUTES)) {
 					chain.doFilter(request, response);
+				} else {
+					res.sendRedirect(req.getContextPath() + "/dashboard");
+				}
+			}
+			else if (user.getRole().equals("superAdmin")) {
+				if (this.endsWithAny(uri, SUPER_ADMIN_ROUTES)) {
+					chain.doFilter(request, response);
+				} else {
+					res.sendRedirect(req.getContextPath() + "/superDashboard");
 				}
 			}
 			else {
-				if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.endsWith(DASHBOARD)) {
-					res.sendRedirect(req.getContextPath() + HOME);
-				} else {
+				if (this.endsWithAny(uri, USER_ROUTES)) {
 					chain.doFilter(request, response);
+				} else {
+					res.sendRedirect(req.getContextPath() + "/home");
 				}
 			}
 		}
