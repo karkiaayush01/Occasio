@@ -18,6 +18,22 @@
 	</head>
 
 	<body>
+		<c:if test="${not empty searchFilter}">
+		    <script>
+		        window.addEventListener('DOMContentLoaded', function() {
+		        	const OFFSET_TOP = 100;
+		        	const marker = document.querySelector('.scroll-marker');
+
+		        	if (marker) {
+		        	  const markerTop = marker.getBoundingClientRect().top + window.scrollY;
+		        	  window.scrollTo({
+		        	    top: markerTop - OFFSET_TOP,
+		        	    behavior: 'smooth'
+		        	  });
+		        	}
+		        });
+		    </script>
+		</c:if>
 		<main class="main">
 			<section class="home-nav">
 				<h2 class="nav-title">Occasio</h2>
@@ -87,105 +103,148 @@
 			</div>
 			
 			<div class="scroll-marker" id="#ongoing-events" style="height: 1px; margin: 0;"></div>
-			<form class="event-search-bar-form">
+			<form class="event-search-bar-form" action="${contextPath}/home?action=search" method="post">
 				<div class="event-search-bar">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-					<input class="search-bar-input" type="text" placeholder="Search for college events"/>
+					<input class="search-bar-input" type="text" name="searchText" placeholder="Search for college events" value="${searchFilter}"/>
+					<button class="search-button" type="submit">
+						<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M19.5 19L15.15 14.65M17.5 9C17.5 13.4183 13.9183 17 9.5 17C5.08172 17 1.5 13.4183 1.5 9C1.5 4.58172 5.08172 1 9.5 1C13.9183 1 17.5 4.58172 17.5 9Z" stroke="#F65E2C" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
 				</div>	
 			</form>
 			
 			<section class="ongoing-events">
 				<h3 class="event-section-title">Ongoing Events</h3>
 				
-				<div class="events-card-container">
-					<c:forEach var="event" items="${ongoingEvents}">
-						<div class = "ongoing-events-card">
-							<img src="${contextPath}/${not empty event.imagePath ? event.imagePath : '/resources/images/event-default.png'}" class="ongoing-events-cover"/>
-							<div class="ongoing-events-card-details">
-								<div class="ongoing-events-card-details-title">
-									<h4 class="event-card-title" style="font-size: 16px">${event.name}</h4>
-									<span class="view-event-details-link">View Details</span>
-								</div>
-								
-								<div class="ongoing-events-card-info">
-									<div class="ongoing-events-card-info-child">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-										<span class="event-card-time-label">${event.startDate} - ${event.endDate}</span>
+				<c:if test="${not empty ongoingEvents}">
+					<div class="events-card-container">
+						<c:forEach var="event" items="${ongoingEvents}">
+							<div class = "ongoing-events-card">
+								<img src="${contextPath}/${not empty event.imagePath ? event.imagePath : '/resources/images/event-default.png'}" class="ongoing-events-cover"/>
+								<div class="ongoing-events-card-details">
+									<div class="ongoing-events-card-details-title">
+										<h4 class="event-card-title" style="font-size: 16px">${event.name}</h4>
+										<span class="view-event-details-link" onClick="window.location.href='${contextPath}/event?action=fetchEventData&eventId=${event.id}&userId=${userId}'">
+											View Details
+										</span>
 									</div>
-									<div class="ongoing-events-card-info-child">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-										<span class="event-card-location-label">${event.location}</span>
+									
+									<div class="ongoing-events-card-info">
+										<div class="ongoing-events-card-info-child">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+											<span class="event-card-time-label">${event.startDate} - ${event.endDate}</span>
+										</div>
+										<div class="ongoing-events-card-info-child">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+											<span class="event-card-location-label">${event.location}</span>
+										</div>
 									</div>
-								</div>
-								
-								<div class="event-card-interested">
-									<div class="interested-counts" >
-										<c:if test="${not empty event.interestedUsers.interestedUsersPicturePaths}">
-											<div class = "interested-user-images">
-												<c:forEach var="imagePath" items="${event.interestedUsers.interestedUsersPicturePaths}" varStatus="status">
-												    <c:if test="${status.index < 3}">
-												        <img src="${contextPath}/${not empty imagePath ? imagePath : 'resources/images/default-profile.png'}" class="interested-user-${status.index + 1}">
-												    </c:if>
-												</c:forEach>
-											</div>
-										</c:if>
-										
-										<c:choose>
-											<c:when test="${event.interestedUsers.totalInterestedCount > 3}">
-												<div class="total-interests">+ ${event.interestedUsers.totalInterestedCount - 3} others are interested</div>
-											</c:when>
+									
+									<div class="event-card-interested">
+										<div class="interested-counts" >
+											<c:if test="${not empty event.interestedUsers.interestedUsersPicturePaths}">
+												<div class = "interested-user-images">
+													<c:forEach var="imagePath" items="${event.interestedUsers.interestedUsersPicturePaths}" varStatus="status">
+													    <c:if test="${status.index < 3}">
+													        <img src="${contextPath}/${not empty imagePath ? imagePath : 'resources/images/default-profile.png'}" class="interested-user-${status.index + 1}">
+													    </c:if>
+													</c:forEach>
+												</div>
+											</c:if>
 											
-											<c:when test="${event.interestedUsers.totalInterestedCount == 0}">
-												<div class="total-interests">No one interested so far</div>
-											</c:when>
-											
-											<c:when test="${event.interestedUsers.totalInterestedCount <= 3}">
-												<div class="total-interests"> are interested</div>
-											</c:when>
-										</c:choose>								
-									</div>
-									<div class="">
-										<c:choose>
-											<c:when test="${event.interested}">
-												<button class="interested-button">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
-													Interested
-												</button>
-											</c:when>
-											<c:otherwise>
-												<button class="show-interest-button">
-													Confirm Interest
-												</button>
-											</c:otherwise>
-										</c:choose>
+											<c:choose>
+												<c:when test="${event.interestedUsers.totalInterestedCount > 3}">
+													<div class="total-interests">+ ${event.interestedUsers.totalInterestedCount - 3} others are interested</div>
+												</c:when>
+												
+												<c:when test="${event.interestedUsers.totalInterestedCount == 0}">
+													<div class="total-interests">No one interested so far</div>
+												</c:when>
+												
+												<c:when test="${event.interestedUsers.totalInterestedCount <= 3}">
+													<div class="total-interests"> are interested</div>
+												</c:when>
+											</c:choose>								
+										</div>
+										<div class="">
+											<c:choose>
+												<c:when test="${event.interested}">
+													<button class="interested-button">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+														Interested
+													</button>
+												</c:when>
+												<c:otherwise>
+													<button class="show-interest-button">
+														Confirm Interest
+													</button>
+												</c:otherwise>
+											</c:choose>
+										</div>
 									</div>
 								</div>
 							</div>
+						</c:forEach>
+					</div>
+				</c:if>
+				
+				<c:if test="${empty ongoingEvents}">
+					<section class="empty-user-events">
+						<div class="empty-user-events-search-icon-container">
+							<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M19.5 19L15.15 14.65M17.5 9C17.5 13.4183 13.9183 17 9.5 17C5.08172 17 1.5 13.4183 1.5 9C1.5 4.58172 5.08172 1 9.5 1C13.9183 1 17.5 4.58172 17.5 9Z" stroke="#F65E2C" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
 						</div>
-					</c:forEach>		
+						
+						<div class="empty-user-events-text-details">
+							<h4 class="empty-user-events-text-details-title">No Events Found</h4>
+							<p class="empty-user-events-text-details-desc">No Ongoing Events Currently!</p>
+						</div>
+					</section>
+				</c:if>		
 			</section>
 			
 			<section class="upcoming-events">
 				<h3 class="event-section-title">Upcoming Events</h3>
 				
-				<div class="events-card-container">
-					<div class="upcoming-events-card">
-						<img class="upcoming-events-card-cover" src="${contextPath}/resources/images/event-default.png">
-						<div class = "upcoming-events-card-details">
-							<h3 class="upcoming-events-card-details-title">Holi 2025</h3>
-							<div class="upcoming-events-card-info">
-								<div class="upcoming-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span class="event-card-time-label">9:00 AM - 2:00 PM</span>
-								</div>
-								<div class="upcoming-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span class="event-card-location-label">Kumari Hall</span>
+				<c:if test="${not empty upcomingEvents}">
+					<div class="events-card-container">
+						<c:forEach var="event" items="${upcomingEvents}">
+							<div class="upcoming-events-card">
+								<img src="${contextPath}/${not empty event.imagePath ? event.imagePath : '/resources/images/event-default.png'}" class="upcoming-events-card-cover">
+								<div class = "upcoming-events-card-details">
+									<h3 class="upcoming-events-card-details-title">${event.name}</h3>
+									<div class="upcoming-events-card-info">
+										<div class="upcoming-events-card-info-child">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+											<span class="event-card-time-label">${event.startDate} - ${event.endDate}</span>
+										</div>
+										<div class="upcoming-events-card-info-child">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+											<span class="event-card-location-label">${event.location}</span>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
+						</c:forEach>
 					</div>
-				</div>
+				</c:if>
+				
+				<c:if test="${empty upcomingEvents}">
+					<section class="empty-user-events">
+						<div class="empty-user-events-search-icon-container">
+							<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M19.5 19L15.15 14.65M17.5 9C17.5 13.4183 13.9183 17 9.5 17C5.08172 17 1.5 13.4183 1.5 9C1.5 4.58172 5.08172 1 9.5 1C13.9183 1 17.5 4.58172 17.5 9Z" stroke="#F65E2C" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						
+						<div class="empty-user-events-text-details">
+							<h4 class="empty-user-events-text-details-title">No Events Found</h4>
+							<p class="empty-user-events-text-details-desc">No Upcoming Events for the future!</p>
+						</div>
+					</section>
+				</c:if>
 			</section>
 			
 			<div class = "mobile-nav-overlay">
@@ -517,102 +576,6 @@
             }
         }
 		
-		document.addEventListener('DOMContentLoaded', (event) => {
-            // Check if event data was passed for editing
-            <c:if test="${not empty eventToEdit}">
-                console.log('Event data found for edit, opening overlay.');
-
-                // Select elements within the EDIT overlay specifically
-                const editOverlay = document.querySelector(".edit-event-overlay");
-                const editImagePreview = editOverlay.querySelector('.edit-event-cover-image');
-                const uploadControls = editOverlay.querySelector(".edit-event-upload-image-controls");
-                const deleteImageButton = editOverlay.querySelector(".edit-event-image-remove");
-                const fileInput = document.getElementById('edit-event-image-uploader');
-                const imageChangedFlag = document.getElementById('edit-image-changed-flag'); // Assuming you add this flag
-
-                // Reset the edit image preview to the fetched image
-                if (editImagePreview) {
-                    const originalSrc = editImagePreview.getAttribute('data-original-src');
-                    if (originalSrc) {
-                         editImagePreview.src = originalSrc;
-
-                         // Show/hide image controls based on whether it's the default image
-                        if (!originalSrc.endsWith('event-default.png')) { // Check if it's NOT the default
-                            editImagePreview.style.display = 'block';
-                            if(uploadControls) uploadControls.style.display = 'none';
-                            if(deleteImageButton) deleteImageButton.style.display = 'block';
-                        } else { // It IS the default image
-                            editImagePreview.style.display = 'none';
-                             if(uploadControls) uploadControls.style.display = 'flex';
-                             if(deleteImageButton) deleteImageButton.style.display = 'none';
-                        }
-                    } else { // No original source found (shouldn't happen if data-attribute is set)
-                         editImagePreview.style.display = 'none';
-                         if(uploadControls) uploadControls.style.display = 'flex';
-                         if(deleteImageButton) deleteImageButton.style.display = 'none';
-                    }
-                }
-
-                // Clear the file input in case of refresh issues
-                if(fileInput) fileInput.value = "";
-
-                 // Reset the image changed flag
-                if(imageChangedFlag) imageChangedFlag.value = "false";
-
-                toggleEditEventsForm(); // Open the edit overlay
-            </c:if>
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const errorMsg = urlParams.get('error');
-            const failedEventId = urlParams.get('failedEventId');
-
-            if (errorMsg && failedEventId && document.getElementById('edit-event-form')) { // Check if edit form exists
-                 alert("Error updating event: " + decodeURIComponent(errorMsg));
-                 const formEventIdInput = document.querySelector('.edit-event-form input[name="eventId"]');
-                 if (formEventIdInput && formEventIdInput.value === failedEventId) {
-                    // Ensure the overlay is visible if it wasn't already opened by eventToEdit check
-                    const editOverlay = document.querySelector(".edit-event-overlay");
-                    if (editOverlay.style.visibility !== 'visible') {
-                         toggleEditEventsForm();
-                    }
-                 }
-            } else if (errorMsg) {
-                 alert("Error: " + decodeURIComponent(errorMsg));
-            }
-
-        });
-		
-		function setEditImageChanged(changed) {
-            const flag = document.getElementById('edit-image-changed-flag');
-            if(flag) flag.value = changed ? 'true' : 'false';
-       	}
-		
-		function editImageChange(e){
-			const imageElement = document.querySelector(".edit-event-cover-image");
-			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
-			const deleteImageButton = document.querySelector(".edit-event-image-remove");
-			uploadControls.style.display="none";
-			imageElement.style.display="block";
-			deleteImageButton.style.display = "block";
-			imageElement.src = e.target.result;
-            setEditImageChanged(true);
-		}
-
-		function removeEditedImage(e){
-			e.stopPropagation();
-			const imageElement = document.querySelector(".edit-event-cover-image");
-			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
-			const deleteImageButton = document.querySelector(".edit-event-image-remove");
-			const imageUploader = document.getElementById('edit-event-image-uploader');
-			imageElement.src=""; // Clear preview
-            // Show upload controls, hide image/delete button
-			uploadControls.style.display="flex";
-			imageElement.style.display="none";
-			deleteImageButton.style.display = "none";
-			imageUploader.value = ""; // Clear the file input
-            setEditImageChanged(true); // Mark as changed (to remove image path on server)
-		}
-		
 		const OFFSET_TOP = 100;
 		let hasUserScrolled = false;
 
@@ -639,6 +602,7 @@
 		});
 
 		markers.forEach(marker => observer.observe(marker));
+
 		
 	</script>
 </html>

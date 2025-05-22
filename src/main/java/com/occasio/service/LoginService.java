@@ -20,8 +20,8 @@ public class LoginService {
      */
     public UserModel authenticateUser(String email, String password) {
         UserModel user = null;
-        String sql = "SELECT UserId, FullName, UserEmail, Password, Role, DateJoined, PhoneNumber, ProfilePicturePath, OrgId " +
-                     "FROM user WHERE UserEmail = ?";
+        String sql = "SELECT u.UserId, u.FullName, u.UserEmail, u.Password, u.Role, u.DateJoined, u.PhoneNumber, u.ProfilePicturePath, u.OrgId, o.Status  " +
+                     "FROM user u JOIN organization o ON u.OrgId = o.OrgId WHERE u.UserEmail = ?";
 
         if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()) {
             return null;
@@ -34,6 +34,10 @@ public class LoginService {
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) { // User found
+                	if(rs.getString("Status") == "Deleted") {
+                		return null;
+                	}
+                	
                     String storedHashedPassword = rs.getString("Password");
 
                     // Verify password

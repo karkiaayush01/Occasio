@@ -63,7 +63,7 @@
 							<div class="stat-card-data-container">
 								<div class="stat-card-data">
 									<p class="stat-card-data-title">Total Orgs</p>
-									<h3 class="stat-card-data-number">126</h3>
+									<h3 class="stat-card-data-number">${totalOrgs}</h3>
 								</div>
 							</div>
 						</div>
@@ -72,7 +72,7 @@
 							<div class="stat-card-data-container">
 								<div class="stat-card-data">
 									<p class="stat-card-data-title">Total Users</p>
-									<h3 class="stat-card-data-number">13</h3>
+									<h3 class="stat-card-data-number">${totalUsers}</h3>
 								</div>
 							</div>
 						</div>
@@ -81,7 +81,7 @@
 							<div class="stat-card-data-container">
 								<div class="stat-card-data">
 									<p class="stat-card-data-title">Completed Events</p>
-									<h3 class="stat-card-data-number">120</h3>
+									<h3 class="stat-card-data-number">${totalCompletedEvents}</h3>
 								</div>
 							</div>
 						</div>
@@ -90,7 +90,7 @@
 							<div class="stat-card-data-container">
 								<div class="stat-card-data">
 									<p class="stat-card-data-title">Events Due</p>
-									<h3 class="stat-card-data-number">89</h3>
+									<h3 class="stat-card-data-number">${totalDueEvents}</h3>
 								</div>
 							</div>
 						</div>

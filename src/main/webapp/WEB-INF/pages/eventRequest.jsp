@@ -57,181 +57,57 @@
 				</div>
 				
 				<div class="user-management-tab" style="flex-grow: 1">
-					<h2 style="margin-bottom: 16px;">Event Requests</h2>
-					
-					<div class = "table-scroll-wrapper">
-						<table class="users-table">
-							<thead>
-								<tr class="users-table-headers">
-									<th style="min-width: 280px; max-width: 280px">Event Name</th>
-									<th style="min-width: 100px; max-width: 100px">EventId</th>
-									<th style="min-width: 250px; max-width: 250px">Posted By</th>
-									<th style="min-width: 280px; max-width: 280px">Event-Duration</th>
-									<th style="min-width: 100px; max-width: 100px">Actions</th>
-								</tr>
-							</thead>
-							
-							<tbody>
-								<tr class="users-table-data">
-									<td style="width: 280px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/event-default.png"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Islington Jatra 2026</p>
-									</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">1</td>
-									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">2025-5-26 - 2025-5-30</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
+                    <h2 style="margin-bottom: 16px;">Event Requests</h2>
+                     <c:if test="${not empty message}">
+                        <p class="message">${message}</p>
+                    </c:if>
+                    <div class = "table-scroll-wrapper">
+                        <table class="users-table">
+                            <thead>
+                                <tr class="users-table-headers">
+                                    <th style="min-width: 280px; max-width: 280px">Event Name</th>
+                                    <th style="min-width: 100px; max-width: 100px">EventId</th>
+                                    <th style="min-width: 250px; max-width: 250px">Posted By</th>
+                                    <th style="min-width: 280px; max-width: 280px">Event-Duration</th>
+                                    <th style="min-width: 100px; max-width: 100px">Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <c:forEach var="event" items="${allEvents}">
+                                    <tr class="users-table-data">
+                                        <td style="width: 280px; display: flex; align-items: center; gap: 12px;">
+                                            <img class="user-table-data-image" src="${contextPath}/resources/images/event-default.png"/>
+                                            <p style="text-overflow: ellipsis; overflow: hidden;"><c:out value="${event.name}" /></p>
+                                        </td>
+                                        <td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;"><c:out value="${event.id}" /></td>
+                                        <td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;"><c:out value="${event.posterUserId}" /></td>
+                                        <td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;"><c:out value="${event.startDate} - ${event.endDate}" /></td>
+                                        <td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
+                                            <div class="user-actions">
+											   <form action="${contextPath}/eventRequest" method="post">
+											       <input type="hidden" name="action" value="approveEvent" />
+											       <input type="hidden" name="eventId" value="${event.id}" />
+											       <button class="approve-event-table-button" type="submit">
+											          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
+											             <path d="M20 6 9 17l-5-5"/>
+											           </svg>
+											        </button>
+											    </form>
 											
-											<button class="approve-event-table-button" onClick="toggleApproveEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
-													<path d="M20 6 9 17l-5-5"/>
-												</svg>
-											</button>
-											
-											<button class="reject-event-table-button" onClick="toggleRejectEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/>
-													<path d="m6 6 12 12"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 280px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/event-default.png"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Islington Jatra 2026</p>
-									</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">1</td>
-									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">2025-5-26 - 2025-5-30</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											
-											<button class="approve-event-table-button" onClick="toggleApproveEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
-													<path d="M20 6 9 17l-5-5"/>
-												</svg>
-											</button>
-											
-											<button class="reject-event-table-button" onClick="toggleRejectEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/>
-													<path d="m6 6 12 12"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 280px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/event-default.png"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Islington Jatra 2026</p>
-									</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">1</td>
-									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">2025-5-26 - 2025-5-30</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											
-											<button class="approve-event-table-button" onClick="toggleApproveEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
-													<path d="M20 6 9 17l-5-5"/>
-												</svg>
-											</button>
-											
-											<button class="reject-event-table-button" onClick="toggleRejectEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/>
-													<path d="m6 6 12 12"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 280px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/event-default.png"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Islington Jatra 2026</p>
-									</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">1</td>
-									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">2025-5-26 - 2025-5-30</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											
-											<button class="approve-event-table-button" onClick="toggleApproveEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
-													<path d="M20 6 9 17l-5-5"/>
-												</svg>
-											</button>
-											
-											<button class="reject-event-table-button" onClick="toggleRejectEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/>
-													<path d="m6 6 12 12"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 280px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/event-default.png"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Islington Jatra 2026</p>
-									</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">1</td>
-									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">2025-5-26 - 2025-5-30</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											
-											<button class="approve-event-table-button" onClick="toggleApproveEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
-													<path d="M20 6 9 17l-5-5"/>
-												</svg>
-											</button>
-											
-											<button class="reject-event-table-button" onClick="toggleRejectEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/>
-													<path d="m6 6 12 12"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 280px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/event-default.png"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Islington Jatra 2026</p>
-									</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">1</td>
-									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">2025-5-26 - 2025-5-30</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											
-											<button class="approve-event-table-button" onClick="toggleApproveEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check">
-													<path d="M20 6 9 17l-5-5"/>
-												</svg>
-											</button>
-											
-											<button class="reject-event-table-button" onClick="toggleRejectEvent(0)">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/>
-													<path d="m6 6 12 12"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						
-					</div>
-				</div>
+											    <button class="reject-event-table-button" onClick="toggleRejectEvent('${event.id}')">
+											       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/>
+											          <path d="m6 6 12 12"/>
+											          </svg>
+											     </button>
+											</div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 			</div>
 			
 			<div class="update-profile-overlay">
@@ -243,55 +119,45 @@
                         <span>Back</span>
                     </button>
 
-                    <%-- CHANGE 1: Modify the <form> tag --%>
                     <form class="update-profile-form"
                           action="${contextPath}/userProfile"
                           method="post"
                           enctype="multipart/form-data">
 
-                        <div class="update-profile-user-info">
-                            <%-- CHANGE 2: Modify the <img> tag src for dynamic display + fallback --%>
+                        <div class="update-profile-user-info">\
                             <img src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}"
                                  class="user-profile" alt="Current User Profile Picture" data-original-src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}">
 
-                            <%-- CHANGE 3: Add the hidden file input --%>
                             <input type="file" name="profilePictureFile" id="profilePictureUpload" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
 
-                            <%-- CHANGE 4: Modify the "Change Profile" button type and add onclick --%>
                             <button type="button" class="change-profile-picture-button" onclick="document.getElementById('profilePictureUpload').click();">Change Profile</button>
 
-                             <%-- CHANGE 5: Make the display name dynamic --%>
                             <p class="update-profile-display-name"><c:out value="${fullName}"/></p>
                         </div>
 
                         <div class="update-profile-input-forms">
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Full Name</label>
-                                <%-- CHANGE 6a: Add value attribute --%>
                                 <input name="fullName" type="text" class="update-profile-input-field" value="<c:out value='${fullName}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Email</label>
-                                <%-- CHANGE 6b: Add value attribute, change type --%>
                                 <input name="email" type="email" class="update-profile-input-field" value="<c:out value='${userEmail}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Phone Number</label>
-                                <%-- CHANGE 6c: Add value attribute, change type --%>
                                 <input name="phoneNumber" type="tel" class="update-profile-input-field" value="<c:out value='${userPhoneNumber}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
-                                <%-- CHANGE 6d: Correct name, add value, add readonly --%>
                                 <input name="organizationId" type="text" class="update-profile-input-field" value="<c:out value='${organizationId}'/>" readonly/>
                             </div>
 
                             <div class="update-profile-form-section">
-                                <label class="update-profile-input-label">New Password</label> <%-- Changed label --%>
-                                <%-- CHANGE 6e: Correct name, change type, add placeholder --%>
+                                <label class="update-profile-input-label">New Password</label> 
                                 <input name="password" type="password" class="update-profile-input-field" placeholder="Leave blank to keep current password"/>
                             </div>
                         </div>
@@ -323,11 +189,12 @@
 			</div>
 			
 			<div class="event-management-overlay" id="reject-event-overlay">
-				<form class="reject-event-container">
+				<form class="reject-event-container" action="${contextPath}/eventRequest" method="post">
+					<input type="hidden" name="action" value="rejectEvent" />
 					<input type="hidden" name="eventId" id="rejectEventIdField" value="" />
 					<div class="reject-event-container-info">
 						<h2 class="reject-event-container-info-heading">Reject Event Request</h2>
-						<textarea class="reject-event-container-info-textarea" name="rejectonReason" placeholder="Enter your reason for rejection"></textarea>
+						<textarea class="reject-event-container-info-textarea" name="rejectionReason" placeholder="Enter your reason for rejection"></textarea>
 					</div>
 					<div class="reject-event-controls">
 						<button class="reject-event-button cancel" type="button" onClick="toggleRejectEvent()">Cancel</button>
@@ -337,7 +204,7 @@
 			</div>
 			
 			<div class="event-management-overlay" id="approve-event-overlay">
-				<form class="approve-event-container">
+				<form class="approve-event-container" action="${contextPath}/eventRequest" method="post">
 					<input type="hidden" name="eventId" id="approveEventIdField" value="" />
 					<div class="approve-event-container-info">
 						<h2 class="approve-event-container-info-heading" style="margin-bottom: 16px;">Approve Event</h2>
@@ -355,25 +222,25 @@
 
 	<script>
 		function switchActiveTab(activeTab){
-			const statisticTab = document.querySelector(".statistics-tab");
-			const userManagementTab = document.querySelector(".user-management-tab");
-			
-			const statisticTabButton = document.getElementById("statisticTabButton");
-			const userManagementTabButton = document.getElementById("userManagementTabButton");
-			
-			if (activeTab === "statistic" && !statisticTabButton.classList.contains("active")){
-				statisticTabButton.classList.add("active");
-				userManagementTabButton.classList.remove("active");
-				statisticTab.style.display = "block";
-				userManagementTab.style.display = "none";
-			}
-			else if (activeTab == "userManagement" && !userManagementTabButton.classList.contains("active")){
-				statisticTabButton.classList.remove("active");
-				userManagementTabButton.classList.add("active");
-				statisticTab.style.display = "none";
-				userManagementTab.style.display = "block";
-			}
-		}
+	        const statisticTab = document.querySelector(".statistics-tab");
+	        const userManagementTab = document.querySelector(".user-management-tab");
+	
+	        const statisticTabButton = document.getElementById("statisticTabButton");
+	        const userManagementTabButton = document.getElementById("userManagementTabButton");
+	
+	        if (activeTab === "statistic" && !statisticTabButton.classList.contains("active")){
+	            statisticTabButton.classList.add("active");
+	            userManagementTabButton.classList.remove("active");
+	            statisticTab.style.display = "block";
+	            userManagementTab.style.display = "none";
+	        }
+	        else if (activeTab == "userManagement" && !userManagementTabButton.classList.contains("active")){
+	            statisticTabButton.classList.remove("active");
+	            userManagementTabButton.classList.add("active");
+	            statisticTab.style.display = "none";
+	            userManagementTab.style.display = "block";
+	        }
+	    }
 		
 		function toggleLogoutOverlay(){
 			const logoutElement = document.querySelector(".logout-overlay");
@@ -398,7 +265,7 @@
 			const rejectTextArea = document.querySelector(".reject-event-container-info-textarea");
 			if(rejectOverlay.style.visibility == "hidden" || rejectOverlay.style.visibility == ""){
 				rejectOverlay.style.visibility = "visible";
-				eventIdInputField.value = userId.toString();
+				eventIdInputField.value = eventId.toString();
 			} 
 			else{
 				rejectOverlay.style.visibility = "hidden";
@@ -412,7 +279,7 @@
 			const eventIdInputField = document.getElementById("approveEventIdField");
 			if(approveOverlay.style.visibility == "hidden" || approveOverlay.style.visibility == ""){
 				approveOverlay.style.visibility = "visible";
-				eventIdInputField.value = userId.toString();
+				eventIdInputField.value = eventId.toString();
 			} 
 			else{
 				approveOverlay.style.visibility = "hidden";

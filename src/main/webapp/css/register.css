@@ -123,7 +123,6 @@ body::-webkit-scrollbar {
 	height: 47px;
 	border-radius: 6px;
 	background-color: rgba(235,235,235,1);
-	color: rgba(0, 0, 0, 0.51);
 	border: none;
 	font-size: 16px;
 	padding-left: 17px;

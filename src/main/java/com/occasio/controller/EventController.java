@@ -15,55 +15,81 @@ import java.util.ArrayList;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-
 import com.occasio.util.ImageUtil;
 import com.occasio.util.SessionUtil;
 import com.occasio.model.EventModel;
 import com.occasio.model.UserModel;
 import com.occasio.service.EventService;
 
+/**
+ * Servlet for handling event-related requests, including creation, editing, and display.
+ */
 @WebServlet(asyncSupported = true, urlPatterns = { "/event" })
-@MultipartConfig
+@MultipartConfig // Required for handling file uploads (e.g., event cover images)
 public class EventController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final EventService eventService = new EventService();
-	private final ImageUtil imageUtil = new ImageUtil();
+    private final EventService eventService = new EventService();
+    private final ImageUtil imageUtil = new ImageUtil();
 
-	// Constants for image paths
-	private static final String EVENT_IMAGE_SUBFOLDER = "event_covers";
-	private static final String IMAGE_BASE_WEB_PATH = "resources/images";
+    // Constants for image paths
+    private static final String EVENT_IMAGE_SUBFOLDER = "event_covers";
+    private static final String IMAGE_BASE_WEB_PATH = "resources/images";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		UserModel currentUser = (UserModel) SessionUtil.getAttribute(request, "user"); // Get current user
+		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user"); // Get current user
 
 		// Ensure user is logged in for any event action via GET
-        if (currentUser == null) {
+        if (user == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sessionExpired");
             return;
         }
         
-        if(action==null || "".equals(action)) {
+        if("fetchEventData".equals(action)) {
+        	int eventId = Integer.parseInt(request.getParameter("eventId"));
+        	int userId = Integer.parseInt(request.getParameter("userId"));
+        	
+        	EventModel event = eventService.getEventData(request, eventId, userId);
+        	
+        	String popupMessage = (String) SessionUtil.getAttribute(request, "popupMessage");
+        	String popupType = (String) SessionUtil.getAttribute(request, "popupType");
+        	
+        	if(popupMessage != null && popupType != null) {
+        		request.setAttribute("popupMessage", popupMessage);
+        		request.setAttribute("popupType", popupType);
+        		SessionUtil.removeAttribute(request, "popupMessage");
+        		SessionUtil.removeAttribute(request, "popupType");
+        	}
+        	
+        	request.setAttribute("userId", user.getUserId());
+    		request.setAttribute("fullName", user.getFullName());
+    		request.setAttribute("userEmail", user.getEmail());
+    		request.setAttribute("organizationId", user.getOrgId());
+    		request.setAttribute("userPhoneNumber", user.getPhoneNumber());
+    		request.setAttribute("userProfileImgUrl", user.getProfilePicturePath());
+    		request.setAttribute("event", event);
+    		
         	request.getRequestDispatcher("/WEB-INF/pages/eventdetails.jsp").forward(request, response);
         	return;
         }
+            
+        // Action for fetching event data to pre-fill an edit form (e.g., /event?action=fetchForEdit&eventId=123)
+        if ("fetchForEdit".equals(action)) {
+            try {
+                int eventId = Integer.parseInt(request.getParameter("eventId"));
+                System.out.println("Fetching event data for edit, ID: " + eventId);
 
-		if ("fetchForEdit".equals(action)) {
-			try {
-				int eventId = Integer.parseInt(request.getParameter("eventId"));
-				System.out.println("Fetching event data for edit, ID: " + eventId);
-
-				EventModel eventToEdit = eventService.getEventById(eventId);
+                EventModel eventToEdit = eventService.getEventById(eventId);
 
 				if (eventToEdit != null) {
 					// Authorization Check: Ensure the current user owns the event
-					 if (eventToEdit.getPosterUserId() == currentUser.getUserId()) {
+					 if (eventToEdit.getPosterUserId() == user.getUserId()) {
 						request.setAttribute("eventToEdit", eventToEdit);
 						System.out.println("Event data fetched successfully, preparing to forward back to home.");
 					 } else {
-						System.err.println("User ID " + currentUser.getUserId() + " is not authorized to edit event ID " + eventId);
+						System.err.println("User ID " + user.getUserId() + " is not authorized to edit event ID " + eventId);
 						redirectToHomeWithError(request, response, "You are not authorized to edit this event.");
 						return;
 					 }
@@ -83,17 +109,16 @@ public class EventController extends HttpServlet {
 				 return;
 			}
 
-			// If fetch was successful, repopulate necessary home attributes and forward
-			System.out.println("Repopulating home attributes before forwarding.");
-			populateHomeAttributes(request);
-			request.getRequestDispatcher("/WEB-INF/pages/myEvents.jsp").forward(request, response);
+            System.out.println("Repopulating home attributes before forwarding.");
+            
+            request.getRequestDispatcher("/WEB-INF/pages/myEvents.jsp").forward(request, response);
 
-		} else {
-			System.out.println("GET request to /event with invalid or missing action: " + action);
-			// Redirect to home or show an error page
-			response.sendRedirect(request.getContextPath() + "/myEvents?error=invalidAction");
-		}
-	}
+        }
+         else {
+    			System.out.println("GET request to /event with invalid or missing action: " + action);
+    			response.sendRedirect(request.getContextPath() + "/myEvents?error=invalidAction");
+    		}
+    }
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -121,7 +146,7 @@ public class EventController extends HttpServlet {
 		String endDateStr = request.getParameter("end-date");
 		String eventLocation = request.getParameter("event-location");
 		String eventDescription = request.getParameter("event-description");
-//		String restriction = request.getParameter("restriction");
+		String restriction = request.getParameter("restriction");
 		String imageChanged = request.getParameter("image-change");
 
 		String sponsorName = request.getParameter("sponsor-name");
@@ -157,17 +182,14 @@ public class EventController extends HttpServlet {
 		event.setPostDate(postedDate);
 		event.setLocation(eventLocation);
 		event.setDescription(eventDescription);
-//		event.setRestriction(restriction);
+		event.setRestriction(restriction);
 		event.setImagePath(eventCoverDbPath);
 		event.setPosterUserId(currentUser.getUserId()); // Use logged-in user's ID
 		event.setStatus("pending");
 		event.setReviewNote(null);
 
-		event.setSponsorName(sponsorName);
-		event.setSponsorContact(sponsorContact);
-		event.setSponsorEmail(sponsorEmail);
-
-		String addEventResult = eventService.addEvent(event);
+		// EventService will now handle the sponsor data
+		String addEventResult = eventService.addEvent(event, sponsorName, sponsorContact, sponsorEmail);
 
 		if (addEventResult.startsWith("Successfully")) {
 			System.out.println("Added event successfully");
@@ -251,24 +273,19 @@ public class EventController extends HttpServlet {
 //        eventToUpdate.setRestriction(restriction);
 		eventToUpdate.setImagePath(eventCoverDbPath);
 
-		eventToUpdate.setSponsorName(sponsorName);
-		eventToUpdate.setSponsorContact(sponsorContact);
-		eventToUpdate.setSponsorEmail(sponsorEmail);
-
         eventToUpdate.setPosterUserId(originalEvent.getPosterUserId());
         eventToUpdate.setPostDate(originalEvent.getPostDate());
         eventToUpdate.setStatus(originalEvent.getStatus());
         eventToUpdate.setReviewNote(originalEvent.getReviewNote());
 
-
-		String updateResult = eventService.updateEvent(eventToUpdate);
+		String updateResult = eventService.updateEvent(eventToUpdate, sponsorName, sponsorContact, sponsorEmail);
 
 		if (updateResult.startsWith("Successfully")) {
 			System.out.println("Updated event successfully");
 			response.sendRedirect(request.getContextPath() + "/myEvents?eventUpdate=success");
 		} else {
 			System.err.println("Failed to update event: " + updateResult);
-			 redirectToHomeWithError(request, response, updateResult, eventId); // Pass service error message
+			 redirectToHomeWithError(request, response, updateResult, eventId);
 		}
 	}
 
@@ -276,7 +293,7 @@ public class EventController extends HttpServlet {
 	private String handleImageUpload(HttpServletRequest request, String partName, String subFolder) throws IOException, ServletException {
 		Part filePart = request.getPart(partName);
 		String originalFileName = imageUtil.getImageNameFromPart(filePart);
-		String dbPath = null; // Default to null (no change / error)
+		String dbPath = null; // Default to null (indicates failure)
 
 		// Check if a file was actually submitted and has a name
 		if (filePart != null && filePart.getSize() > 0 && originalFileName != null && !originalFileName.isEmpty()) {

@@ -43,8 +43,18 @@ public class HomeController extends HttpServlet {
 		request.setAttribute("userPhoneNumber", user.getPhoneNumber());
 		request.setAttribute("userProfileImgUrl", user.getProfilePicturePath());
 		
-		ArrayList<EventModel> ongoingEvents = eventService.getOngoingEvents(user.getUserId(), user.getOrgId());
+		String searchFilter = (String) SessionUtil.getAttribute(request, "searchTerm");
+		if(searchFilter == null) {
+			searchFilter = "";
+		}
+		
+		request.setAttribute("searchFilter", searchFilter);
+		SessionUtil.removeAttribute(request, "searchFilter");
+		
+		ArrayList<EventModel> ongoingEvents = eventService.getOngoingEvents(user.getUserId(), user.getOrgId(), searchFilter);
+		ArrayList<EventModel> upcomingEvents = eventService.getUpcomingEvents(user.getOrgId(), searchFilter);
 		request.setAttribute("ongoingEvents", ongoingEvents);
+		request.setAttribute("upcomingEvents", upcomingEvents);
 		
 		request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
 	}
@@ -53,8 +63,13 @@ public class HomeController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		
+		if(action.equals("search")) {
+			SessionUtil.setAttribute(request, "searchTerm", request.getParameter("searchText"));
+			
+			response.sendRedirect(request.getContextPath() + "/home");
+		}
 	}
 
 }

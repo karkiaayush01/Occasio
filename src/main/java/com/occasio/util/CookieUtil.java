@@ -5,6 +5,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Arrays;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Utility class for managing cookies in a web application.
@@ -21,10 +24,15 @@ public class CookieUtil {
      * @param maxAge   the maximum age of the cookie in seconds
      */
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setMaxAge(maxAge);
-        cookie.setPath("/"); // Make cookie available to the entire application
-        response.addCookie(cookie);
+    	try {
+            String encodedValue = URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+            Cookie cookie = new Cookie(name, encodedValue);
+            cookie.setMaxAge(maxAge);
+            cookie.setPath("/"); // Make cookie available to the entire application
+            response.addCookie(cookie);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace(); // Handle encoding exception
+        }
     }
 
     /**

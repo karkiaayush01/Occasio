@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2025 at 10:14 AM
+-- Generation Time: May 21, 2025 at 01:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,8 +112,8 @@ CREATE TABLE `organization` (
 --
 
 INSERT INTO `organization` (`OrgId`, `OrgName`, `OnboardedDate`, `Status`) VALUES
-(0, 'Super Organization', '2025-05-01', 'Active'),
-(1, 'Islington', '2025-05-04', 'Active');
+(1, 'Super Organization', '2025-05-01', 'Active'),
+(2, 'Islington', '2025-05-04', 'Active');
 
 -- --------------------------------------------------------
 
@@ -151,13 +151,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserId`, `FullName`, `UserEmail`, `Role`, `Password`, `DateJoined`, `PhoneNumber`, `ProfilePicturePath`, `OrgId`) VALUES
-(1, 'Aayush Karki', 'karkiaayush01@gmail.co', 'admin', '$2a$12$47Pou2IDTl7hlK/QW6nxQ.hWMi2f090zThInb4v5rehVs4/ba1MxK', '2025-05-04', '9824386150', 'resources/images/profile_pics/290570419_349674360477901_3582246089466682745_n.jpeg', 1),
-(4, 'Arpeet Neupaneb', 'neupanearpeet@gmail.com', 'user', '$2a$12$Hho2U.05u7nC.igo.6XdVOc7vLhuUx2lNnU0bh0z5.q79QsOH4cUa', '2025-05-06', '9803649735', 'resources/images/profile_pics/Brant Sparkle.jpg', 1),
-(7, 'Arpit Neupane', 'neupanearpit@gmail.com', 'user', '$2a$12$SlDrmFEygRyUnh4UoGbHJ.ywygNu/IPmDpb7EgD3mF7FAXAXa5vgi', '2025-05-06', '9803649735', NULL, 1),
-(8, 'Admin', 'admin@test.test', 'admin', '$2a$12$AH7iivmSKyZpsmdq/PHod.EYn3UQw.TKKXqceHCodBPXaSHzfUpkq', '2025-05-07', '9824038615', '', 1),
-(9, 'rabina lamaaaaa', 'rabina12@gmail.com', 'user', '$2a$12$eivtGJ/1YvFGQwlu6YaGgeBoTX4/DdSAFIPiKdszFpQzVO.O9wE0O', '2025-05-07', '098765432', 'resources/images/profile_pics/2303230606-KVvUXgt2.jpeg', 1),
-(10, 'Aayush Karki', 'karkiaayush001@gmail.com', 'user', '$2a$12$EBBYREI2bwMDDc.3TqkoOuhb7z/2rc1VwsL9fjP4rUvpI9yL6dLOm', '2025-05-19', '9824038615', 'resources/images/profile_pics/Cantarella PV V2.jpg', 1),
-(11, 'Super Admin', 'superadmin@occasio.com', 'superAdmin', '$2a$12$Ua06eiI.Td9Gw1L13F3DRO.9r73SUcip87EoFSktaJPAJpCpQd4Wm', '2025-05-21', '9824038615', 'resources/images/profile_pics/event-default.png', 0);
+(1, 'Aayush Karki', 'karkiaayush01@gmail.co', 'admin', '$2a$12$47Pou2IDTl7hlK/QW6nxQ.hWMi2f090zThInb4v5rehVs4/ba1MxK', '2025-05-04', '9824386150', 'resources/images/profile_pics/290570419_349674360477901_3582246089466682745_n.jpeg', 2),
+(4, 'Arpeet Neupaneb', 'neupanearpeet@gmail.com', 'user', '$2a$12$Hho2U.05u7nC.igo.6XdVOc7vLhuUx2lNnU0bh0z5.q79QsOH4cUa', '2025-05-06', '9803649735', 'resources/images/profile_pics/Brant Sparkle.jpg', 2),
+(7, 'Arpit Neupane', 'neupanearpit@gmail.com', 'user', '$2a$12$SlDrmFEygRyUnh4UoGbHJ.ywygNu/IPmDpb7EgD3mF7FAXAXa5vgi', '2025-05-06', '9803649735', NULL, 2),
+(9, 'rabina lamaaaaa', 'rabina12@gmail.com', 'user', '$2a$12$eivtGJ/1YvFGQwlu6YaGgeBoTX4/DdSAFIPiKdszFpQzVO.O9wE0O', '2025-05-07', '098765432', 'resources/images/profile_pics/2303230606-KVvUXgt2.jpeg', 2),
+(10, 'Aayush Karki', 'karkiaayush001@gmail.com', 'user', '$2a$12$EBBYREI2bwMDDc.3TqkoOuhb7z/2rc1VwsL9fjP4rUvpI9yL6dLOm', '2025-05-19', '9824038615', 'resources/images/profile_pics/Cantarella PV V2.jpg', 2),
+(11, 'Super Admin', 'superadmin@occasio.com', 'superAdmin', '$2a$12$Ua06eiI.Td9Gw1L13F3DRO.9r73SUcip87EoFSktaJPAJpCpQd4Wm', '2025-05-21', '9824038615', 'resources/images/profile_pics/event-default.png', 1);
 
 --
 -- Indexes for dumped tables
@@ -214,6 +213,12 @@ ALTER TABLE `event`
   MODIFY `EventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT for table `organization`
+--
+ALTER TABLE `organization`
+  MODIFY `OrgId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `sponsor`
 --
 ALTER TABLE `sponsor`
@@ -223,7 +228,7 @@ ALTER TABLE `sponsor`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -233,27 +238,27 @@ ALTER TABLE `user`
 -- Constraints for table `event`
 --
 ALTER TABLE `event`
-  ADD CONSTRAINT `event_poster_fk` FOREIGN KEY (`PostedUserId`) REFERENCES `user` (`UserId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `event_poster_fk` FOREIGN KEY (`PostedUserId`) REFERENCES `user` (`UserId`);
 
 --
 -- Constraints for table `event_interested_users`
 --
 ALTER TABLE `event_interested_users`
-  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`) ON DELETE CASCADE,
-  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
+  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`);
 
 --
 -- Constraints for table `event_sponsor`
 --
 ALTER TABLE `event_sponsor`
-  ADD CONSTRAINT `Event_Sponsor_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`) ON DELETE CASCADE,
-  ADD CONSTRAINT `Sponsor_Event_fk` FOREIGN KEY (`SponsorId`) REFERENCES `sponsor` (`SponsorId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `Event_Sponsor_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
+  ADD CONSTRAINT `Sponsor_Event_fk` FOREIGN KEY (`SponsorId`) REFERENCES `sponsor` (`SponsorId`);
 
 --
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `OrgId` FOREIGN KEY (`OrgId`) REFERENCES `organization` (`OrgId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `OrgId` FOREIGN KEY (`OrgId`) REFERENCES `organization` (`OrgId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

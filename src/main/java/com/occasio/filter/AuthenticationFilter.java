@@ -29,10 +29,10 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final List<String> LOGIN_ROUTES = List.of("/login", "/register");
-	private static final List<String> USER_ROUTES = List.of("/home", "/myEvents", "/aboutUs", "/eventDetails");
-	private static final List<String> ADMIN_ROUTES = List.of("/dashboard", "/userManagement", "/eventRequest");
-	private static final List<String> SUPER_ADMIN_ROUTES = List.of("/superDashboard", "/organizations");
+	private static final List<String> LOGIN_ROUTES = List.of("/login", "/register", "/userProfile");
+	private static final List<String> USER_ROUTES = List.of("/home", "/myEvents", "/aboutUs", "/eventDetails", "/event", "/userProfile");
+	private static final List<String> ADMIN_ROUTES = List.of("/dashboard", "/userManagement", "/eventRequest", "/userProfile");
+	private static final List<String> SUPER_ADMIN_ROUTES = List.of("/superDashboard", "/organizations", "/userProfile");
 	
 	private static final String LOGIN = "/login";
 
@@ -49,13 +49,6 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 	    }
 	    return false;
 	}
-	
-	private boolean doesNotMatchAnyRoute(String uri) {
-	    return LOGIN_ROUTES.stream().noneMatch(uri::endsWith) &&
-	           USER_ROUTES.stream().noneMatch(uri::endsWith) &&
-	           ADMIN_ROUTES.stream().noneMatch(uri::endsWith) &&
-	           SUPER_ADMIN_ROUTES.stream().noneMatch(uri::endsWith);
-	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -69,9 +62,9 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		// Get the requested URI
 		String uri = req.getRequestURI();
 
-		if (uri.endsWith(".css") || uri.endsWith(".ttf") || uri.endsWith(".js") || uri.endsWith(".svg") || uri.endsWith(".png") || uri.endsWith(".jpg")) {
-			chain.doFilter(request, response);
-			return;
+		if (uri.matches(".*\\.(css|ttf|js|svg|png|jpe?g|webp)$")) {
+		    chain.doFilter(request, response);
+		    return;
 		}
 
 		// Get the session and check if user is logged in

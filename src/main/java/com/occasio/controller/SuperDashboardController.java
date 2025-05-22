@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import com.occasio.model.UserModel;
 import com.occasio.util.SessionUtil;
+import com.occasio.service.DashboardService;
 
 /**
  * Servlet implementation class SuperDashboardController
@@ -16,6 +17,8 @@ import com.occasio.util.SessionUtil;
 @WebServlet("/superDashboard")
 public class SuperDashboardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private DashboardService dashboardService = new DashboardService();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,6 +40,16 @@ public class SuperDashboardController extends HttpServlet {
 		request.setAttribute("organizationId", user.getOrgId());
 		request.setAttribute("userPhoneNumber", user.getPhoneNumber());
 		request.setAttribute("userProfileImgUrl", user.getProfilePicturePath());
+		
+		int totalOrgs = dashboardService.getAllOrganizationCount();
+		int totalUsers = dashboardService.getAllUsersCount();
+		int totalCompletedEvents = dashboardService.getAllCompletedEvents();
+		int totalDueEvents = dashboardService.getAllEventsDue();
+		
+		request.setAttribute("totalOrgs", totalOrgs);
+		request.setAttribute("totalUsers", totalUsers);
+		request.setAttribute("totalCompletedEvents", totalCompletedEvents);
+		request.setAttribute("totalDueEvents", totalDueEvents);
 		
 		request.getRequestDispatcher("/WEB-INF/pages/superDashboard.jsp").forward(request, response);
 	}
