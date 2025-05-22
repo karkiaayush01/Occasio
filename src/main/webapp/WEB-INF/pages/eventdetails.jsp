@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="${contextPath}/css/updateProfile.css?v=${System.currentTimeMillis()}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
-
+	
 	<body>
 		<jsp:include page="popup.jsp"></jsp:include>
 		<main>
@@ -119,8 +119,8 @@
 						<p class = "details-event"> Event Details</p>
 					</div>
 					 <div class="detail-item">
-       					 <div class="detail-label">
-          					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.0757 20.82C11.9124 20.9372 11.7166 21.0003 11.5156 21.0003C11.3147 21.0003 11.1189 20.9372 10.9556 20.82C6.12665 17.378 1.00165 10.298 6.18265 5.182C7.60499 3.78285 9.52049 2.99912 11.5156 3C13.5156 3 15.4346 3.785 16.8486 5.181C22.0297 10.297 16.9047 17.376 12.0757 20.82Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5156 12C12.0461 12 12.5548 11.7893 12.9298 11.4142C13.3049 11.0391 13.5156 10.5304 13.5156 10C13.5156 9.46957 13.3049 8.96086 12.9298 8.58579C12.5548 8.21071 12.0461 8 11.5156 8C10.9852 8 10.4765 8.21071 10.1014 8.58579C9.72634 8.96086 9.51562 9.46957 9.51562 10C9.51562 10.5304 9.72634 11.0391 10.1014 11.4142C10.4765 11.7893 10.9852 12 11.5156 12Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+	      					 <div class="detail-label">
+	         					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.0757 20.82C11.9124 20.9372 11.7166 21.0003 11.5156 21.0003C11.3147 21.0003 11.1189 20.9372 10.9556 20.82C6.12665 17.378 1.00165 10.298 6.18265 5.182C7.60499 3.78285 9.52049 2.99912 11.5156 3C13.5156 3 15.4346 3.785 16.8486 5.181C22.0297 10.297 16.9047 17.376 12.0757 20.82Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5156 12C12.0461 12 12.5548 11.7893 12.9298 11.4142C13.3049 11.0391 13.5156 10.5304 13.5156 10C13.5156 9.46957 13.3049 8.96086 12.9298 8.58579C12.5548 8.21071 12.0461 8 11.5156 8C10.9852 8 10.4765 8.21071 10.1014 8.58579C9.72634 8.96086 9.51562 9.46957 9.51562 10C9.51562 10.5304 9.72634 11.0391 10.1014 11.4142C10.4765 11.7893 10.9852 12 11.5156 12Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 							</svg>
 
          					 <span class = "venue-text">Venue</span>
@@ -268,5 +268,4 @@
 			}
 		}
 	</script>
-
-	</html>
+</html>

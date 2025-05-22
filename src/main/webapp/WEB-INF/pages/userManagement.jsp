@@ -57,208 +57,59 @@
 				</div>
 				
 				<div class="user-management-tab" style="flex-grow: 1">
-					<h2 style="margin-bottom: 16px;">User Information</h2>
-					
-					<div class = "table-scroll-wrapper">
-						<table class="users-table">
-							<thead>
-								<tr class="users-table-headers">
-									<th style="min-width: 200px; max-width: 200px">Name</th>
-									<th style="min-width: 200px; max-width: 200px">Organization Name</th>
-									<th style="min-width: 100px; max-width: 100px">Role</th>
-									<th style="min-width: 120px; max-width: 120px">Phone</th>
-									<th style="min-width: 280px; max-width: 280px">Email Address</th>
-									<th style="min-width: 100px; max-width: 100px">Edit User</th>
-								</tr>
-							</thead>
-							
-							<tbody>
-								<tr class="users-table-data">
-									<td style="width: 200px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/profile_pics/queen.webp"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</p>
-									</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">User</td>
-									<td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;">98293200102</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">srijanshrestha@gmail.com</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteUserModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 200px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/profile_pics/queen.webp"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</p>
-									</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">User</td>
-									<td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;">98293200102</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">srijanshrestha@gmail.com</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteUserModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 200px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/profile_pics/queen.webp"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</p>
-									</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">User</td>
-									<td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;">98293200102</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">srijanshrestha@gmail.com</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteUserModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 200px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/profile_pics/queen.webp"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</p>
-									</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">User</td>
-									<td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;">98293200102</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">srijanshrestha@gmail.com</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteUserModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 200px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/profile_pics/queen.webp"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</p>
-									</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">User</td>
-									<td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;">98293200102</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">srijanshrestha@gmail.com</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteUserModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 200px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/profile_pics/queen.webp"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</p>
-									</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">User</td>
-									<td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;">98293200102</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">srijanshrestha@gmail.com</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteUserModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-								
-								<tr class="users-table-data">
-									<td style="width: 200px; display: flex; align-items: center; gap: 12px;">
-										<img class="user-table-data-image" src="${contextPath}/resources/images/profile_pics/queen.webp"/>
-										<p style="text-overflow: ellipsis; overflow: hidden;">Srijan Shrestha</p>
-									</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">User</td>
-									<td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;">98293200102</td>
-									<td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;">srijanshrestha@gmail.com</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteUserModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						
-					</div>
-				</div>
+	                <h2 style="margin-bottom: 16px;">User Information</h2>
+	                <c:if test="${not empty message}">
+	                    <p class="message">${message}</p>
+	                </c:if>
+	                <div class="table-scroll-wrapper">
+	                    <table class="users-table">
+	                        <thead>
+	                            <tr class="users-table-headers">
+	                                <th style="min-width: 200px; max-width: 200px">Name</th>
+	                                <th style="min-width: 200px; max-width: 200px">Organization Id</th>
+	                                <th style="min-width: 100px; max-width: 100px">Role</th>
+	                                <th style="min-width: 120px; max-width: 120px">Phone</th>
+	                                <th style="min-width: 280px; max-width: 280px">Email Address</th>
+	                                <th style="min-width: 100px; max-width: 100px">Edit User</th>
+	                            </tr>
+	                        </thead>
+	
+	                        <tbody>
+	                            <c:forEach var="user" items="${users}">
+	                                <tr class="users-table-data">
+	                                    <td style="width: 200px; display: flex; align-items: center; gap: 12px;">
+	                                        <img class="user-table-data-image" src="${contextPath}/${user.profilePicturePath}" onerror="this.src='${contextPath}/resources/images/default-profile.png';" alt="Profile Picture"/>
+	                                        <p style="text-overflow: ellipsis; overflow: hidden;"><c:out value="${user.fullName}" /></p>
+	                                    </td>
+	                                    <td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;"><c:out value="${user.orgId}" /></td>
+	                                    <td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;"><c:out value="${user.role}" /></td>
+	                                    <td style="min-width: 120px; max-width: 120px; text-overflow: ellipsis; overflow: hidden;"><c:out value="${user.phoneNumber}" /></td>
+	                                    <td style="min-width: 280px; max-width: 280px; text-overflow: ellipsis; overflow: hidden;"><c:out value="${user.email}" /></td>
+	                                    <td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
+	                                        <div class="user-actions">
+	                                            <form action="${contextPath}/userManagement" method="post">
+	                                                <input type="hidden" name="action" value="deleteUser" />
+	                                                <input type="hidden" name="userId" value="${user.userId}" />
+	                                                <button class="delete-user-button" type="submit" onclick="return confirm('Are you sure you want to delete this user?')">
+	                                                    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                                                        <path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+	                                                    </svg>
+	                                                </button>
+	                                            </form>
+	                                            <button class="edit-user-button" onClick="populateAndToggleUpdateUserModal('${user.userId}', '${user.fullName}', '${user.email}', '${user.phoneNumber}')">
+	                                                 <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                                                    <path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+	                                                 </svg>
+	                                            </button>
+	
+	                                        </div>
+	                                    </td>
+	                                </tr>
+	                            </c:forEach>
+	                        </tbody>
+	                    </table>
+	                </div>
+	            </div>
 			</div>
 			
 			<div class="update-profile-overlay">
@@ -270,37 +121,37 @@
                         <span>Back</span>
                     </button>
 
-                    <%-- CHANGE 1: Modify the <form> tag --%>
+                    <%-- Modify the <form> tag --%>
                     <form class="update-profile-form"
                           action="${contextPath}/userProfile"
                           method="post"
                           enctype="multipart/form-data">
 
                         <div class="update-profile-user-info">
-                            <%-- CHANGE 2: Modify the <img> tag src for dynamic display + fallback --%>
+                            <%-- Modify the <img> tag src for dynamic display + fallback --%>
                             <img src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}"
                                  class="user-profile" alt="Current User Profile Picture" data-original-src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}">
 
-                            <%-- CHANGE 3: Add the hidden file input --%>
+                            <%-- Add the hidden file input --%>
                             <input type="file" name="profilePictureFile" id="profilePictureUpload" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
 
-                            <%-- CHANGE 4: Modify the "Change Profile" button type and add onclick --%>
+                            <%-- Modify the "Change Profile" button type and add onclick --%>
                             <button type="button" class="change-profile-picture-button" onclick="document.getElementById('profilePictureUpload').click();">Change Profile</button>
 
-                             <%-- CHANGE 5: Make the display name dynamic --%>
+                             <%-- Make the display name dynamic --%>
                             <p class="update-profile-display-name"><c:out value="${fullName}"/></p>
                         </div>
 
                         <div class="update-profile-input-forms">
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Full Name</label>
-                                <%-- CHANGE 6a: Add value attribute --%>
+                                <%-- Add value attribute --%>
                                 <input name="fullName" type="text" class="update-profile-input-field" value="<c:out value='${fullName}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Email</label>
-                                <%-- CHANGE 6b: Add value attribute, change type --%>
+                                <%-- Add value attribute, change type --%>
                                 <input name="email" type="email" class="update-profile-input-field" value="<c:out value='${userEmail}'/>"/>
                             </div>
 
@@ -312,13 +163,13 @@
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
-                                <%-- CHANGE 6d: Correct name, add value, add readonly --%>
+                                <%-- Correct name, add value, add readonly --%>
                                 <input name="organizationId" type="text" class="update-profile-input-field" value="<c:out value='${organizationId}'/>" readonly/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">New Password</label> <%-- Changed label --%>
-                                <%-- CHANGE 6e: Correct name, change type, add placeholder --%>
+                                <%-- Correct name, change type, add placeholder --%>
                                 <input name="password" type="password" class="update-profile-input-field" placeholder="Leave blank to keep current password"/>
                             </div>
                         </div>
@@ -350,57 +201,60 @@
 			</div>
 			
 			<div class="user-management-overlay" id="user-delete-overlay">
-				<form class="user-delete-container">
-					<input type="hidden" name="userId" id="deleteUserIdField" value="" />
-					<div class="user-delete-container-info">
-						<h2 class="user-delete-container-info-heading">Delete User</h2>
-						<p class="user-delete-container-info-text">Are you sure you want to delete this user? This action cannot be undone.</p>
-					</div>
-					<div class="user-delete-controls">
-						<button class="user-delete-button cancel" type="button" onClick="toggleDeleteUserModal()">Cancel</button>
-						<button class="user-delete-button confirm" type="submit">Confirm</button>
-					</div>
-				</form>
-			</div>
+	            <form class="user-delete-container" action="${contextPath}/userManagement" method="post">
+	                <input type="hidden" name="action" value="deleteUser" />
+	                <input type="hidden" name="userId" id="deleteUserIdField" value="" />
+	                <div class="user-delete-container-info">
+	                    <h2 class="user-delete-container-info-heading">Delete User</h2>
+	                    <p class="user-delete-container-info-text">Are you sure you want to delete this user? This action cannot be undone.</p>
+	                </div>
+	                <div class="user-delete-controls">
+	                    <button class="user-delete-button cancel" type="button" onClick="toggleDeleteUserModal()">Cancel</button>
+	                    <button class="user-delete-button confirm" type="submit">Confirm</button>
+	                </div>
+	            </form>
+	        </div>
 			
 			<div class="user-management-overlay" id="user-edit-overlay">
-				<div class="user-edit-container">
-					<button class="user-edit-container-back" onclick="toggleUpdateUserModal()">
-                        <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.4574 11.9999L12.8854 21.4279L11.0001 23.3132L0.629396 12.9425C0.379434 12.6925 0.239014 12.3534 0.239014 11.9999C0.239014 11.6463 0.379434 11.3072 0.629396 11.0572L11.0001 0.686523L12.8854 2.57186L3.4574 11.9999Z" fill="black"/>
-                        </svg>
-                        <span>Back</span>
-                    </button>
-                    <div class="user-edit-container-content">
-						<h2 class="user-edit-container-title">Edit User</h2>
-						<form class="user-edit-form">
-							<input type="hidden" name="userId" id="updateUserIdField" value="" />
-							<div class="user-edit-form-section">
-								<label for="fullName" class="user-edit-form-section-label">Full Name</label>
-								<input type="text" name="fullName" class="user-edit-form-section-input" placeholder="John Doe"/>
-							</div>
-							<div class="user-edit-form-section">
-								<label for="email" class="user-edit-form-section-label">Email</label>
-								<input type="text" name="email" class="user-edit-form-section-input" placeholder="example@gmail.com"/>
-							</div>
-							<div class="user-edit-form-section">
-								<label for="email" class="user-edit-form-section-label">Phone Number</label>
-								<input type="text" name="email" class="user-edit-form-section-input" placeholder="9812345678"/>
-							</div>
-							<div class="user-edit-form-section">
-								<label for="password" class="user-edit-form-section-label">Reset Password</label>
-								<input type="text" name="email" class="user-edit-form-section-input"/>
-							</div>
-							<button type="submit" class="user-edit-form-submit">Save Edit</button>
-						</form>
-					</div>
-				</div>
-			</div>
+	            <div class="user-edit-container">
+	                <button class="user-edit-container-back" onclick="toggleUpdateUserModal()">
+	                    Back
+	                </button>
+	                <div class="user-edit-container-content">
+	                    <h2 class="user-edit-container-title">Edit User</h2>
+	                    <form class="user-edit-form" action="${contextPath}/userManagement" method="post">
+	                        <input type="hidden" name="action" value="updateUser" />
+	                        <input type="hidden" name="userId" id="updateUserIdField" value="" />
+	                        <div class="user-edit-form-section">
+	                            <label for="fullName" class="user-edit-form-section-label">Full Name</label>
+	                            <input type="text" name="fullName" id="updateFullNameField" class="user-edit-form-section-input" placeholder="John Doe" />
+	                        </div>
+	                        <div class="user-edit-form-section">
+	                            <label for="email" class="user-edit-form-section-label">Email</label>
+	                            <input type="text" name="email" id="updateEmailField" class="user-edit-form-section-input" placeholder="example@gmail.com" />
+	                        </div>
+	                        <div class="user-edit-form-section">
+	                            <label for="phoneNumber" class="user-edit-form-section-label">Phone Number</label>
+	                            <input type="text" name="phoneNumber" id="updatePhoneNumberField" class="user-edit-form-section-input" placeholder="9812345678" />
+	                        </div>
+	                        <button type="submit" class="user-edit-form-submit">Save Edit</button>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
 		</main>
 		<script src="${contextPath}/script/updateProfile.js"></script>
 	</body>
 
 	<script>
+		function populateAndToggleUpdateUserModal(userId, fullName, email, phoneNumber) {
+	        document.getElementById('updateUserIdField').value = userId;
+	        document.getElementById('updateFullNameField').value = fullName;
+	        document.getElementById('updateEmailField').value = email;
+	        document.getElementById('updatePhoneNumberField').value = phoneNumber;
+	        toggleUpdateUserModal();
+	    }
+		
 		function switchActiveTab(activeTab){
 			const statisticTab = document.querySelector(".statistics-tab");
 			const userManagementTab = document.querySelector(".user-management-tab");
@@ -439,31 +293,23 @@
 			}
 		}
 		
-		function toggleDeleteUserModal(userId = 0){
-			const deleteOverlay = document.getElementById("user-delete-overlay");
-			const userIdInputField = document.getElementById("deleteUserIdField");
-			if(deleteOverlay.style.visibility == "hidden" || deleteOverlay.style.visibility == ""){
-				deleteOverlay.style.visibility = "visible";
-				userIdInputField.value = userId.toString();
-			} 
-			else{
-				deleteOverlay.style.visibility = "hidden";
-				userIdInputField.value="";
-			}
-		}
 		
 		//populate the fields based on userId from here 
-		function toggleUpdateUserModal(userId = 0){
-			const updateOverlay = document.getElementById("user-edit-overlay");
-			const userIdInputField = document.getElementById("updateUserIdField");
-			if(updateOverlay.style.visibility == "hidden" || updateOverlay.style.visibility == ""){
-				updateOverlay.style.visibility = "visible";
-				userIdInputField.value = userId.toString();
-			} 
-			else{
-				updateOverlay.style.visibility = "hidden";
-				userIdInputField.value="";
-			}
-		}
+		function toggleUpdateUserModal() {
+	        const updateOverlay = document.getElementById("user-edit-overlay");
+	        updateOverlay.style.visibility = (updateOverlay.style.visibility === "visible") ? "hidden" : "visible";
+	    }
+	
+	    function toggleDeleteUserModal(userId = 0) {
+	        const deleteOverlay = document.getElementById("user-delete-overlay");
+	        const userIdInputField = document.getElementById("deleteUserIdField");
+	        if (deleteOverlay.style.visibility == "hidden" || deleteOverlay.style.visibility == "") {
+	            deleteOverlay.style.visibility = "visible";
+	            userIdInputField.value = userId.toString();
+	        } else {
+	            deleteOverlay.style.visibility = "hidden";
+	            userIdInputField.value = "";
+	        }
+	    }
 	</script>
 </html>

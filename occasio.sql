@@ -228,7 +228,7 @@ ALTER TABLE `sponsor`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -238,27 +238,27 @@ ALTER TABLE `user`
 -- Constraints for table `event`
 --
 ALTER TABLE `event`
-  ADD CONSTRAINT `event_poster_fk` FOREIGN KEY (`PostedUserId`) REFERENCES `user` (`UserId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `event_poster_fk` FOREIGN KEY (`PostedUserId`) REFERENCES `user` (`UserId`);
 
 --
 -- Constraints for table `event_interested_users`
 --
 ALTER TABLE `event_interested_users`
-  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`) ON DELETE CASCADE,
-  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `Event_User_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
+  ADD CONSTRAINT `User_Event_fk` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`);
 
 --
 -- Constraints for table `event_sponsor`
 --
 ALTER TABLE `event_sponsor`
-  ADD CONSTRAINT `Event_Sponsor_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`) ON DELETE CASCADE,
-  ADD CONSTRAINT `Sponsor_Event_fk` FOREIGN KEY (`SponsorId`) REFERENCES `sponsor` (`SponsorId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `Event_Sponsor_fk` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
+  ADD CONSTRAINT `Sponsor_Event_fk` FOREIGN KEY (`SponsorId`) REFERENCES `sponsor` (`SponsorId`);
 
 --
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `OrgId` FOREIGN KEY (`OrgId`) REFERENCES `organization` (`OrgId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `OrgId` FOREIGN KEY (`OrgId`) REFERENCES `organization` (`OrgId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

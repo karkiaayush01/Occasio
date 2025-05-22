@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import java.util.List;
+import com.occasio.model.TopInterestedEventModel;
+import com.occasio.model.MostEngagedUserModel;
+
 import com.occasio.config.DbConfig;
 import com.occasio.model.OrganizationModel;
 import com.occasio.util.ValidationUtil;
@@ -125,6 +129,35 @@ public class DashboardService {
 		
 		return count;
 	}
+	
+	public int getOngoingEventsDue() {
+	    if (this.dbConn == null) {
+	        System.err.println("DashboardService.getOngoingEventsDue: Database connection not found.");
+	        return 0;
+	    }
+	    
+	    LocalDate currentDate = LocalDate.now();
+	    
+	    String getOngoingEventsQuery = "SELECT COUNT(*) AS EventCount FROM event WHERE Status='approved' AND StartDate <= ? AND EndDate >= ?";
+	    int count = 0;
+	    
+	    try (PreparedStatement getOngoingEventsStmt = dbConn.prepareStatement(getOngoingEventsQuery)) {
+	        getOngoingEventsStmt.setDate(1, Date.valueOf(currentDate));
+	        getOngoingEventsStmt.setDate(2, Date.valueOf(currentDate));
+	        
+	        ResultSet rs = getOngoingEventsStmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            count = rs.getInt("EventCount");
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("DashboardService.getOngoingEventsDue: Error fetching ongoing events count " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	    
+	    return count;
+	}
+
 	
 	public ArrayList<OrganizationModel> getAllOrganizations() {
 		if (this.dbConn == null) {
@@ -305,4 +338,64 @@ public class DashboardService {
 		    return "Error: Error while updating organization";
 		}
 	}
+	
+	public List<TopInterestedEventModel> getTopInterestedEvents() {
+        if (this.dbConn == null) {
+            System.err.println("DashboardService.getTopInterestedEvents: Database connection not found.");
+            return new ArrayList<>(); // Return an empty list to avoid errors
+        }
+
+        List<TopInterestedEventModel> topEvents = new ArrayList<>();
+        String sql = "SELECT e.EventName, COUNT(ei.UserId) AS InterestCount " +
+                     "FROM event e " +
+                     "JOIN event_interested_users ei ON e.EventId = ei.EventId " +
+                     "GROUP BY e.EventName " +
+                     "ORDER BY InterestCount DESC " +
+                     "LIMIT 5"; // Get top 5
+
+        try (PreparedStatement stmt = dbConn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                TopInterestedEventModel event = new TopInterestedEventModel();
+                event.setEventName(rs.getString("EventName"));
+                event.setInterestCount(rs.getInt("InterestCount"));
+                topEvents.add(event);
+            }
+        } catch (SQLException e) {
+            System.err.println("DashboardService.getTopInterestedEvents: Error fetching data: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return topEvents;
+    }
+
+    public List<MostEngagedUserModel> getMostEngagedUsers() {
+        if (this.dbConn == null) {
+            System.err.println("DashboardService.getMostEngagedUsers: Database connection not found.");
+            return new ArrayList<>(); // Return empty list
+        }
+
+        List<MostEngagedUserModel> engagedUsers = new ArrayList<>();
+        String sql = "SELECT u.FullName, u.UserEmail, u.ProfilePicturePath, COUNT(ei.EventId) AS EngagementCount " +
+                     "FROM user u " +
+                     "JOIN event_interested_users ei ON u.UserId = ei.UserId " +
+                     "GROUP BY u.UserId " +
+                     "ORDER BY EngagementCount DESC " +
+                     "LIMIT 5";  // Get top 5
+
+        try (PreparedStatement stmt = dbConn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                MostEngagedUserModel user = new MostEngagedUserModel();
+                user.setFullName(rs.getString("FullName"));
+                user.setEmail(rs.getString("UserEmail"));
+                user.setProfilePicturePath(rs.getString("ProfilePicturePath")); // Assuming you have a ProfilePicturePath column
+                user.setEngagementCount(rs.getInt("EngagementCount"));
+                engagedUsers.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("DashboardService.getMostEngagedUsers: Error fetching data: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return engagedUsers;
+    }
 }

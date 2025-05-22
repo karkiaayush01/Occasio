@@ -1,13 +1,5 @@
 package com.occasio.controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-
 import java.io.IOException;
 
 // Import your specific classes
@@ -15,6 +7,14 @@ import com.occasio.model.UserModel;
 import com.occasio.service.UserService;
 import com.occasio.util.ImageUtil;
 import com.occasio.util.SessionUtil;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 @WebServlet("/userProfile")
 @MultipartConfig // Crucial for file uploads

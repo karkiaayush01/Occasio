@@ -1,10 +1,8 @@
-/*
- * @author Occasio Team
- */
-
 package com.occasio.model;
 
 import java.time.LocalDate;
+import java.util.List; // Import List
+import java.util.ArrayList; // Import ArrayList (for initialization)
 
 public class EventModel {
 	private int id;
@@ -20,19 +18,20 @@ public class EventModel {
 	private String postedUserName;
 	private String status;
 	private String reviewNote;
-	private String sponsorName;
-	private String sponsorContact;
-	private String sponsorEmail;
+
+	private List<SponsorModel> sponsors; // A list of sponsors
+
 	private Boolean interested;
 	private InterestedModel interestedUsers;
-	
+
 	public EventModel() {
-		
+		this.sponsors = new ArrayList<>(); // Initialize the list
 	}
-	
+
+	// Constructor
 	public EventModel(int id, String name, LocalDate startDate, LocalDate endDate, LocalDate postDate,
             String description, String imagePath, String location, String restriction, int posterUserId,
-            String status, String reviewNote, String sponsorName, String sponsorContact, String sponsorEmail) 
+            String status, String reviewNote)
 	{
 		super();
 		this.id = id;
@@ -47,125 +46,48 @@ public class EventModel {
 		this.posterUserId = posterUserId;
 		this.status = status;
 		this.reviewNote = reviewNote;
-		this.sponsorName = sponsorName;
-		this.sponsorContact = sponsorContact;
-		this.sponsorEmail = sponsorEmail;
+		this.sponsors = new ArrayList<>(); // Initialize the list here too
 	}
 
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-	
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-	
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
-	}
-	
-	public LocalDate getPostDate() {
-		return postDate;
-	}
-	public void setPostDate(LocalDate postDate) {
-		this.postDate = postDate;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public String getImagePath() {
-		return imagePath;
-	}
-	
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-	public String getLocation() {
-		return location;
-	}
-	
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
-	public String getRestriction() {
-		return restriction;
-	}
-	
-	public void setRestriction(String restriction) {
-		this.restriction = restriction;
-	}
-	
-	public int getPosterUserId() {
-		return posterUserId;
-	}
-	
-	public void setPosterUserId(int posterUserId) {
-		this.posterUserId = posterUserId;
-	}
-	
-	public String getStatus() {
-		return status;
-	}
-	
-	public void setStatus(String eventStatus) {
-		this.status = eventStatus;
+	// --- Existing Getters and Setters (keep) ---
+	public int getId() { return id; }
+	public void setId(int id) { this.id = id; }
+	public String getName() { return name; }
+	public void setName(String name) { this.name = name; }
+	public LocalDate getStartDate() { return startDate; }
+	public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+	public LocalDate getEndDate() { return endDate; }
+	public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+	public LocalDate getPostDate() { return postDate; }
+	public void setPostDate(LocalDate postDate) { this.postDate = postDate; }
+	public String getDescription() { return description; }
+	public void setDescription(String description) { this.description = description; }
+	public String getImagePath() { return imagePath; }
+	public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+	public String getLocation() { return location; }
+	public void setLocation(String location) { this.location = location; }
+	public String getRestriction() { return restriction; }
+	public void setRestriction(String restriction) { this.restriction = restriction; }
+	public int getPosterUserId() { return posterUserId; }
+	public void setPosterUserId(int posterUserId) { this.posterUserId = posterUserId; }
+	public String getStatus() { return status; }
+	public void setStatus(String eventStatus) { this.status = eventStatus; }
+	public String getReviewNote() { return reviewNote; }
+	public void setReviewNote(String reviewNote) { this.reviewNote = reviewNote; }
+
+	public List<SponsorModel> getSponsors() {
+		return sponsors;
 	}
 
-	public String getReviewNote() {
-		return reviewNote;
+	public void setSponsors(List<SponsorModel> sponsors) {
+		this.sponsors = sponsors;
 	}
-
-	public void setReviewNote(String reviewNote) {
-		this.reviewNote = reviewNote;
-	}
-	
-	public String getSponsorName() {
-	    return sponsorName;
-	}
-
-	public void setSponsorName(String sponsorName) {
-	    this.sponsorName = sponsorName;
-	}
-
-	public String getSponsorContact() {
-	    return sponsorContact;
-	}
-
-	public void setSponsorContact(String sponsorContact) {
-	    this.sponsorContact = sponsorContact;
-	}
-	
-	public String getSponsorEmail() {
-	    return sponsorEmail;
-	}
-
-	public void setSponsorEmail(String sponsorEmail) {
-	    this.sponsorEmail = sponsorEmail;
+	// Add a helper method to add a single sponsor
+	public void addSponsor(SponsorModel sponsor) {
+		if (this.sponsors == null) {
+			this.sponsors = new ArrayList<>();
+		}
+		this.sponsors.add(sponsor);
 	}
 	
 	public Boolean getInterested() {
