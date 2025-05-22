@@ -188,8 +188,6 @@ public class EventController extends HttpServlet {
 		event.setStatus("pending");
 		event.setReviewNote(null);
 
-		// REMOVE THE LINES BELOW: We do NOT set SponsorName/Contact/Email on EventModel anymore
-
 		// EventService will now handle the sponsor data
 		String addEventResult = eventService.addEvent(event, sponsorName, sponsorContact, sponsorEmail);
 

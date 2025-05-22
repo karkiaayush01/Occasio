@@ -112,7 +112,7 @@ public class EventService {
 	        return "Error while connecting to database";
 	    }
 
-        String validationError = validateEventData(eventModel, false, sponsorNameInput, sponsorContactInput, sponsorEmailInput);
+        String validationError = validateEventData(eventModel, false);
         if (validationError != null) {
             return validationError;
         }
@@ -234,7 +234,7 @@ public class EventService {
     }
 
 
-	// *** CRITICAL CHANGE: updateEvent now handles Many-to-Many linking ***
+	// updateEvent now handles Many-to-Many linking ***
 	public String updateEvent(EventModel eventModel, String sponsorNameInput, String sponsorContactInput, String sponsorEmailInput) {
         if (this.dbConn == null) {
            return "Database connection error.";
@@ -243,7 +243,7 @@ public class EventService {
             return "Invalid event data or missing Event ID for update.";
        }
 
-       String validationError = validateEventData(eventModel, true, sponsorNameInput, sponsorContactInput, sponsorEmailInput);
+       String validationError = validateEventData(eventModel, true);
        if (validationError != null) {
            return validationError;
        }
@@ -491,10 +491,6 @@ public class EventService {
 				event.setPosterUserId(rs.getInt("PostedUserId"));
 				event.setStatus(rs.getString("Status"));
 				event.setReviewNote(rs.getString("ReviewNote"));
-				
-				event.setSponsorName(rs.getString("SponsorName"));
-	            event.setSponsorContact(rs.getString("SponsorContact"));
-	            event.setSponsorEmail(rs.getString("SponsorEmail"));
 	            
 				upcomingEvents.add(event);
 			}
@@ -539,10 +535,6 @@ public class EventService {
 				event.setPostedUserName(rs.getString("PostedBy"));
 				event.setStatus(rs.getString("Status"));
 				event.setReviewNote(rs.getString("ReviewNote"));
-				
-				event.setSponsorName(rs.getString("SponsorName"));
-	            event.setSponsorContact(rs.getString("SponsorContact"));
-	            event.setSponsorEmail(rs.getString("SponsorEmail"));
 	            
 	            Boolean isInterested = rs.getObject("Interested") != null;
 	            event.setInterested(isInterested);
@@ -579,21 +571,7 @@ public class EventService {
         if (event.getStartDate().isAfter(event.getEndDate())) {
             return "Start Date cannot be after End Date.";
         }
-
-        String typedSponsorName = sponsorName != null ? sponsorName.trim() : "";
-        String typedSponsorContact = sponsorContact != null ? sponsorContact.trim() : "";
-        String typedSponsorEmail = sponsorEmail != null ? sponsorEmail.trim() : "";
-
-        boolean anySponsorInfoProvided = !typedSponsorName.isEmpty() || !typedSponsorContact.isEmpty() || !typedSponsorEmail.isEmpty();
-
-        if (anySponsorInfoProvided) {
-            if (typedSponsorName.isEmpty()) {
-                return "Sponsor Name is required if any sponsor details are provided.";
-            }
-            if (typedSponsorEmail.isEmpty()) {
-                return "Sponsor Email is required if any sponsor details are provided.";
-            }
-        }
+        
         return null;
     }
     

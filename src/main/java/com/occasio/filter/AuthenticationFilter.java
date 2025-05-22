@@ -1,6 +1,7 @@
 package com.occasio.filter;
 
 import jakarta.servlet.Filter;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
@@ -49,13 +50,14 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 	    return false;
 	}
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
-        String action = request.getParameter("action");
+		// Cast the request and response to HttpServletRequest and HttpServletResponse
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		String action = request.getParameter("action");
 
 		// Get the requested URI
 		String uri = req.getRequestURI();
@@ -65,62 +67,49 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		    return;
 		}
 
-        boolean isLoggedIn = SessionUtil.getAttribute(req, "user") != null;
-        UserModel user = (UserModel) SessionUtil.getAttribute(req, "user");
+		// Get the session and check if user is logged in
+		boolean isLoggedIn = SessionUtil.getAttribute(req, "user") != null;
+		
+		UserModel user = (UserModel) SessionUtil.getAttribute(req, "user");
+		
+		if (!isLoggedIn) {
+			if (this.endsWithAny(uri, LOGIN_ROUTES)) {
+				chain.doFilter(request, response);
+			} else {
+				res.sendRedirect(req.getContextPath() + LOGIN);
+			}
+		} else {
+			//if user is already logged in but trying to redirect to login with logout action, do not block the user
+			if (uri.endsWith(LOGIN) && action != null && action.equals("logout")) {
+				chain.doFilter(request, response);
+			}
+			
+			if(user.getRole().equals("admin")) {
+				if (this.endsWithAny(uri, ADMIN_ROUTES) || this.endsWithAny(uri, USER_ROUTES)) {
+					chain.doFilter(request, response);
+				} else {
+					res.sendRedirect(req.getContextPath() + "/dashboard");
+				}
+			}
+			else if (user.getRole().equals("superAdmin")) {
+				if (this.endsWithAny(uri, SUPER_ADMIN_ROUTES)) {
+					chain.doFilter(request, response);
+				} else {
+					res.sendRedirect(req.getContextPath() + "/superDashboard");
+				}
+			}
+			else {
+				if (this.endsWithAny(uri, USER_ROUTES)) {
+					chain.doFilter(request, response);
+				} else {
+					res.sendRedirect(req.getContextPath() + "/home");
+				}
+			}
+		}
+	}
 
-        System.out.println("Filter: Is Logged In: " + isLoggedIn);
-        System.out.println("Filter: User Role: " + (user != null ? user.getRole() : "N/A (not logged in)"));
-
-        if (!isLoggedIn) {
-            System.out.println("Filter: User not logged in.");
-            if (this.endsWithAny(pathWithoutContext, LOGIN_ROUTES)) {
-                System.out.println("Filter: Allowing access to login/register route: " + pathWithoutContext);
-                chain.doFilter(request, response);
-            } else {
-                System.out.println("Filter: Redirecting unauthenticated user to LOGIN: " + LOGIN);
-                res.sendRedirect(contextPath + LOGIN);
-            }
-        } else { // User is logged in
-            System.out.println("Filter: User is logged in.");
-            // Allow logged-in user to perform logout action
-            if (pathWithoutContext.endsWith(LOGIN) && action != null && action.equals("logout")) {
-                System.out.println("Filter: Allowing logged-in user to logout.");
-                chain.doFilter(request, response);
-            }
-            // Role-based authorization
-            else if(user.getRole().equals("admin")) {
-                if (this.endsWithAny(pathWithoutContext, ADMIN_ROUTES) || this.endsWithAny(pathWithoutContext, USER_ROUTES)) {
-                    System.out.println("Filter: Admin allowing access to route: " + pathWithoutContext);
-                    chain.doFilter(request, response);
-                } else {
-                    System.out.println("Filter: Admin redirecting to dashboard (unauthorized route): " + pathWithoutContext);
-                    res.sendRedirect(contextPath + "/dashboard");
-                }
-            }
-            else if (user.getRole().equals("superAdmin")) {
-                if (this.endsWithAny(pathWithoutContext, SUPER_ADMIN_ROUTES) || this.endsWithAny(pathWithoutContext, ADMIN_ROUTES) || this.endsWithAny(pathWithoutContext, USER_ROUTES)) { // SuperAdmin can access admin and user routes too
-                    System.out.println("Filter: SuperAdmin allowing access to route: " + pathWithoutContext);
-                    chain.doFilter(request, response);
-                } else {
-                    System.out.println("Filter: SuperAdmin redirecting to superDashboard (unauthorized route): " + pathWithoutContext);
-                    res.sendRedirect(contextPath + "/superDashboard");
-                }
-            }
-            else { // Default user role (not admin/superAdmin)
-                if (this.endsWithAny(pathWithoutContext, USER_ROUTES)) {
-                    System.out.println("Filter: Regular user allowing access to route: " + pathWithoutContext);
-                    chain.doFilter(request, response);
-                } else {
-                    System.out.println("Filter: Regular user redirecting to home (unauthorized route): " + pathWithoutContext);
-                    res.sendRedirect(contextPath + "/home"); // <-- This is your likely redirect location
-                }
-            }
-        }
-        System.out.println("--- AuthenticationFilter End ---\n");
-    }
-
-    @Override
-    public void destroy() {
-        // Cleanup logic, if required
-    }
+	@Override
+	public void destroy() {
+		// Cleanup logic, if required
+	}
 }
