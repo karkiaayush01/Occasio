@@ -29,6 +29,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	//defining routes for different types of users
 	private static final List<String> LOGIN_ROUTES = List.of("/login", "/register", "/userProfile");
 	private static final List<String> USER_ROUTES = List.of("/home", "/myEvents", "/aboutUs", "/eventDetails", "/event", "/userProfile");
 	private static final List<String> ADMIN_ROUTES = List.of("/dashboard", "/userManagement", "/eventRequest", "/userProfile");

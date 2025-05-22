@@ -21,8 +21,18 @@ public class EventRequestController extends HttpServlet {
         super();
     }
 
+    /**
+     * Handles GET requests for the /eventRequest endpoint.
+     * Retrieves all event requests for the logged-in user's organization and
+     * forwards the data to eventRequest.jsp.
+     *
+     * @param request  the HttpServletRequest containing user session
+     * @param response the HttpServletResponse to send data to the JSP
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("Entering doGet for eventRequest");
+        System.out.println("Entering doGet for eventRequest");
         UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
 
         EventRequestService eventService = new EventRequestService();
@@ -39,6 +49,15 @@ public class EventRequestController extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/pages/eventRequest.jsp").forward(request, response);
     }
 
+    /**
+     * Handles POST requests for the /eventRequest endpoint.
+     * Delegates to appropriate handlers based on 'action' parameter.
+     *
+     * @param request  the HttpServletRequest containing form data
+     * @param response the HttpServletResponse to send results
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
@@ -51,6 +70,14 @@ public class EventRequestController extends HttpServlet {
         }
     }
 
+    /**
+     * Handles approval of an event.
+     *
+     * @param request  the HttpServletRequest containing the eventId
+     * @param response the HttpServletResponse to redirect or show message
+     * @throws ServletException
+     * @throws IOException
+     */
     private void handleApproveEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int eventId = Integer.parseInt(request.getParameter("eventId"));
 
@@ -61,6 +88,14 @@ public class EventRequestController extends HttpServlet {
         doGet(request, response);
     }
 
+    /**
+     * Handles rejection of an event with a reason.
+     *
+     * @param request  the HttpServletRequest containing the eventId and rejectionReason
+     * @param response the HttpServletResponse to redirect or show message
+     * @throws ServletException
+     * @throws IOException
+     */
     private void handleRejectEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int eventId = Integer.parseInt(request.getParameter("eventId"));
         String reviewNote = request.getParameter("rejectionReason");

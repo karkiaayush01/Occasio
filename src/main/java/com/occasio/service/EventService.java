@@ -112,7 +112,7 @@ public class EventService {
 	        return "Error while connecting to database";
 	    }
 
-        String validationError = validateEventData(eventModel, false);
+        String validationError = validateEventData(eventModel, false, sponsorNameInput, sponsorContactInput, sponsorEmailInput);
         if (validationError != null) {
             return validationError;
         }
@@ -243,7 +243,7 @@ public class EventService {
             return "Invalid event data or missing Event ID for update.";
        }
 
-       String validationError = validateEventData(eventModel, true);
+       String validationError = validateEventData(eventModel, true, sponsorNameInput, sponsorContactInput, sponsorEmailInput);
        if (validationError != null) {
            return validationError;
        }
@@ -558,22 +558,37 @@ public class EventService {
 		return event;
 	}
 	
-    private String validateEventData(EventModel event, boolean isUpdate) {
-        if (event.getName() == null || event.getName().trim().isEmpty()) return "Event Title cannot be empty.";
-        if (event.getStartDate() == null) return "Start Date cannot be empty.";
-        if (event.getEndDate() == null) return "End Date cannot be empty.";
-        if (event.getLocation() == null || event.getLocation().trim().isEmpty()) return "Event Location cannot be empty.";
-        if (event.getDescription() == null || event.getDescription().trim().isEmpty()) return "Event Description cannot be empty.";
-
-        if (event.getName().length() > 30) return "Event Title cannot exceed 30 characters.";
-        if (event.getDescription().length() > 2000) return "Event Description cannot exceed 2000 characters.";
-
-        if (event.getStartDate().isAfter(event.getEndDate())) {
-            return "Start Date cannot be after End Date.";
-        }
-        
-        return null;
-    }
+	// validateEventData now takes sponsor string parameters
+		private String validateEventData(EventModel event, boolean isUpdate, String sponsorName, String sponsorContact, String sponsorEmail) {
+		    if (event.getName() == null || event.getName().trim().isEmpty()) return "Event Title cannot be empty.";
+		    if (event.getStartDate() == null) return "Start Date cannot be empty.";
+		    if (event.getEndDate() == null) return "End Date cannot be empty.";
+		    if (event.getLocation() == null || event.getLocation().trim().isEmpty()) return "Event Location cannot be empty.";
+		    if (event.getDescription() == null || event.getDescription().trim().isEmpty()) return "Event Description cannot be empty.";
+		
+		    if (event.getName().length() > 30) return "Event Title cannot exceed 30 characters.";
+		    if (event.getDescription().length() > 100) return "Event Description cannot exceed 100 characters.";
+		
+		    if (event.getStartDate().isAfter(event.getEndDate())) {
+		        return "Start Date cannot be after End Date.";
+		    }
+		
+		    String typedSponsorName = sponsorName != null ? sponsorName.trim() : "";
+		    String typedSponsorContact = sponsorContact != null ? sponsorContact.trim() : "";
+		    String typedSponsorEmail = sponsorEmail != null ? sponsorEmail.trim() : "";
+		
+		    boolean anySponsorInfoProvided = !typedSponsorName.isEmpty() || !typedSponsorContact.isEmpty() || !typedSponsorEmail.isEmpty();
+		
+		    if (anySponsorInfoProvided) {
+		        if (typedSponsorName.isEmpty()) {
+		            return "Sponsor Name is required if any sponsor details are provided.";
+		        }
+		        if (typedSponsorEmail.isEmpty()) {
+		            return "Sponsor Email is required if any sponsor details are provided.";
+		        }
+		    }
+		    return null;
+		}
     
  // Method to remove an interested user from an event
  	public String removeInterestedUser(int userId, int eventId) {
