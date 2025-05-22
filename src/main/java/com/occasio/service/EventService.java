@@ -480,7 +480,7 @@ public class EventService {
 		try(PreparedStatement getOngoingEventsStmt = dbConn.prepareStatement(getOngoingEventsQuery)){
 			getOngoingEventsStmt.setInt(1, userId);
 			getOngoingEventsStmt.setInt(2, orgId);
-			getOngoingEventsStmt.setString(3, "pending");
+			getOngoingEventsStmt.setString(3, "approved");
 			getOngoingEventsStmt.setDate(4, Date.valueOf(currentDate));
 			getOngoingEventsStmt.setDate(5, Date.valueOf(currentDate));
 			getOngoingEventsStmt.setString(6, "%" + filter + "%");
@@ -539,7 +539,7 @@ public class EventService {
 		
 		try(PreparedStatement getUpcomingEventsStmt = dbConn.prepareStatement(getUpcomingEventsQuery)){
 			getUpcomingEventsStmt.setInt(1, orgId);
-			getUpcomingEventsStmt.setString(2, "pending");
+			getUpcomingEventsStmt.setString(2, "approved");
 			getUpcomingEventsStmt.setDate(3, Date.valueOf(currentDate));
 			getUpcomingEventsStmt.setString(4, "%" + filter + "%");
 			
