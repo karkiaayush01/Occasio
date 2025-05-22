@@ -60,7 +60,7 @@
 	                    <p class="general-error">${registrationError}</p>
 	                </c:if>
 	
-					<%-- =========== REGISTER=========== --%>
+					<%-- =========== REGISTER PART 1 =========== --%>
 					<div class="register-part-1">
 						<div class="form-section">
 							<label class="register-label">Full name</label>
@@ -99,8 +99,9 @@
 								<span class="error-message">${errors.phoneNumber}</span>
 							</c:if>
 						</div>
-					</div> 
+					</div> <%-- End register-part-1 --%>
 	
+					<%-- =========== REGISTER PART 2 =========== --%>
 					<div class="register-part-2" style="display: none;"> <%-- Initially hidden --%>
 						<div class= "profile-circle">
 							<%-- Note: File inputs cannot be repopulated for security reasons --%>
@@ -152,7 +153,7 @@
 								</c:if>
 							</div>
 						</div>
-					</div> <%-- End register- --%>
+					</div> <%-- End register-part-2 --%>
 	
 					<button type="button" class="register-continue" onclick="proceedRegistration()">
 						Continue
@@ -172,145 +173,249 @@
 	
 	</body>
 	<script>
-	        function toggleViewPassword(elementId, iconId) {
-	            passwordField = document.getElementById(elementId);
-	            iconButton = document.getElementById(iconId);
-	            // Check If Field Type Is Password
-	            if (passwordField.type === "password") {
-	                passwordField.type = "text";
-	                iconButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>';
-	            } else {
-	                passwordField.type = "password";
-	                iconButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
-	            }
-	        }
-	    </script>
-		
-		<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
-		<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
-		
-		<script>
-			particlesJS("particles-js", 
-				{
-				  "particles": {
-				    "number": {
-				      "value":115,
-				      "density": {
-				        "enable":true,"value_area":639.7441023590567
-				      }
-				    },
-				    "color": {
-				      "value":"#ffffff"
-				    },
-				    "shape":{
-				      "type":"circle",
-				      "stroke": {
-				        "width":0,"color":"#000000"
-				      },
-				      "polygon": {
-				        "nb_sides":5
-				      },
-				      "image": {
-				        "src":"img/github.svg","width":100,"height":100
-				      }
-				    },
-				    "opacity": {
-				      "value":0.5,
-				      "random":false,
-				      "anim": {
-				        "enable":false,"speed":1,"opacity_min":0.1,"sync":false
-				      }
-				    },
-				    "size":{
-				      "value":3,
-				      "random":true,
-				      "anim":{
-				        "enable":false,
-				        "speed":40,
-				        "size_min":0.1,
-				        "sync":false
-				      }
-				    },
-				    "line_linked":{
-				      "enable":true,
-				      "distance":255.89764094362266,
-				      "color":"#ffffff",
-				      "opacity":0.2958816473410637,
-				      "width":1
-				    },
-				    "move":{
-				      "enable":true,
-				      "speed":2,
-				      "direction":"none",
-				      "random":true,
-				      "straight":false,
-				      "out_mode":"out",
-				      "bounce":false,
-				      "attract":{
-				        "enable":true,
-				        "rotateX":1599.3602558976415,
-				        "rotateY":2798.880447820873
-				      }
-				    }
-				  },
-				  "interactivity":{
-				    "detect_on":"canvas",
-				    "events":{
-				      "onhover":{
-				        "enable":true,"mode":"repulse"
-				      },
-				      "onclick":{
-				        "enable":true,
-				        "mode":"push"
-				      },
-				      "resize":true
-				    },
-				    "modes":{
-				      "grab":{
-				        "distance":400,
-				        "line_linked":{
-				          "opacity":1
-				        }
-				      },
-				      "bubble":{
-				        "distance":400,
-				        "size":40,
-				        "duration":2,
-				        "opacity":8,
-				        "speed":3
-				      },
-				      "repulse":{
-				        "distance":200,
-				        "duration":0.4
-				      },
-				      "push":{
-				        "particles_nb":4
-				      },
-				      "remove":{
-				        "particles_nb":2
-				      }
-				    }
-				  },
-				  "retina_detect":true
-				}
-			)
-			var count_particles, stats, update; 
-			stats = new Stats; 
-			stats.setMode(0); 
-			stats.domElement.style.position = 'absolute'; 
-			stats.domElement.style.left = '0px'; 
-			stats.domElement.style.top = '0px'; 
-			document.body.appendChild(stats.domElement); 
-			count_particles = document.querySelector('.js-count-particles'); 
-			update = function() { 
-				stats.begin(); 
-				stats.end(); 
-				if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { 
-					count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; 
-				} 
-				requestAnimationFrame(update); 
-			}; 
-			requestAnimationFrame(update);
+		function toggleViewPassword(elementId, iconId){
+			passwordField = document.getElementById(elementId);
+			iconButton = document.getElementById(iconId);
+			if(passwordField.type == "password"){
+				passwordField.type = "text";
+				iconButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>';
+			}
+			else{
+				passwordField.type = "password";
+				iconButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
+			}
+		}
 	
-		</script>
+		function proceedRegistration(){
+			const step1 = document.getElementById('step-1');
+			const step2 = document.getElementById('step-2');
+			step1.classList.remove('active');
+			step2.classList.add('active');
+	
+			step1.style.cursor = "pointer";
+			step1.addEventListener('click', goBack)
+	
+			const form1 = document.querySelector('.register-part-1');
+			const form2 = document.querySelector('.register-part-2');
+			const continueButton = document.querySelector('.register-continue');
+			const confirmButton = document.querySelector('.register-confirm');
+	
+			form1.style.display = 'none';
+			form2.style.display = 'block'; // Make sure this is 'block' or 'flex' depending on your CSS
+			continueButton.style.display = 'none';
+			confirmButton.style.display = 'block';
+		}
+	
+		function goBack(){
+			const step1 = document.getElementById('step-1');
+			const step2 = document.getElementById('step-2');
+			step1.classList.add('active');
+			step2.classList.remove('active');
+	
+			step1.style.cursor = "default";
+			step1.removeEventListener('click', goBack);
+	
+			const form1 = document.querySelector('.register-part-1');
+			const form2 = document.querySelector('.register-part-2');
+			const continueButton = document.querySelector('.register-continue');
+			const confirmButton = document.querySelector('.register-confirm');
+	
+			form1.style.display = 'flex'; // Or 'block' depending on original CSS
+			form2.style.display = 'none';
+			continueButton.style.display = 'block';
+			confirmButton.style.display = 'none';
+		}
+	
+		document.querySelector(".circle3").addEventListener('click', function(){
+			document.getElementById('image').click();
+		})
+	
+		const addLabel = document.querySelector(".add-label");
+		addLabel?.addEventListener('click', handleImageSelectorClick(event));
+		
+		function handleImageSelectorClick(e) {
+			e.stopPropagation();
+		  document.getElementById('image').click();
+		}
+	
+		function handlePictureChange(event) { // Removed 'type' parameter, wasn't used
+			event.stopPropagation();
+			const file = event.target.files[0];
+			if (file) {
+			  const reader = new FileReader();
+	
+			  reader.onload = function(e) {
+				  setProfilePicture(e);
+			  };
+	
+			  reader.readAsDataURL(file); // this triggers the onload
+			}
+		}
+	
+		function removeProfilePicture(e){
+			e.stopPropagation();
+			const imageElement = document.querySelector(".register-profile-picture");
+			const deleteImageButton = document.querySelector(".remove-profile-picture");
+			const imageUploader = document.getElementById('image');
+			const addLabel = document.querySelector(".add-label");
+			imageElement.src="";
+			imageElement.style.display="none";
+			deleteImageButton.style.display = "none";
+			imageUploader.value = ""; // Clear the file input
+			addLabel.innerText="Add Profile Picture";
+		}
+	
+		function setProfilePicture(e){
+			const imageElement = document.querySelector(".register-profile-picture");
+			const deleteImageButton = document.querySelector(".remove-profile-picture");
+			const addLabel = document.querySelector(".add-label");
+			imageElement.style.display = "block";
+			imageElement.src = e.target.result;
+			deleteImageButton.style.display = "block";
+			addLabel.innerText="Change Profile Picture";
+		}
+	
+	    // --- Logic to handle staying on step 2 if validation failed on step 2 ---
+	    // Check if there are errors related to step 2 fields OR a general registration error after submission attempt
+	    const hasStep2Errors = ${not empty errors.password or not empty errors.confirmPassword or not empty registrationError};
+	    const hasAnyErrors = ${not empty errors or not empty registrationError};
+	
+	    // If we are supposed to be on step 2 (due to errors) and the page loaded, force step 2 view
+	    if (hasStep2Errors || (hasAnyErrors && !(${not empty errors.fullName or not empty errors.orgId or not empty errors.email or not empty errors.phoneNumber})) ) {
+	        // Only proceed if there are errors *and* they aren't exclusively step 1 errors
+	        // This handles the case where the form was submitted from step 2 and failed.
+	         // Ensure the page initially loads showing step 2 if there were step 2 errors
+	        window.onload = function() {
+	             // Need a slight delay sometimes for DOM rendering
+	             setTimeout(proceedRegistration, 0);
+	        };
+	    }
+	</script>
+	
+	<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
+	<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+	
+	<script>
+		particlesJS("particles-js", 
+			{
+			  "particles": {
+			    "number": {
+			      "value":115,
+			      "density": {
+			        "enable":true,"value_area":639.7441023590567
+			      }
+			    },
+			    "color": {
+			      "value":"#ffffff"
+			    },
+			    "shape":{
+			      "type":"circle",
+			      "stroke": {
+			        "width":0,"color":"#000000"
+			      },
+			      "polygon": {
+			        "nb_sides":5
+			      },
+			      "image": {
+			        "src":"img/github.svg","width":100,"height":100
+			      }
+			    },
+			    "opacity": {
+			      "value":0.5,
+			      "random":false,
+			      "anim": {
+			        "enable":false,"speed":1,"opacity_min":0.1,"sync":false
+			      }
+			    },
+			    "size":{
+			      "value":3,
+			      "random":true,
+			      "anim":{
+			        "enable":false,
+			        "speed":40,
+			        "size_min":0.1,
+			        "sync":false
+			      }
+			    },
+			    "line_linked":{
+			      "enable":true,
+			      "distance":255.89764094362266,
+			      "color":"#ffffff",
+			      "opacity":0.2958816473410637,
+			      "width":1
+			    },
+			    "move":{
+			      "enable":true,
+			      "speed":2,
+			      "direction":"none",
+			      "random":true,
+			      "straight":false,
+			      "out_mode":"out",
+			      "bounce":false,
+			      "attract":{
+			        "enable":true,
+			        "rotateX":1599.3602558976415,
+			        "rotateY":2798.880447820873
+			      }
+			    }
+			  },
+			  "interactivity":{
+			    "detect_on":"canvas",
+			    "events":{
+			      "onhover":{
+			        "enable":true,"mode":"repulse"
+			      },
+			      "onclick":{
+			        "enable":true,
+			        "mode":"push"
+			      },
+			      "resize":true
+			    },
+			    "modes":{
+			      "grab":{
+			        "distance":400,
+			        "line_linked":{
+			          "opacity":1
+			        }
+			      },
+			      "bubble":{
+			        "distance":400,
+			        "size":40,
+			        "duration":2,
+			        "opacity":8,
+			        "speed":3
+			      },
+			      "repulse":{
+			        "distance":200,
+			        "duration":0.4
+			      },
+			      "push":{
+			        "particles_nb":4
+			      },
+			      "remove":{
+			        "particles_nb":2
+			      }
+			    }
+			  },
+			  "retina_detect":true
+			}
+		)
+		var count_particles, stats, update; 
+		stats = new Stats; 
+		stats.setMode(0); 
+		stats.domElement.style.position = 'absolute'; 
+		stats.domElement.style.left = '0px'; 
+		stats.domElement.style.top = '0px'; 
+		document.body.appendChild(stats.domElement); 
+		count_particles = document.querySelector('.js-count-particles'); 
+		update = function() { 
+			stats.begin(); 
+			stats.end(); 
+			if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { 
+				count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; 
+			} 
+			requestAnimationFrame(update); 
+		}; 
+		requestAnimationFrame(update);
+	</script>
 </html>
