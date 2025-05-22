@@ -20,7 +20,8 @@
         <main class = "main">
             <div class = "side-bar">
                 <h2 class="side-bar-title">Occasio</h2>
-
+				
+				<!-- Sidebar naviagtion -->
                 <div class="side-bar-sub-menu">
                     <div class="side-bar-sub-menu-items">
                         <button id="statisticTabButton" class = "side-bar-sub-menu-items-item active" onClick="window.location.href='${contextPath}/dashboard'">Dashboard</button>
@@ -30,7 +31,8 @@
                     </div>
                 </div>
             </div>
-
+			
+			<!-- user details and logout -->
             <div class = "main-content">
                 <div class="user-nav">
                     <div class="nav-user-section">
@@ -57,6 +59,7 @@
                     </div>
                 </div>
 
+				<!-- ADMIN DASHBOARD -->
                 <div class = "statistics-tab">
                     <h2 style="margin-bottom: 32px;">Dashboard</h2>
                     <div class = "stats-list">
@@ -114,7 +117,8 @@
 			                    </c:forEach>
 			                </div>
                         </div>
-
+						
+						<!-- Statistics -->
                         <div class="most-engaged-users">
                             <div class="most-engaged-users-desc">
                                 <p class="most-engaged-users-desc-title">Most Engaged Users</p>
@@ -279,11 +283,12 @@
         <script src="${contextPath}/script/updateProfile.js"></script>
     </body>
 
-    <script>
+       <script>
         function toggleLogoutOverlay(){
             const logoutElement = document.querySelector(".logout-overlay");
             const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
             //mobileNavOverlayElement.style.display = "none"; //Hide the mobile nav if it was visible
+            // Check If Logout Element Is Visible
             if(logoutElement.style.visibility == "visible"){
                 logoutElement.style.visibility = "hidden";
             } else {
@@ -291,15 +296,25 @@
             }
         }
 
+        /**
+         * Handles clicks outside the logout container to close the logout overlay.
+         * @param {Event} e The click event.
+         */
         function handleLogoutOverlayClick(e){
+            // Check If Click Happens Close To Logout Container
             if(!e.target.closest('.logout-container')){
                 toggleLogoutOverlay();
             }
         }
 
+        /**
+         * Toggles the visibility of the user delete modal.
+         * @param {number} userId The ID of the user to delete (optional, defaults to 0).
+         */
         function toggleDeleteUserModal(userId = 0){
             const deleteOverlay = document.getElementById("user-delete-overlay");
             const userIdInputField = document.getElementById("deleteUserIdField");
+            // Check If Delete Overlay Is Hidden
             if(deleteOverlay.style.visibility == "hidden" || deleteOverlay.style.visibility == ""){
                 deleteOverlay.style.visibility = "visible";
                 userIdInputField.value = userId.toString();
@@ -310,10 +325,14 @@
             }
         }
 
-        //populate the fields based on userId from here
+        /**
+         * Toggles the visibility of the user update modal and populates fields.
+         * @param {number} userId The ID of the user to update (optional, defaults to 0).
+         */
         function toggleUpdateUserModal(userId = 0){
             const updateOverlay = document.getElementById("user-edit-overlay");
             const userIdInputField = document.getElementById("updateUserIdField");
+            // Check If Update Overlay Is Hidden
             if(updateOverlay.style.visibility == "hidden" || updateOverlay.style.visibility == ""){
                 updateOverlay.style.visibility = "visible";
                 userIdInputField.value = userId.toString();

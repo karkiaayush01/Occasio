@@ -6,6 +6,7 @@
 	<html>
 
 	<head>
+	<!-- Links and metadata -->
 		<meta charset="UTF-8">
 		<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 		<title>Event Details</title>
@@ -17,6 +18,7 @@
 	</head>
 	
 	<body>
+	<!-- including jsp pppuup -->
 		<jsp:include page="popup.jsp"></jsp:include>
 		<main>
 			<header>
@@ -113,6 +115,7 @@
 					</div>
 					
 				</div>
+				<!-- Event details section -->>
 			</section>
 				<section class = "details-section">
 					<div class= "detail-event-div">
@@ -199,49 +202,49 @@
                         <span>Back</span>
                     </button>
 
-                    <%-- CHANGE 1: Modify the <form> tag --%>
+                    <%--  Modify the <form> tag --%>
                     <form class="update-profile-form"
                           action="${contextPath}/userProfile"
                           method="post"
                           enctype="multipart/form-data">
 
                         <div class="update-profile-user-info">
-                            <%-- CHANGE 2: Modify the <img> tag src for dynamic display + fallback --%>
+                            <%--  Modify the <img> tag src for dynamic display + fallback --%>
                             <img src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}"
                                  class="user-profile" alt="Current User Profile Picture" data-original-src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}">
 
-                            <%-- CHANGE 3: Add the hidden file input --%>
+                            <%-- Add the hidden file input --%>
                             <input type="file" name="profilePictureFile" id="profilePictureUpload" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
 
-                            <%-- CHANGE 4: Modify the "Change Profile" button type and add onclick --%>
+                            <%--  Modify the "Change Profile" button type and add onclick --%>
                             <button type="button" class="change-profile-picture-button" onclick="document.getElementById('profilePictureUpload').click();">Change Profile</button>
 
-                             <%-- CHANGE 5: Make the display name dynamic --%>
+                             <%-- Make the display name dynamic --%>
                             <p class="update-profile-display-name"><c:out value="${fullName}"/></p>
                         </div>
 
                         <div class="update-profile-input-forms">
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Full Name</label>
-                                <%-- CHANGE 6a: Add value attribute --%>
+                                <%-- Add value attribute --%>
                                 <input name="fullName" type="text" class="update-profile-input-field" value="<c:out value='${fullName}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Email</label>
-                                <%-- CHANGE 6b: Add value attribute, change type --%>
+                                <%-- Add value attribute, change type --%>
                                 <input name="email" type="email" class="update-profile-input-field" value="<c:out value='${userEmail}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Phone Number</label>
-                                <%-- CHANGE 6c: Add value attribute, change type --%>
+                                <%-- Add value attribute, change type --%>
                                 <input name="phoneNumber" type="tel" class="update-profile-input-field" value="<c:out value='${userPhoneNumber}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
-                                <%-- CHANGE 6d: Correct name, add value, add readonly --%>
+                                <%--  Correct name, add value, add readonly --%>
                                 <input name="organizationId" type="text" class="update-profile-input-field" value="<c:out value='${organizationId}'/>" readonly/>
                             </div>
 
@@ -259,6 +262,7 @@
             <script src="${contextPath}/script/updateProfile.js"></script>
 	</body>
 	<script>
+		//this function toggles logout pop up overlay
 		function toggleLogoutOverlay(){
 			const logoutElement = document.querySelector(".logout-overlay");
 			if(logoutElement.style.visibility == "visible"){

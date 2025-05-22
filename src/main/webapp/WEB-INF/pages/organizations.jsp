@@ -129,55 +129,55 @@
                         <span>Back</span>
                     </button>
 
-                    <%-- CHANGE 1: Modify the <form> tag --%>
+                    <%-- Modify the <form> tag --%>
                     <form class="update-profile-form"
                           action="${contextPath}/userProfile"
                           method="post"
                           enctype="multipart/form-data">
 
                         <div class="update-profile-user-info">
-                            <%-- CHANGE 2: Modify the <img> tag src for dynamic display + fallback --%>
+                            <%-- Modify the <img> tag src for dynamic display + fallback --%>
                             <img src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}"
                                  class="user-profile" alt="Current User Profile Picture" data-original-src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}">
 
-                            <%-- CHANGE 3: Add the hidden file input --%>
+                            <%--  Add the hidden file input --%>
                             <input type="file" name="profilePictureFile" id="profilePictureUpload" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
 
-                            <%-- CHANGE 4: Modify the "Change Profile" button type and add onclick --%>
+                            <%-- Modify the "Change Profile" button type and add onclick --%>
                             <button type="button" class="change-profile-picture-button" onclick="document.getElementById('profilePictureUpload').click();">Change Profile</button>
 
-                             <%-- CHANGE 5: Make the display name dynamic --%>
+                             <%-- Make the display name dynamic --%>
                             <p class="update-profile-display-name"><c:out value="${fullName}"/></p>
                         </div>
 
                         <div class="update-profile-input-forms">
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Full Name</label>
-                                <%-- CHANGE 6a: Add value attribute --%>
+                                <%--  Add value attribute --%>
                                 <input name="fullName" type="text" class="update-profile-input-field" value="<c:out value='${fullName}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Email</label>
-                                <%-- CHANGE 6b: Add value attribute, change type --%>
+                                <%-- Add value attribute, change type --%>
                                 <input name="email" type="email" class="update-profile-input-field" value="<c:out value='${userEmail}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Phone Number</label>
-                                <%-- CHANGE 6c: Add value attribute, change type --%>
+                                <%-- Add value attribute, change type --%>
                                 <input name="phoneNumber" type="tel" class="update-profile-input-field" value="<c:out value='${userPhoneNumber}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
-                                <%-- CHANGE 6d: Correct name, add value, add readonly --%>
+                                <%--  Correct name, add value, add readonly --%>
                                 <input name="organizationId" type="text" class="update-profile-input-field" value="<c:out value='${organizationId}'/>" readonly/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">New Password</label> <%-- Changed label --%>
-                                <%-- CHANGE 6e: Correct name, change type, add placeholder --%>
+                                <%-- Correct name, change type, add placeholder --%>
                                 <input name="password" type="password" class="update-profile-input-field" placeholder="Leave blank to keep current password"/>
                             </div>
                         </div>
@@ -285,10 +285,12 @@
 	</body>
 
 	<script>
+		//handles the toggling of logout of user
 		function toggleLogoutOverlay(){
 			const logoutElement = document.querySelector(".logout-overlay");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
 			//mobileNavOverlayElement.style.display = "none"; //Hide the mobile nav if it was visible
+			// Check If ELement Style Is Visible
 			if(logoutElement.style.visibility == "visible"){
 				logoutElement.style.visibility = "hidden";
 			} else {
@@ -296,15 +298,25 @@
 			}
 		}
 		
+		/**
+		 * Handles clicks outside the logout container to close the logout overlay.
+		 * @param {Event} e The click event.
+		 */
 		function handleLogoutOverlayClick(e){
+			// Check If Click Occured Close To Logout Container
 			if(!e.target.closest('.logout-container')){
 				toggleLogoutOverlay();
 			}
 		}
 		
+		/**
+		 * Toggles the visibility of the delete organization modal.
+		 * @param {number} userId The ID of the organization to delete (optional, defaults to 0).
+		 */
 		function toggleDeleteOrgModal(userId = 0){
 			const deleteOverlay = document.getElementById("user-delete-overlay");
 			const orgIdInputField = document.getElementById("deleteOrgIdField");
+			// Check If Delete Overlay ELement Style Is Visible
 			if(deleteOverlay.style.visibility == "hidden" || deleteOverlay.style.visibility == ""){
 				deleteOverlay.style.visibility = "visible";
 				orgIdInputField.value = userId.toString();
@@ -315,13 +327,17 @@
 			}
 		}
 		
-		//populate the fields based on userId from here 
+		/**
+		 * Toggles the visibility of the update user modal and populates fields.
+		 * @param {HTMLButtonElement} button The button that triggered the modal (used to get data attributes).
+		 */
 		function toggleUpdateUserModal(button) {
 		  const updateOverlay = document.getElementById("user-edit-overlay");
 		  const orgIdInputField = document.getElementById("updateOrgIdField");
 		  const orgFullNameField = document.getElementById("orgFullNameField");
 		  const orgAdminNameField = document.getElementById("orgAdminNameField");
 		
+		  // Check If Update Overlay Is Visible
 		  if (updateOverlay.style.visibility === "hidden" || updateOverlay.style.visibility === "") {
 		    updateOverlay.style.visibility = "visible";
 		    orgIdInputField.value = button.getAttribute("data-id");
@@ -335,8 +351,12 @@
 		  }
 		}
 		
+		/**
+		 * Toggles the visibility of the create organization form overlay.
+		 */
 		function toggleCreateOrganizationForm() {
 			const updateOverlay = document.getElementById("org-edit-overlay");
+			// Check If Update Overlay ELement Style Is Visible
 			if(updateOverlay.style.visibility == "hidden" || updateOverlay.style.visibility == ""){
 				updateOverlay.style.visibility = "visible";
 			} 

@@ -247,14 +247,25 @@
 	</body>
 
 	<script>
+		/**
+		 * Populates the update user modal fields with user data and toggles its visibility.
+		 * @param {number} userId The ID of the user to update.
+		 * @param {string} fullName The full name of the user.
+		 * @param {string} email The email address of the user.
+		 * @param {string} phoneNumber The phone number of the user.
+		 */
 		function populateAndToggleUpdateUserModal(userId, fullName, email, phoneNumber) {
-	        document.getElementById('updateUserIdField').value = userId;
-	        document.getElementById('updateFullNameField').value = fullName;
-	        document.getElementById('updateEmailField').value = email;
-	        document.getElementById('updatePhoneNumberField').value = phoneNumber;
-	        toggleUpdateUserModal();
-	    }
-		
+		    document.getElementById('updateUserIdField').value = userId;
+		    document.getElementById('updateFullNameField').value = fullName;
+		    document.getElementById('updateEmailField').value = email;
+		    document.getElementById('updatePhoneNumberField').value = phoneNumber;
+		    toggleUpdateUserModal();
+		}
+	
+		/**
+		 * Switches the active tab between statistics and user management.
+		 * @param {string} activeTab The tab to switch to ('statistic' or 'userManagement').
+		 */
 		function switchActiveTab(activeTab){
 			const statisticTab = document.querySelector(".statistics-tab");
 			const userManagementTab = document.querySelector(".user-management-tab");
@@ -262,12 +273,14 @@
 			const statisticTabButton = document.getElementById("statisticTabButton");
 			const userManagementTabButton = document.getElementById("userManagementTabButton");
 			
+			// Check If Active Tab Is Statistics And Statistics Tab Is Not Active
 			if (activeTab === "statistic" && !statisticTabButton.classList.contains("active")){
 				statisticTabButton.classList.add("active");
 				userManagementTabButton.classList.remove("active");
 				statisticTab.style.display = "block";
 				userManagementTab.style.display = "none";
 			}
+			// Check If Active Tab Is User MAnagement And User Management Tab Is Not Active
 			else if (activeTab == "userManagement" && !userManagementTabButton.classList.contains("active")){
 				statisticTabButton.classList.remove("active");
 				userManagementTabButton.classList.add("active");
@@ -275,41 +288,57 @@
 				userManagementTab.style.display = "block";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the logout overlay.
+		 */
 		function toggleLogoutOverlay(){
 			const logoutElement = document.querySelector(".logout-overlay");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
 			//mobileNavOverlayElement.style.display = "none"; //Hide the mobile nav if it was visible
+			// Check If Element Style Is Visible
 			if(logoutElement.style.visibility == "visible"){
 				logoutElement.style.visibility = "hidden";
 			} else {
 				logoutElement.style.visibility = "visible";
 			}
 		}
-		
+	
+		/**
+		 * Handles clicks outside the logout container to close the logout overlay.
+		 * @param {Event} e The click event.
+		 */
 		function handleLogoutOverlayClick(e){
+			// Check If Click Occured Outside LogOut Container
 			if(!e.target.closest('.logout-container')){
 				toggleLogoutOverlay();
 			}
 		}
-		
-		
-		//populate the fields based on userId from here 
-		function toggleUpdateUserModal() {
-	        const updateOverlay = document.getElementById("user-edit-overlay");
-	        updateOverlay.style.visibility = (updateOverlay.style.visibility === "visible") ? "hidden" : "visible";
-	    }
 	
-	    function toggleDeleteUserModal(userId = 0) {
-	        const deleteOverlay = document.getElementById("user-delete-overlay");
-	        const userIdInputField = document.getElementById("deleteUserIdField");
-	        if (deleteOverlay.style.visibility == "hidden" || deleteOverlay.style.visibility == "") {
-	            deleteOverlay.style.visibility = "visible";
-	            userIdInputField.value = userId.toString();
-	        } else {
-	            deleteOverlay.style.visibility = "hidden";
-	            userIdInputField.value = "";
-	        }
-	    }
+		/**
+		 * Toggles the visibility of the update user modal.
+		 */
+		function toggleUpdateUserModal() {
+		    const updateOverlay = document.getElementById("user-edit-overlay");
+		    updateOverlay.style.visibility = (updateOverlay.style.visibility === "visible") ? "hidden" : "visible";
+		}
+	
+		/**
+		 * Toggles the visibility of the delete user modal.
+		 * @param {number} userId The ID of the user to delete (optional, defaults to 0).
+		 */
+		function toggleDeleteUserModal(userId = 0) {
+		    const deleteOverlay = document.getElementById("user-delete-overlay");
+		    const userIdInputField = document.getElementById("deleteUserIdField");
+	
+			// Check If Delete Overlay is Visible
+		    if (deleteOverlay.style.visibility == "hidden" || deleteOverlay.style.visibility == "") {
+		        deleteOverlay.style.visibility = "visible";
+		        userIdInputField.value = userId.toString();
+		    } else {
+		        deleteOverlay.style.visibility = "hidden";
+		        userIdInputField.value = "";
+		    }
+		}
 	</script>
 </html>

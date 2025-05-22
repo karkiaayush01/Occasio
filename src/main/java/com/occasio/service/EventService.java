@@ -35,6 +35,11 @@ public class EventService {
 		this.sponsorService = new SponsorService();
 	}
 
+	/**
+	 * Retrieves an event by its ID.
+	 * @param eventId The ID of the event to retrieve.
+	 * @return The EventModel object representing the event, or null if not found.
+	 */
 	public EventModel getEventById(int eventId) {
         if (this.dbConn == null) {
             System.err.println("EventService.getEventById: Database connection not found.");
@@ -78,8 +83,9 @@ public class EventService {
         return event;
     }
 
-    /**
+	/**
      * Helper method to fetch all sponsors linked to a given event ID.
+     * @param eventId The ID of the event for which to retrieve sponsors.
      */
 	private List<SponsorModel> getSponsorsForEvent(int eventId) {
 	    List<SponsorModel> sponsors = new ArrayList<>();
@@ -107,6 +113,14 @@ public class EventService {
 	    return sponsors;
 	}
 
+	/**
+	 * Adds a new event to the database.
+	 * @param eventModel The EventModel object containing the event data.
+	 * @param sponsorNameInput The name of the sponsor.
+	 * @param sponsorContactInput The contact information of the sponsor.
+	 * @param sponsorEmailInput The email address of the sponsor.
+	 * @return A string indicating the success or failure of the operation.
+	 */
 	public String addEvent(EventModel eventModel, String sponsorNameInput, String sponsorContactInput, String sponsorEmailInput) {
 	    if (this.dbConn == null) {
 	        return "Error while connecting to database";
@@ -199,8 +213,10 @@ public class EventService {
         }
 	}
 
-    /**
+	/**
      * Helper method to link an event to a sponsor in the event_sponsor bridging table.
+     * @param eventId The ID of the event.
+     * @param sponsorId The ID of the sponsor.
      */
     private boolean linkEventToSponsor(int eventId, int sponsorId) {
         String sql = "INSERT INTO event_sponsor (eventID, sponsorID) VALUES (?, ?)";
@@ -218,6 +234,7 @@ public class EventService {
 
     /**
      * Helper method to unlink all sponsors from an event in the event_sponsor bridging table.
+     * @param eventId The ID of the event to unlink sponsors from.
      */
     private boolean unlinkAllSponsorsFromEvent(int eventId) {
         String sql = "DELETE FROM event_sponsor WHERE eventID = ?";
@@ -234,7 +251,14 @@ public class EventService {
     }
 
 
-	// updateEvent now handles Many-to-Many linking ***
+    /**
+	 * Updates an existing event in the database.
+	 * @param eventModel The EventModel object containing the updated event data.
+	 * @param sponsorNameInput The name of the sponsor.
+	 * @param sponsorContactInput The contact information of the sponsor.
+	 * @param sponsorEmailInput The email address of the sponsor.
+	 * @return A string indicating the success or failure of the operation.
+	 */
 	public String updateEvent(EventModel eventModel, String sponsorNameInput, String sponsorContactInput, String sponsorEmailInput) {
         if (this.dbConn == null) {
            return "Database connection error.";
@@ -333,6 +357,11 @@ public class EventService {
        }
    }
 
+	/**
+	 * Retrieves a list of events posted by a specific user.
+	 * @param userId The ID of the user whose events are to be retrieved.
+	 * @return An ArrayList of EventModel objects representing the user's events.
+	 */
 	public ArrayList<EventModel> getEventsByUser(int userId) {
 		ArrayList<EventModel> userEvents = new ArrayList<>();
 
@@ -377,6 +406,12 @@ public class EventService {
 		return userEvents;
 	}
 
+	/**
+	 * Retrieves interested users for a particular event
+	 * @param eventId The ID of the event
+	 * @param postedUserId The ID of the event poster
+	 * @return The list of users who are intrested in an event
+	 */
 	public InterestedModel getInterestedUsersForEvent(int eventId, int postedUserId) {
 		InterestedModel totalInterested = new InterestedModel();
 		String getInterestedQuery = "SELECT i.UserId, u.ProfilePicturePath FROM event_interested_users i JOIN user u ON i.UserId = u.UserId WHERE i.eventId = ?";
@@ -401,6 +436,13 @@ public class EventService {
 		return totalInterested;
 	}
 	
+	/**
+	 * Retrieves a list of ongoing events based on user ID, organization ID, and a filter.
+	 * @param userId The ID of the user.
+	 * @param orgId The ID of the organization.
+	 * @param filter A string used to filter events by name.
+	 * @return An ArrayList of EventModel objects representing the ongoing events.
+	 */
 	public ArrayList<EventModel> getOngoingEvents(int userId, int orgId, String filter){
 		ArrayList<EventModel> ongoingEvents = new ArrayList<>();
 		if(this.dbConn == null) {
@@ -454,6 +496,12 @@ public class EventService {
 		return ongoingEvents;
 	}
 	
+	/**
+	 * Retrieves a list of upcoming events based on organization ID and a filter.
+	 * @param orgId The ID of the organization.
+	 * @param filter A string used to filter events by name.
+	 * @return An ArrayList of EventModel objects representing the upcoming events.
+	 */
 	public ArrayList<EventModel> getUpcomingEvents(int orgId, String filter){
 		ArrayList<EventModel> upcomingEvents = new ArrayList<>();
 		
@@ -502,6 +550,13 @@ public class EventService {
 		return upcomingEvents;
 	}
 	
+	/**
+	 * Retrieves event data for a specific event, including interest information.
+	 * @param req The HttpServletRequest object.
+	 * @param eventId The ID of the event to retrieve.
+	 * @param userId The ID of the user viewing the event.
+	 * @return The EventModel object containing the event data, or null if not found.
+	 */
 	public EventModel getEventData(HttpServletRequest req, int eventId, int userId) {
 		EventModel event = new EventModel();
 		
@@ -558,7 +613,15 @@ public class EventService {
 		return event;
 	}
 	
-	// validateEventData now takes sponsor string parameters
+	/**
+	 * Validates event data before adding or updating an event.
+	 * @param event The EventModel object containing the event data.
+	 * @param isUpdate A boolean indicating whether the validation is for an update operation.
+	 * @param sponsorName The name of the sponsor.
+	 * @param sponsorContact The contact information of the sponsor.
+	 * @param sponsorEmail The email address of the sponsor.
+	 * @return A string containing the validation error message, or null if the data is valid.
+	 */
 		private String validateEventData(EventModel event, boolean isUpdate, String sponsorName, String sponsorContact, String sponsorEmail) {
 		    if (event.getName() == null || event.getName().trim().isEmpty()) return "Event Title cannot be empty.";
 		    if (event.getStartDate() == null) return "Start Date cannot be empty.";
@@ -590,7 +653,12 @@ public class EventService {
 		    return null;
 		}
     
- // Method to remove an interested user from an event
+	/**
+ 	 * Removes a user's interest in an event.
+ 	 * @param userId The ID of the user.
+ 	 * @param eventId The ID of the event.
+ 	 * @return A string indicating the success or failure of the operation.
+ 	 */
  	public String removeInterestedUser(int userId, int eventId) {
          if (this.dbConn == null) {
              return "Error while connecting to the database.";
@@ -613,7 +681,12 @@ public class EventService {
          }
      }
  	
-     // Method to add an interested user to an event
+ 	/**
+     * Adds a user's interest in an event.
+     * @param userId The ID of the user.
+     * @param eventId The ID of the event.
+     * @return A string indicating the success or failure of the operation.
+     */
      public String addInterestedUser(int userId, int eventId) {
          if (this.dbConn == null) {
              return "Error while connecting to the database.";

@@ -23,7 +23,13 @@ public class UserManagementService {
         }
     }
 
+    /**
+     * Retrieves all users within a specific organization, excluding super admins.
+     * @param orgId The ID of the organization.
+     * @return A list of UserModel objects representing the users in the organization.
+     */
     public List<UserModel> getAllUsersInOrganization(int orgId) {
+        // Check if the database connection is null
         if (this.dbConn == null) {
             System.err.println("UserManagementService.getAllUsersInOrganization: Database connection not found.");
             return new ArrayList<>();
@@ -37,6 +43,7 @@ public class UserManagementService {
         try (PreparedStatement stmt = dbConn.prepareStatement(sql)) {
             stmt.setInt(1, orgId);
             ResultSet rs = stmt.executeQuery();
+            // Looping through result set
             while (rs.next()) {
                 UserModel user = new UserModel();
                 user.setUserId(rs.getInt("UserId"));
@@ -55,7 +62,13 @@ public class UserManagementService {
         return users;
     }
 
+    /**
+     * Deletes a user from the database.
+     * @param userId The ID of the user to delete.
+     * @return A string indicating the success or failure of the operation.
+     */
     public String deleteUser(int userId) {
+    	// Check if the database connection is null
         if (this.dbConn == null) {
             System.err.println("UserManagementService.deleteUser: Database connection not found.");
             return "Error: Database Connection Failed";
@@ -65,6 +78,7 @@ public class UserManagementService {
         try (PreparedStatement stmt = dbConn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
             int rowsAffected = stmt.executeUpdate();
+            // Check If Row Affected greater Than Zero
             if (rowsAffected > 0) {
                 return "Success: User deleted successfully";
             } else {
@@ -77,7 +91,13 @@ public class UserManagementService {
         }
     }
 
+    /**
+     * Updates a user's information in the database.
+     * @param user The UserModel object containing the updated user data.
+     * @return A string indicating the success or failure of the operation.
+     */
     public String updateUser(UserModel user) {
+    	// Check if the database connection is null
         if (this.dbConn == null) {
             System.err.println("UserManagementService.updateUser: Database connection not found.");
             return "Error: Database Connection Failed";
@@ -92,6 +112,7 @@ public class UserManagementService {
             stmt.setInt(4, user.getUserId());
 
             int rowsAffected = stmt.executeUpdate();
+            //Check If Row Is Updated
             if (rowsAffected > 0) {
                 return "Success: User updated successfully";
             } else {

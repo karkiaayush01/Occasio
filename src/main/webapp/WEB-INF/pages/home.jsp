@@ -313,55 +313,55 @@
                         <span>Back</span>
                     </button>
 
-                    <%-- CHANGE 1: Modify the <form> tag --%>
+                    <%-- Modify the <form> tag --%>
                     <form class="update-profile-form"
                           action="${contextPath}/userProfile"
                           method="post"
                           enctype="multipart/form-data">
 
                         <div class="update-profile-user-info">
-                            <%-- CHANGE 2: Modify the <img> tag src for dynamic display + fallback --%>
+                            <%-- Modify the <img> tag src for dynamic display + fallback --%>
                             <img src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}"
                                  class="user-profile" alt="Current User Profile Picture" data-original-src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}">
 
-                            <%-- CHANGE 3: Add the hidden file input --%>
+                            <%-- Add the hidden file input --%>
                             <input type="file" name="profilePictureFile" id="profilePictureUpload" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
 
-                            <%-- CHANGE 4: Modify the "Change Profile" button type and add onclick --%>
+                            <%-- Modify the "Change Profile" button type and add onclick --%>
                             <button type="button" class="change-profile-picture-button" onclick="document.getElementById('profilePictureUpload').click();">Change Profile</button>
 
-                             <%-- CHANGE 5: Make the display name dynamic --%>
+                             <%-- Make the display name dynamic --%>
                             <p class="update-profile-display-name"><c:out value="${fullName}"/></p>
                         </div>
 
                         <div class="update-profile-input-forms">
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Full Name</label>
-                                <%-- CHANGE 6a: Add value attribute --%>
+                                <%--  Add value attribute --%>
                                 <input name="fullName" type="text" class="update-profile-input-field" value="<c:out value='${fullName}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Email</label>
-                                <%-- CHANGE 6b: Add value attribute, change type --%>
+                                <%-- Add value attribute, change type --%>
                                 <input name="email" type="email" class="update-profile-input-field" value="<c:out value='${userEmail}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Phone Number</label>
-                                <%-- CHANGE 6c: Add value attribute, change type --%>
+                                <%--  Add value attribute, change type --%>
                                 <input name="phoneNumber" type="tel" class="update-profile-input-field" value="<c:out value='${userPhoneNumber}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
-                                <%-- CHANGE 6d: Correct name, add value, add readonly --%>
+                                <%-- Correct name, add value, add readonly --%>
                                 <input name="organizationId" type="text" class="update-profile-input-field" value="<c:out value='${organizationId}'/>" readonly/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">New Password</label> <%-- Changed label --%>
-                                <%-- CHANGE 6e: Correct name, change type, add placeholder --%>
+                                <%--  Correct name, change type, add placeholder --%>
                                 <input name="password" type="password" class="update-profile-input-field" placeholder="Leave blank to keep current password"/>
                             </div>
                         </div>
@@ -406,8 +406,13 @@
 	</body>
 	
 	<script>
+		
+		/**
+		 * Toggles the visibility of the mobile navigation menu overlay.
+		 */
 		function toggleMobileMenu(){
 			const navElement = document.querySelector(".mobile-nav-overlay");
+			// Check If Nav Element Style Is Block
 			if(navElement.style.display == "block"){
 				navElement.style.display = "none";
 			}
@@ -415,42 +420,58 @@
 				navElement.style.display = "block";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the add events form overlay.
+		 */
 		function toggleAddEventsForm(){
 			const addEventFormElement = document.querySelector(".add-event-overlay");
+			// Check If Add Event Form Element Style Is Visible
 			if(addEventFormElement.style.visibility == "visible"){
 				addEventFormElement.style.visibility = "hidden";
 			} else {
 				addEventFormElement.style.visibility = "visible";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the edit events form overlay.
+		 */
 		function toggleEditEventsForm(){
 			const editEventFormElement = document.querySelector(".edit-event-overlay");
+			// Check If Edit Event Form Element Style Is Visible
 			if(editEventFormElement.style.visibility == "visible"){
 				editEventFormElement.style.visibility = "hidden";
 			} else {
 				editEventFormElement.style.visibility = "visible";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the logout overlay and hides the mobile navigation.
+		 */
 		function toggleLogoutOverlay(){
 			const logoutElement = document.querySelector(".logout-overlay");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
 			mobileNavOverlayElement.style.display = "none"; //Hide the mobile nav if it was visible
+			// Check If Logout Element Style Is Visible
 			if(logoutElement.style.visibility == "visible"){
 				logoutElement.style.visibility = "hidden";
 			} else {
 				logoutElement.style.visibility = "visible";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the update profile overlay, handles container animation, and resets image
+		 */
 		function toggleUpdateProfileOverlay(){
 			const updateProfileElement = document.querySelector(".update-profile-overlay");
 			const container = document.querySelector(".update-profile-container");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
 			mobileNavOverlayElement.style.display = "none"; // Always hide mobile nav when profile appears
-
+	
+			// Check If Update Profile Element Style Is Visible
 			if(updateProfileElement.style.visibility == "visible"){
 				container.classList.remove('active');
 				setTimeout(() => {
@@ -459,46 +480,67 @@
 			} else {
 				// Added logic to reset image on open
 				const profileImage = updateProfileElement.querySelector('.user-profile');
-                const fileInput = document.getElementById('profilePictureUpload');
+		        const fileInput = document.getElementById('profilePictureUpload');
+				// Check If Image Element Found
 				if (profileImage) {
 					const originalSrc = profileImage.getAttribute('data-original-src');
+					// Check If Default Image Sorce Found
 					if (originalSrc) {
 						profileImage.src = originalSrc;
 					}
 				}
-                if(fileInput) {
-                    fileInput.value = "";
-                }
-
+		        // Check If Input Fiel Found
+		        if(fileInput) {
+		            fileInput.value = "";
+		        }
+	
 				updateProfileElement.style.visibility = "visible";
-                setTimeout(() => {
-                    container.classList.add('active');
-                }, 10);
+		        setTimeout(() => {
+		            container.classList.add('active');
+		        }, 10);
 			}
 		}
-		
+	
+		/**
+		 * Handles clicks outside the logout container to close the logout overlay.
+		 * @param {Event} e The click event.
+		 */
 		function handleLogoutOverlayClick(e){
+			// Check If Click Occured Not In Logout Container
 			if(!e.target.closest('.logout-container')){
 				toggleLogoutOverlay();
 			}
 		}
-		
+	
+		/**
+		 * Triggers the file input click to open the add image uploader.
+		 */
 		function triggerAddImageUploader(){
 			const actualUploader = document.getElementById('add-event-image-uploader');
 			actualUploader.click();
 		}
-		
+	
+		/**
+		 * Triggers the file input click to open the edit image uploader.
+		 */
 		function triggerEditImageUploader(){
 			const actualUploader = document.getElementById('edit-event-image-uploader');
 			actualUploader.click();
 		}
-		
+	
+		/**
+		 * Handles the file change event for image uploaders.
+		 * @param {Event} event The file change event.
+		 * @param {string} type The type of uploader ('add' or 'edit').
+		 */
 		function handleFileChange(event, type) {
 		    const file = event.target.files[0];
+		    // Check If File Exists
 		    if (file) {
 		      const reader = new FileReader();
-
+	
 		      reader.onload = function(e) {
+		    	  // Check If Type Is Add
 		   	  	if(type == "add"){
 			        addImageChange(e); // e.target.result is now valid
 		   	  	}
@@ -506,11 +548,15 @@
 		   	  		editImageChange(e);
 		   	  	}
 		      };
-
+	
 		      reader.readAsDataURL(file); // this triggers the onload
 		    }
 		 }
-		
+	
+		/**
+		 * Handles the image change for the add event form.
+		 * @param {Event} e The file reader onload event.
+		 */
 		function addImageChange(e){
 			const imageElement = document.querySelector(".add-event-cover-image");
 			const addedFlag = document.getElementById("add-image-changed-flag");
@@ -522,7 +568,11 @@
 			imageElement.src = e.target.result;
 			addedFlag.value = "true";
 		}
-		
+	
+		/**
+		 * Handles the image change for the edit event form.
+		 * @param {Event} e The file reader onload event.
+		 */
 		function editImageChange(e){
 			const imageElement = document.querySelector(".edit-event-cover-image");
 			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
@@ -532,7 +582,11 @@
 			deleteImageButton.style.display = "block";
 			imageElement.src = e.target.result;
 		}
-		
+	
+		/**
+		 * Removes the added image from the add event form.
+		 * @param {Event} e The click event.
+		 */
 		function removeAddedImage(e){
 			e.stopPropagation();
 			const addedFlag = document.getElementById("add-image-changed-flag");
@@ -547,7 +601,10 @@
 			imageUploader.value = "";
 			addedFlag.value = "false";
 		}
-		
+	
+		/**
+		 * Removes the edited image from the edit event form.
+		 */
 		function removeEditedImage(e){
 			e.stopPropagation();
 			const imageElement = document.querySelector(".edit-event-cover-image");
@@ -560,35 +617,42 @@
 			deleteImageButton.style.display = "none";
 			imageUploader.value = "";
 		}
-		
+	
+		/**
+		 * Previews the selected profile picture before upload.
+		 * @param {Event} event The file input change event.
+		 */
 		function previewProfilePicture(event) {
-            const file = event.target.files[0];
-            const imagePreview = document.querySelector('.update-profile-overlay .user-profile');
-
-            if (file && imagePreview) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                }
-
-                reader.readAsDataURL(file);
-            }
-        }
-		
+		    const file = event.target.files[0];
+		    const imagePreview = document.querySelector('.update-profile-overlay .user-profile');
+	
+		    // Check If File And Image Previedws Are Available
+		    if (file && imagePreview) {
+		        const reader = new FileReader();
+	
+		        reader.onload = function(e) {
+		            imagePreview.src = e.target.result;
+		        }
+	
+		        reader.readAsDataURL(file);
+		    }
+		}
+	
 		const OFFSET_TOP = 100;
 		let hasUserScrolled = false;
-
+	
 		window.addEventListener('scroll', () => {
 		  hasUserScrolled = true;
 		}, { once: true }); // only need to detect first scroll
-
+	
 		const markers = document.querySelectorAll('.scroll-marker');
-
+	
 		const observer = new IntersectionObserver((entries) => {
-		  if (!hasUserScrolled) return; // skip auto scroll on page load
-
+			// Skip Auto Scroll If User Not Scrolled
+		  if (!hasUserScrolled) return;
+	
 		  entries.forEach(entry => {
+			  // Check If Entry Is Intersecting
 		    if (entry.isIntersecting) {
 		      const markerTop = entry.target.getBoundingClientRect().top + window.scrollY;
 		      window.scrollTo({
@@ -600,9 +664,8 @@
 		}, {
 		  threshold: 0.01
 		});
-
+	
 		markers.forEach(marker => observer.observe(marker));
-
 		
 	</script>
 </html>

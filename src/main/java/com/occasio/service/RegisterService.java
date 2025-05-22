@@ -33,6 +33,11 @@ public class RegisterService {
 		}
 	}
 	
+	/**
+	 * Adds a new user to the database.
+	 * @param userModel The UserModel object containing the user's data.
+	 * @return A string indicating the success or failure of the operation.
+	 */
 	public String addUser(UserModel userModel) {
 		if(this.dbConn == null) {
 			System.err.println("Database connection not found.");
@@ -56,6 +61,7 @@ public class RegisterService {
 				//Check Organization Id validity first
 				getOrgStmt.setInt(1, userModel.getOrgId());
 				try (ResultSet result = getOrgStmt.executeQuery()) {
+					// Check if the organization ID is valid
 					if(!result.next()) {
 						System.err.println("OrgId " + userModel.getOrgId() + " not found.");
 						return "Provided Organization ID does not exist. Please recheck and try again.";
@@ -68,6 +74,7 @@ public class RegisterService {
 
 				// --- Hash the Password ---
 				String plainPassword = userModel.getPassword();
+				//Check If Password Is Null
 				if (plainPassword == null || plainPassword.isEmpty()) {
 					return "Password cannot be empty.";
 				}
@@ -81,6 +88,7 @@ public class RegisterService {
 
 				int rowsAffected = insertUserStmt.executeUpdate();
 
+				// Check If User Inserted
 				if(rowsAffected > 0) {
 					return "Successfully Added User";
 				} else {

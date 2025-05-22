@@ -31,6 +31,7 @@ public class UserService {
      * @return true if the email is taken by another user, false otherwise.
      */
     private boolean isEmailTakenByOtherUser(String email, int currentUserId) {
+    	// Check If DB Connection Or Email Null
         if (this.dbConn == null || email == null || email.trim().isEmpty()) {
             return false; // Cannot check without connection or email
         }
@@ -40,41 +41,46 @@ public class UserService {
             pstmt.setString(1, email);
             pstmt.setInt(2, currentUserId);
             try (ResultSet rs = pstmt.executeQuery()) {
+            	//Check If Next Record Availble
                 return rs.next(); // If rs.next() is true, it means another user has this email
             }
         } catch (SQLException e) {
             System.err.println("UserService.isEmailTakenByOtherUser: Error checking email existence - " + e.getMessage());
             e.printStackTrace();
-            // Fail safely - assume email might be taken to prevent potential issues
-            // Or you could throw an exception to indicate a check failure
             return true;
         }
     }
 
+    /**
+     * Updates a user's profile information in the database.
+     *
+     * @param userData The UserModel object containing the updated user data.
+     * @param newPassword The new password for the user (if any).
+     * @return true if the profile was successfully updated, false otherwise.
+     */
     public boolean updateUserProfile(UserModel userData, String newPassword) {
-
+    	// Check If DB Connection Is Null
         if (this.dbConn == null) {
             System.err.println("UserService.updateUserProfile: Database connection is not available.");
             return false;
         }
 
+        // Check If UserData Or User ID Is Invalid
         if (userData == null || userData.getUserId() <= 0) {
             System.err.println("UserService.updateUserProfile: Invalid user data or user ID provided.");
             return false;
         }
 
-        // --- NEW: Email Clash Validation ---
+        // Check if is Email Already Taken By Any Other User
         if (isEmailTakenByOtherUser(userData.getEmail(), userData.getUserId())) {
             System.err.println("UserService.updateUserProfile: Email '" + userData.getEmail() + "' is already taken by another user.");
-            // Optionally set a specific error message attribute here for the controller
-            return false; // Stop the update process
+            return false;
         }
-        // --- End Email Clash Validation ---
-
 
         String hashedPassword = null;
         boolean updatePassword = false;
 
+        // Check If New Password Not Null
         if (newPassword != null && !newPassword.trim().isEmpty()) {
             try {
                 hashedPassword = PasswordUtil.hashPassword(newPassword);
@@ -90,6 +96,7 @@ public class UserService {
 
         StringBuilder sqlBuilder = new StringBuilder("UPDATE user SET FullName = ?, UserEmail = ?, PhoneNumber = ?, ProfilePicturePath = ?");
 
+        // Check If User Selected For Update Password
         if (updatePassword) {
             sqlBuilder.append(", Password = ?");
         }
@@ -104,6 +111,7 @@ public class UserService {
             pstmt.setString(paramIndex++, userData.getPhoneNumber());
             pstmt.setString(paramIndex++, userData.getProfilePicturePath());
 
+             // Check If User Selected For Update Password
             if (updatePassword) {
                 pstmt.setString(paramIndex++, hashedPassword);
             }
@@ -111,6 +119,7 @@ public class UserService {
 
             int rowsAffected = pstmt.executeUpdate();
 
+            // Check If Row is affected
             if (rowsAffected > 0) {
                 System.out.println("UserService.updateUserProfile: Successfully updated profile for User ID " + userData.getUserId());
                 return true;

@@ -22,11 +22,17 @@ public class ValidationUtil {
 		}
 	}
 	
+	/**
+     * Checks if an email address is already registered in the database.
+     * @param email The email address to check.
+     * @return True if the email is already registered, false otherwise.
+     */
 	public boolean isEmailAlreadyRegistered(String email) {
         String checkEmailQuery = "SELECT UserEmail FROM user WHERE UserEmail = ?";
         try (PreparedStatement checkStmt = dbConn.prepareStatement(checkEmailQuery)) {
             checkStmt.setString(1, email);
             ResultSet resultSet = checkStmt.executeQuery();
+            // Check If Result Set Is Empty
             return resultSet.next(); // Returns true if a user with this email exists
         } catch (SQLException e) {
             System.err.println("Error checking email existence: " + e.getMessage());
@@ -35,6 +41,11 @@ public class ValidationUtil {
         }
     }
 	
+	 /**
+     * Checks if a given string is a valid email address based on a simple regex.
+     * @param email The email address to validate.
+     * @return True if the email is valid, false otherwise.
+     */
 	 public boolean isValidEmail(String email) {
         // Basic email validation regex
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
@@ -43,6 +54,11 @@ public class ValidationUtil {
         return matcher.matches();
     }
 
+    /**
+     * Checks if a given string is a valid phone number based on a simple regex.
+     * @param phoneNumber The phone number to validate.
+     * @return True if the phone number is valid, false otherwise.
+     */
     public boolean isValidPhoneNumber(String phoneNumber) {
         // Basic phone number validation regex (allows digits, spaces, hyphens, parentheses)
         String phoneRegex = "^[\\d\\s\\-\\(\\)]+$";

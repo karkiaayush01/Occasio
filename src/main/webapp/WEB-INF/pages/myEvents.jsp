@@ -178,7 +178,7 @@
 			            <div class="add-event-actions-children">
 			                <div class = "add-event-actions-info">
 			                    <h3>Your Past Events</h3>
-			                    <%-- CHANGE 4: Use requestScope.pastEvents.size() --%>
+			                    <%--  Use requestScope.pastEvents.size() --%>
 			                    <p class="personal-event-count">${requestScope.pastEvents.size()} ${requestScope.pastEvents.size() == 1 ? "Event" : "Events"}</p>
 			                </div>
 			                <p class="add-event-actions-help-text">Keep track of your completed events</p>
@@ -190,7 +190,7 @@
 			        </div>
 			        
 			        <div class="events-card-container">
-			            <%-- CHANGE 5: Iterate over requestScope.pastEvents --%>
+			            <%--Iterate over requestScope.pastEvents --%>
 			            <c:forEach var="event" items="${requestScope.pastEvents}">
 			                <div class="user-events-card">
 			                    <img src="${contextPath}/${not empty event.imagePath? event.imagePath : 'resources/images/event-default.png'}" class="user-events-cover"/>
@@ -251,190 +251,6 @@
 			    </section>
 			</c:if>
 			
-			<!--  section class="ongoing-events">
-				<h3 class="event-section-title">Ongoing Events</h3>
-				
-				<div class="ongoing-events-card-large-container">
-					<div class="ongoing-events-large-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-large-cover"/>
-						<div class="ongoing-events-large-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 32px">Aspire 2025</h4>
-								<span class="view-event-details-link" style="font-size: 14px">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info-child">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-								<span class="event-card-time-label" style="font-size: 20px;">25/04/2025 - 29/04/2025</span>
-							</div>
-							
-							<div class="ongoing-events-card-info-child">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-								<span class="event-card-location-label" style="font-size: 20px;">Kumari Hall</span>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts-large" >
-									<div class = "interested-user-images-large">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="show-interest-button">Confirm Interest</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="ongoing-events-large-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-large-cover"/>
-						<div class="ongoing-events-large-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 32px">Aspire 2025</h4>
-								<span class="view-event-details-link" style="font-size: 14px">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info-child">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-								<span class="event-card-time-label" style="font-size: 20px;">25/04/2025 - 29/04/2025</span>
-							</div>
-							
-							<div class="ongoing-events-card-info-child">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-								<span class="event-card-location-label" style="font-size: 20px;">Kumari Hall</span>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts-large" >
-									<div class = "interested-user-images-large">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="show-interest-button">Confirm Interest</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="events-card-container">
-					<div class = "ongoing-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
-						<div class="ongoing-events-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info">
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span class="event-card-time-label">9:00 AM - 2:00 PM</span>
-								</div>
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span class="event-card-location-label">Kumari Hall</span>
-								</div>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts" >
-									<div class = "interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="show-interest-button">Confirm Interest</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class = "ongoing-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
-						<div class="ongoing-events-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info">
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span class="event-card-time-label">9:00 AM - 2:00 PM</span>
-								</div>
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span class="event-card-location-label">Kumari Hall</span>
-								</div>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts" >
-									<div class = "interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="interested-button">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
-										Interested
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class = "ongoing-events-card">
-						<img src="${contextPath}/resources/images/event-default.png" class="ongoing-events-cover"/>
-						<div class="ongoing-events-card-details">
-							<div class="ongoing-events-card-details-title">
-								<h4 class="event-card-title" style="font-size: 16px">Aspire 2025</h4>
-								<span class="view-event-details-link">View Details</span>
-							</div>
-							
-							<div class="ongoing-events-card-info">
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-									<span class="event-card-time-label">9:00 AM - 2:00 PM</span>
-								</div>
-								<div class="ongoing-events-card-info-child">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-									<span class="event-card-location-label">Kumari Hall</span>
-								</div>
-							</div>
-							
-							<div class="event-card-interested">
-								<div class="interested-counts" >
-									<div class = "interested-user-images">
-										<img src="" class="interested-user-1">
-										<img src="" class="interested-user-2">
-										<img src="" class="interested-user-3">
-									</div>
-									<div class="total-interests">+20 others are interested</div>
-								</div>
-								<div class="">
-									<button class="show-interest-button">Confirm Interest</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section -->
-			
 			<div class = "mobile-nav-overlay">
 				<div class="mobile-nav-menu">
 					<button class = "mobile-nav-close-button" onclick="toggleMobileMenu()">
@@ -488,55 +304,55 @@
                         <span>Back</span>
                     </button>
 
-                    <%-- CHANGE 1: Modify the <form> tag --%>
+                    <%-- Modify the <form> tag --%>
                     <form class="update-profile-form"
                           action="${contextPath}/userProfile"
                           method="post"
                           enctype="multipart/form-data">
 
                         <div class="update-profile-user-info">
-                            <%-- CHANGE 2: Modify the <img> tag src for dynamic display + fallback --%>
+                            <%-- Modify the <img> tag src for dynamic display + fallback --%>
                             <img src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}"
                                  class="user-profile" alt="Current User Profile Picture" data-original-src="${contextPath}/${not empty userProfileImgUrl ? userProfileImgUrl : 'resources/images/default-profile.png'}">
 
-                            <%-- CHANGE 3: Add the hidden file input --%>
+                            <%--  Add the hidden file input --%>
                             <input type="file" name="profilePictureFile" id="profilePictureUpload" style="display: none;" accept="image/*" onchange="previewProfilePicture(event)">
 
-                            <%-- CHANGE 4: Modify the "Change Profile" button type and add onclick --%>
+                            <%-- Modify the "Change Profile" button type and add onclick --%>
                             <button type="button" class="change-profile-picture-button" onclick="document.getElementById('profilePictureUpload').click();">Change Profile</button>
 
-                             <%-- CHANGE 5: Make the display name dynamic --%>
+                             <%-- Make the display name dynamic --%>
                             <p class="update-profile-display-name"><c:out value="${fullName}"/></p>
                         </div>
 
                         <div class="update-profile-input-forms">
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Full Name</label>
-                                <%-- CHANGE 6a: Add value attribute --%>
+                                <%-- Add value attribute --%>
                                 <input name="fullName" type="text" class="update-profile-input-field" value="<c:out value='${fullName}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Email</label>
-                                <%-- CHANGE 6b: Add value attribute, change type --%>
+                                <%-- Add value attribute, change type --%>
                                 <input name="email" type="email" class="update-profile-input-field" value="<c:out value='${userEmail}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Phone Number</label>
-                                <%-- CHANGE 6c: Add value attribute, change type --%>
+                                <%--  Add value attribute, change type --%>
                                 <input name="phoneNumber" type="tel" class="update-profile-input-field" value="<c:out value='${userPhoneNumber}'/>"/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">Organization ID (Cannot Be Changed)</label>
-                                <%-- CHANGE 6d: Correct name, add value, add readonly --%>
+                                <%-- Correct name, add value, add readonly --%>
                                 <input name="organizationId" type="text" class="update-profile-input-field" value="<c:out value='${organizationId}'/>" readonly/>
                             </div>
 
                             <div class="update-profile-form-section">
                                 <label class="update-profile-input-label">New Password</label> <%-- Changed label --%>
-                                <%-- CHANGE 6e: Correct name, change type, add placeholder --%>
+                                <%--  Correct name, change type, add placeholder --%>
                                 <input name="password" type="password" class="update-profile-input-field" placeholder="Leave blank to keep current password"/>
                             </div>
                         </div>
@@ -775,8 +591,12 @@
 	</body>
 	
 	<script>
+		/**
+		 * Toggles the visibility of the mobile navigation menu overlay.
+		 */
 		function toggleMobileMenu(){
 			const navElement = document.querySelector(".mobile-nav-overlay");
+			// Check If Nav ELement Style Is Block
 			if(navElement.style.display == "block"){
 				navElement.style.display = "none";
 			}
@@ -784,42 +604,58 @@
 				navElement.style.display = "block";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the add events form overlay.
+		 */
 		function toggleAddEventsForm(){
 			const addEventFormElement = document.querySelector(".add-event-overlay");
+			// Check If Add ELement Style Is Visible
 			if(addEventFormElement.style.visibility == "visible"){
 				addEventFormElement.style.visibility = "hidden";
 			} else {
 				addEventFormElement.style.visibility = "visible";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the edit events form overlay.
+		 */
 		function toggleEditEventsForm(){
 			const editEventFormElement = document.querySelector(".edit-event-overlay");
+			// Check If Edit Event ELement Style Is Visible
 			if(editEventFormElement.style.visibility == "visible"){
 				editEventFormElement.style.visibility = "hidden";
 			} else {
 				editEventFormElement.style.visibility = "visible";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the logout overlay and hides the mobile navigation.
+		 */
 		function toggleLogoutOverlay(){
 			const logoutElement = document.querySelector(".logout-overlay");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
 			mobileNavOverlayElement.style.display = "none"; //Hide the mobile nav if it was visible
+			// Check If LogOut ELement Style Is Visible
 			if(logoutElement.style.visibility == "visible"){
 				logoutElement.style.visibility = "hidden";
 			} else {
 				logoutElement.style.visibility = "visible";
 			}
 		}
-		
+	
+		/**
+		 * Toggles the visibility of the update profile overlay, handles container animation, and resets image
+		 */
 		function toggleUpdateProfileOverlay(){
 			const updateProfileElement = document.querySelector(".update-profile-overlay");
 			const container = document.querySelector(".update-profile-container");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
 			mobileNavOverlayElement.style.display = "none"; // Always hide mobile nav when profile appears
-
+	
+			// Check If Update Profile ELement Style Is Visible
 			if(updateProfileElement.style.visibility == "visible"){
 				container.classList.remove('active');
 				setTimeout(() => {
@@ -828,46 +664,67 @@
 			} else {
 				// Added logic to reset image on open
 				const profileImage = updateProfileElement.querySelector('.user-profile');
-                const fileInput = document.getElementById('profilePictureUpload');
+		        const fileInput = document.getElementById('profilePictureUpload');
+				// Check If Profile Image is found
 				if (profileImage) {
 					const originalSrc = profileImage.getAttribute('data-original-src');
+					// Check If Original Source Found
 					if (originalSrc) {
 						profileImage.src = originalSrc;
 					}
 				}
-                if(fileInput) {
-                    fileInput.value = "";
-                }
-
+		         // Check If File Is Found
+		        if(fileInput) {
+		            fileInput.value = "";
+		        }
+	
 				updateProfileElement.style.visibility = "visible";
-                setTimeout(() => {
-                    container.classList.add('active');
-                }, 10);
+		        setTimeout(() => {
+		            container.classList.add('active');
+		        }, 10);
 			}
 		}
-		
+	
+		/**
+		 * Handles clicks outside the logout container to close the logout overlay.
+		 * @param {Event} e The click event.
+		 */
 		function handleLogoutOverlayClick(e){
+			// Check If Click Is Closest To Logout Container
 			if(!e.target.closest('.logout-container')){
 				toggleLogoutOverlay();
 			}
 		}
-		
+	
+		/**
+		 * Triggers the file input click to open the add image uploader.
+		 */
 		function triggerAddImageUploader(){
 			const actualUploader = document.getElementById('add-event-image-uploader');
 			actualUploader.click();
 		}
-		
+	
+		/**
+		 * Triggers the file input click to open the edit image uploader.
+		 */
 		function triggerEditImageUploader(){
 			const actualUploader = document.getElementById('edit-event-image-uploader');
 			actualUploader.click();
 		}
-		
+	
+		/**
+		 * Handles the file change event for image uploaders.
+		 * @param {Event} event The file change event.
+		 * @param {string} type The type of uploader ('add' or 'edit').
+		 */
 		function handleFileChange(event, type) {
 		    const file = event.target.files[0];
+		    // Check If File Found
 		    if (file) {
 		      const reader = new FileReader();
-
+	
 		      reader.onload = function(e) {
+		    	  // Check the Type
 		   	  	if(type == "add"){
 			        addImageChange(e); // e.target.result is now valid
 		   	  	}
@@ -875,11 +732,15 @@
 		   	  		editImageChange(e);
 		   	  	}
 		      };
-
+	
 		      reader.readAsDataURL(file); // this triggers the onload
 		    }
 		 }
-		
+	
+		/**
+		 * Handles the image change for the add event form.
+		 * @param {Event} e The file reader onload event.
+		 */
 		function addImageChange(e){
 			const imageElement = document.querySelector(".add-event-cover-image");
 			const addedFlag = document.getElementById("add-image-changed-flag");
@@ -891,7 +752,11 @@
 			imageElement.src = e.target.result;
 			addedFlag.value = "true";
 		}
-		
+	
+		/**
+		 * Handles the image change for the edit event form.
+		 * @param {Event} e The file reader onload event.
+		 */
 		function editImageChange(e){
 			const imageElement = document.querySelector(".edit-event-cover-image");
 			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
@@ -901,7 +766,11 @@
 			deleteImageButton.style.display = "block";
 			imageElement.src = e.target.result;
 		}
-		
+	
+		/**
+		 * Removes the added image from the add event form.
+		 * @param {Event} e The click event.
+		 */
 		function removeAddedImage(e){
 			e.stopPropagation();
 			const addedFlag = document.getElementById("add-image-changed-flag");
@@ -916,7 +785,10 @@
 			imageUploader.value = "";
 			addedFlag.value = "false";
 		}
-		
+	
+		/**
+		 * Removes the edited image from the edit event form.
+		 */
 		function removeEditedImage(e){
 			e.stopPropagation();
 			const imageElement = document.querySelector(".edit-event-cover-image");
@@ -929,131 +801,42 @@
 			deleteImageButton.style.display = "none";
 			imageUploader.value = "";
 		}
-		
+	
+		/**
+		 * Previews the selected profile picture before upload.
+		 * @param {Event} event The file input change event.
+		 */
 		function previewProfilePicture(event) {
-            const file = event.target.files[0];
-            const imagePreview = document.querySelector('.update-profile-overlay .user-profile');
-
-            if (file && imagePreview) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                }
-
-                reader.readAsDataURL(file);
-            }
-        }
-		
-		document.addEventListener('DOMContentLoaded', (event) => {
-            // Check if event data was passed for editing
-            <c:if test="${not empty eventToEdit}">
-                console.log('Event data found for edit, opening overlay.');
-
-                // Select elements within the EDIT overlay specifically
-                const editOverlay = document.querySelector(".edit-event-overlay");
-                const editImagePreview = editOverlay.querySelector('.edit-event-cover-image');
-                const uploadControls = editOverlay.querySelector(".edit-event-upload-image-controls");
-                const deleteImageButton = editOverlay.querySelector(".edit-event-image-remove");
-                const fileInput = document.getElementById('edit-event-image-uploader');
-                const imageChangedFlag = document.getElementById('edit-image-changed-flag'); // Assuming you add this flag
-
-                // Reset the edit image preview to the fetched image
-                if (editImagePreview) {
-                    const originalSrc = editImagePreview.getAttribute('data-original-src');
-                    if (originalSrc) {
-                         editImagePreview.src = originalSrc;
-
-                         // Show/hide image controls based on whether it's the default image
-                        if (!originalSrc.endsWith('event-default.png')) { // Check if it's NOT the default
-                            editImagePreview.style.display = 'block';
-                            if(uploadControls) uploadControls.style.display = 'none';
-                            if(deleteImageButton) deleteImageButton.style.display = 'block';
-                        } else { // It IS the default image
-                            editImagePreview.style.display = 'none';
-                             if(uploadControls) uploadControls.style.display = 'flex';
-                             if(deleteImageButton) deleteImageButton.style.display = 'none';
-                        }
-                    } else { // No original source found (shouldn't happen if data-attribute is set)
-                         editImagePreview.style.display = 'none';
-                         if(uploadControls) uploadControls.style.display = 'flex';
-                         if(deleteImageButton) deleteImageButton.style.display = 'none';
-                    }
-                }
-
-                // Clear the file input in case of refresh issues
-                if(fileInput) fileInput.value = "";
-
-                 // Reset the image changed flag
-                if(imageChangedFlag) imageChangedFlag.value = "false";
-
-                toggleEditEventsForm(); // Open the edit overlay
-            </c:if>
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const errorMsg = urlParams.get('error');
-            const failedEventId = urlParams.get('failedEventId');
-
-            if (errorMsg && failedEventId && document.getElementById('edit-event-form')) { // Check if edit form exists
-                 alert("Error updating event: " + decodeURIComponent(errorMsg));
-                 const formEventIdInput = document.querySelector('.edit-event-form input[name="eventId"]');
-                 if (formEventIdInput && formEventIdInput.value === failedEventId) {
-                    // Ensure the overlay is visible if it wasn't already opened by eventToEdit check
-                    const editOverlay = document.querySelector(".edit-event-overlay");
-                    if (editOverlay.style.visibility !== 'visible') {
-                         toggleEditEventsForm();
-                    }
-                 }
-            } else if (errorMsg) {
-                 alert("Error: " + decodeURIComponent(errorMsg));
-            }
-
-        });
-		
-		function setEditImageChanged(changed) {
-            const flag = document.getElementById('edit-image-changed-flag');
-            if(flag) flag.value = changed ? 'true' : 'false';
-       	}
-		
-		function editImageChange(e){
-			const imageElement = document.querySelector(".edit-event-cover-image");
-			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
-			const deleteImageButton = document.querySelector(".edit-event-image-remove");
-			uploadControls.style.display="none";
-			imageElement.style.display="block";
-			deleteImageButton.style.display = "block";
-			imageElement.src = e.target.result;
-            setEditImageChanged(true);
+		    const file = event.target.files[0];
+		    const imagePreview = document.querySelector('.update-profile-overlay .user-profile');
+	
+		    // Check If File And Image Preview Is Found
+		    if (file && imagePreview) {
+		        const reader = new FileReader();
+	
+		        reader.onload = function(e) {
+		            imagePreview.src = e.target.result;
+		        }
+	
+		        reader.readAsDataURL(file);
+		    }
 		}
-
-		function removeEditedImage(e){
-			e.stopPropagation();
-			const imageElement = document.querySelector(".edit-event-cover-image");
-			const uploadControls = document.querySelector(".edit-event-upload-image-controls");
-			const deleteImageButton = document.querySelector(".edit-event-image-remove");
-			const imageUploader = document.getElementById('edit-event-image-uploader');
-			imageElement.src=""; // Clear preview
-            // Show upload controls, hide image/delete button
-			uploadControls.style.display="flex";
-			imageElement.style.display="none";
-			deleteImageButton.style.display = "none";
-			imageUploader.value = ""; // Clear the file input
-            setEditImageChanged(true); // Mark as changed (to remove image path on server)
-		}
-		
+	
 		const OFFSET_TOP = 100;
 		let hasUserScrolled = false;
-
+	
 		window.addEventListener('scroll', () => {
 		  hasUserScrolled = true;
 		}, { once: true }); // only need to detect first scroll
-
+	
 		const markers = document.querySelectorAll('.scroll-marker');
-
+	
 		const observer = new IntersectionObserver((entries) => {
-		  if (!hasUserScrolled) return; // skip auto scroll on page load
-
+			// Skip The Auto Scroll If Has User Scrolled
+		  if (!hasUserScrolled) return;
+	
 		  entries.forEach(entry => {
+			  // Check If Entry Is Intersecting
 		    if (entry.isIntersecting) {
 		      const markerTop = entry.target.getBoundingClientRect().top + window.scrollY;
 		      window.scrollTo({
@@ -1065,7 +848,7 @@
 		}, {
 		  threshold: 0.01
 		});
-
+	
 		markers.forEach(marker => observer.observe(marker));
 		
 	</script>

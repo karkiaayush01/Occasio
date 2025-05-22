@@ -56,6 +56,7 @@
 					</div>
 				</div>
 				
+				<!-- Event requests for admin to manage -->
 				<div class="user-management-tab" style="flex-grow: 1">
                     <h2 style="margin-bottom: 16px;">Event Requests</h2>
                      <c:if test="${not empty message}">
@@ -110,6 +111,7 @@
                 </div>
 			</div>
 			
+			<!-- update profile overlay -->
 			<div class="update-profile-overlay">
                 <div class="update-profile-container">
                     <button class="update-profile-back" onclick="toggleUpdateProfileOverlay()">
@@ -166,7 +168,7 @@
                     </form>
                 </div>
             </div>
-            
+            <!-- logout overlay -->
             <div class="logout-overlay" onclick="handleLogoutOverlayClick(event)">
 				<div class="logout-container">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="logout-warning-icon" xmlns="http://www.w3.org/2000/svg">
@@ -221,6 +223,7 @@
 	</body>
 
 	<script>
+	
 		function switchActiveTab(activeTab){
 	        const statisticTab = document.querySelector(".statistics-tab");
 	        const userManagementTab = document.querySelector(".user-management-tab");
@@ -228,12 +231,14 @@
 	        const statisticTabButton = document.getElementById("statisticTabButton");
 	        const userManagementTabButton = document.getElementById("userManagementTabButton");
 	
+	        // Check If Active Tab Is Statistic And Statistic Tab Button Is Not Active
 	        if (activeTab === "statistic" && !statisticTabButton.classList.contains("active")){
 	            statisticTabButton.classList.add("active");
 	            userManagementTabButton.classList.remove("active");
 	            statisticTab.style.display = "block";
 	            userManagementTab.style.display = "none";
 	        }
+	         // Check If Active Tab Is User Management And User Management Tab Button Is Not Active
 	        else if (activeTab == "userManagement" && !userManagementTabButton.classList.contains("active")){
 	            statisticTabButton.classList.remove("active");
 	            userManagementTabButton.classList.add("active");
@@ -246,6 +251,7 @@
 			const logoutElement = document.querySelector(".logout-overlay");
 			const mobileNavOverlayElement = document.querySelector(".mobile-nav-overlay");
 			//mobileNavOverlayElement.style.display = "none"; //Hide the mobile nav if it was visible
+			// Check If LogOut Overlay Is Visible
 			if(logoutElement.style.visibility == "visible"){
 				logoutElement.style.visibility = "hidden";
 			} else {
@@ -253,16 +259,26 @@
 			}
 		}
 		
+		/**
+		 * Handles clicks outside the logout container to close the logout overlay.
+		 * @param {Event} e The click event.
+		 */
 		function handleLogoutOverlayClick(e){
+			// Check If Click Occured Close To Logout Container
 			if(!e.target.closest('.logout-container')){
 				toggleLogoutOverlay();
 			}
 		}
 		
+		/**
+		 * Toggles the visibility of the reject event overlay.
+		 * @param {number} eventId The ID of the event to reject (optional, defaults to 0).
+		 */
 		function toggleRejectEvent(eventId = 0){
 			const rejectOverlay = document.getElementById("reject-event-overlay");
 			const eventIdInputField = document.getElementById("rejectEventIdField");
 			const rejectTextArea = document.querySelector(".reject-event-container-info-textarea");
+			// Check If Reject Overlay Is Hidden
 			if(rejectOverlay.style.visibility == "hidden" || rejectOverlay.style.visibility == ""){
 				rejectOverlay.style.visibility = "visible";
 				eventIdInputField.value = eventId.toString();
@@ -274,9 +290,14 @@
 			}
 		}
 		
+		/**
+		 * Toggles the visibility of the approve event overlay.
+		 * @param {number} eventId The ID of the event to approve (optional, defaults to 0).
+		 */
 		function toggleApproveEvent(eventId = 0){
 			const approveOverlay = document.getElementById("approve-event-overlay");
 			const eventIdInputField = document.getElementById("approveEventIdField");
+			// Check If Approve Overlay Is Hidden
 			if(approveOverlay.style.visibility == "hidden" || approveOverlay.style.visibility == ""){
 				approveOverlay.style.visibility = "visible";
 				eventIdInputField.value = eventId.toString();

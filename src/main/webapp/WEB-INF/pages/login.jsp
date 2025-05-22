@@ -7,7 +7,7 @@
 		<title>Occasio - Login</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css?v=${System.currentTimeMillis()}"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<%-- Add some basic styling for error messages --%>
+		<%-- Adding some basic styling for error messages --%>
         <style>
             .error-message {
                 color: red;
@@ -69,6 +69,9 @@
 	</body>
 
 	<script>
+		/**
+		 * Toggles the visibility of the password in the login form.
+		 */
 		function toggleViewPassword(){
 			passwordField = document.getElementById('login-password-field');
 			iconButton = document.getElementById('show-password-button');
@@ -86,6 +89,7 @@
 	<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
 	<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
 	
+	<!-- Particle JS configuration -->
 	<script>
 		particlesJS("particles-js", 
 			{

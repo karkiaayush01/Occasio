@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- Check If Popup Message Is Not Empty --%>
 <c:if test="${not empty popupMessage}">
     <style>
+    <%-- CSS Styling For PopUp --%>
         .popup {
             padding: 16px;
             border-radius: 6px;
