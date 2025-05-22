@@ -267,6 +267,10 @@ body{
 	justify-content: space-between;
 }
 
+.add-event-actions.past{
+	width: 320px;
+}
+
 .add-event-actions-info{
 	display: flex;
 	gap: 8px;
@@ -393,6 +397,7 @@ body{
 	color: rgba(37, 81, 227, 1);
 	font-family: 'Poppins';
 	cursor: pointer;
+	white-space: nowrap;
 }
 
 .view-event-details-link:hover{
@@ -463,9 +468,10 @@ body{
 	}
 }
 
-.event-card-interested{
-	display: flex;
-	padding: 4px 0px;
+.event-card-interested {
+  display: flex;
+  padding: 4px 0px;
+  justify-content: space-between;
 }
 
 .interested-counts-large{
@@ -476,57 +482,54 @@ body{
 	gap: 4px;
 }
 
-.interested-counts{
-	display: flex;
-	align-items: center;
-	position: relative;
+.interested-counts {
+  display: flex;
+  align-items: center;
 }
 
-.interested-user-images-large{
-	width: 70px; 
-	display: flex; 
-	align-items: center;
+.interested-user-images {
+  position: relative;
+  height: 32px;
+  /* Use a spacer width based on max number of images possible */
+  width: 64px; /* 28px first image + 18px second image + 18px third image */
+  min-width: 64px;
+  margin-right: 4px;
 }
 
-.interested-user-images{
-	width: 100px; 
-	display: flex; 
-	align-items: center;
+.interested-user-images img {
+  background: rgba(217, 217, 217, 1);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border: 2px solid white;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
 }
 
-.interested-user-images-large img{
-	background: rgba(217, 217, 217, 1);
-	border-radius: 50%;
-	width: 28px;
-	height: 28px;
-	border: 2px solid white;
-	z-index: 10;
+.interested-user-1 {
+  left: 0;
+  z-index: 3;
 }
 
-.interested-user-images img{
-	background: rgba(217, 217, 217, 1);
-	border-radius: 50%;
-	width: 28px;
-	height: 28px;
-	border: 2px solid white;
-	z-index: 10;
+.interested-user-2 {
+  left: 18px;
+  z-index: 2;
 }
 
-.total-interests{
-	font-size: 10px;
-	font-family: 'Poppins-Regular';
+.interested-user-3 {
+  left: 36px;
+  z-index: 1;
 }
 
-.interested-user-2{
-	position: absolute;
-	left: 18px;
+.total-interests {
+  font-size: 10px;
+  font-family: 'Poppins-Regular';
 }
 
 .interested-user-3{
-	position: absolute;
 	left: 36px;
 }
-
 .edit-event-button, .show-interest-button, .interested-button{
 	display: flex;
 	padding: 2px 8px;

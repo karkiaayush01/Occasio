@@ -7,6 +7,7 @@
 </c:if>
 <jsp:useBean id="emptySponsor" class="com.occasio.model.SponsorModel" scope="page"/>
 <c:set var="currentSponsor" value="${not empty eventFormData.sponsors ? eventFormData.sponsors[0] : emptySponsor}" />
+<c:set var="currentSponsor" value="${not empty eventFormData.sponsors ? eventFormData.sponsors[0] : emptySponsor}" />
 
 <!DOCTYPE html>
 
@@ -100,12 +101,12 @@
 			                    <div class="user-events-card-details">
 			                        <div class="user-events-card-details-title">
 			                            <h4 class="user-events-card-details-title-name" style="font-size: 16px;">${event.name}</h4>
-			                            <span class="view-event-details-link">View Details</span>
+			                            <span class="view-event-details-link" onclick="window.location.href='${contextPath}/event?action=fetchEventData&eventId=${event.id}&userId=${userId}'">View Details</span>
 			                        </div>
 			                        <div class="user-event-card-details-info">
 			                            <p class="user-event-card-details-info-child">
-			                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-			                                <span>${event.startDate} - ${event.endDate}</span>
+			                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+											<span>${event.startDate} - ${event.endDate}</span>
 			                            </p>
 			                            <p class="user-event-card-details-info-child">
 			                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
@@ -129,14 +130,31 @@
 			                            <p class="user-event-card-details-status-data">${event.status}</p>
 			                        </div>
 			                        <div class="event-card-interested">
-			                            <div class="interested-counts">
-			                                <div class="interested-user-images">
-			                                    <img src="" class="interested-user-1">
-			                                    <img src="" class="interested-user-2">
-			                                    <img src="" class="interested-user-3">
-			                                </div>
-			                                <div class="total-interests">+20 others are interested</div>
-			                            </div>
+			                            <div class="interested-counts" >
+											<c:if test="${not empty event.interestedUsers.interestedUsersPicturePaths}">
+												<div class = "interested-user-images">
+													<c:forEach var="imagePath" items="${event.interestedUsers.interestedUsersPicturePaths}" varStatus="status">
+													    <c:if test="${status.index < 3}">
+													        <img src="${contextPath}/${not empty imagePath ? imagePath : 'resources/images/default-profile.png'}" class="interested-user-${status.index + 1}">
+													    </c:if>
+													</c:forEach>
+												</div>
+											</c:if>
+											
+											<c:choose>
+												<c:when test="${event.interestedUsers.totalInterestedCount > 3}">
+													<div class="total-interests">+ ${event.interestedUsers.totalInterestedCount - 3} others are interested</div>
+												</c:when>
+												
+												<c:when test="${event.interestedUsers.totalInterestedCount == 0}">
+													<div class="total-interests">No one interested so far</div>
+												</c:when>
+												
+												<c:when test="${event.interestedUsers.totalInterestedCount <= 3}">
+													<div class="total-interests"> are interested</div>
+												</c:when>
+											</c:choose>								
+										</div>
 			                            <div>
 			                                <button class="edit-event-button" onclick="window.location.href='${contextPath}/event?action=fetchForEdit&eventId=${event.id}'">
 			                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
@@ -174,7 +192,7 @@
 			<c:if test="${not empty requestScope.pastEvents}">
 			    <section class="user-events">
 			
-			        <div class="add-event-actions">
+			        <div class="add-event-actions past">
 			            <div class="add-event-actions-children">
 			                <div class = "add-event-actions-info">
 			                    <h3>Your Past Events</h3>
@@ -183,10 +201,6 @@
 			                </div>
 			                <p class="add-event-actions-help-text">Keep track of your completed events</p>
 			            </div>
-			            <button class="events-actions-add" onclick="toggleAddEventsForm()">
-			                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-			                <span class="events-actions-add-text">Add Event</span>
-			            </button>
 			        </div>
 			        
 			        <div class="events-card-container">
@@ -197,12 +211,12 @@
 			                    <div class="user-events-card-details">
 			                        <div class="user-events-card-details-title">
 			                            <h4 class="user-events-card-details-title-name" style="font-size: 16px;">${event.name}</h4>
-			                            <span class="view-event-details-link">View Details</span>
+			                            <span class="view-event-details-link" onclick="window.location.href='${contextPath}/event?action=fetchEventData&eventId=${event.id}&userId=${userId}'">View Details</span>
 			                        </div>
 			                        <div class="user-event-card-details-info">
 			                            <p class="user-event-card-details-info-child">
-			                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-			                                <span>${event.startDate} - ${event.endDate}</span>
+			                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+											<span>${event.startDate} - ${event.endDate}</span>
 			                            </p>
 			                            <p class="user-event-card-details-info-child">
 			                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
@@ -214,14 +228,31 @@
 			                            <p class="user-event-card-details-status-data">${event.status}<p>
 			                        </div>
 			                        <div class="event-card-interested">
-			                            <div class="interested-counts">
-			                                <div class="interested-user-images">
-			                                    <img src="" class="interested-user-1">
-			                                    <img src="" class="interested-user-2">
-			                                    <img src="" class="interested-user-3">
-			                                </div>
-			                                <div class="total-interests">+20 others are interested</div>
-			                            </div>
+			                            <div class="interested-counts" >
+											<c:if test="${not empty event.interestedUsers.interestedUsersPicturePaths}">
+												<div class = "interested-user-images">
+													<c:forEach var="imagePath" items="${event.interestedUsers.interestedUsersPicturePaths}" varStatus="status">
+													    <c:if test="${status.index < 3}">
+													        <img src="${contextPath}/${not empty imagePath ? imagePath : 'resources/images/default-profile.png'}" class="interested-user-${status.index + 1}">
+													    </c:if>
+													</c:forEach>
+												</div>
+											</c:if>
+											
+											<c:choose>
+												<c:when test="${event.interestedUsers.totalInterestedCount > 3}">
+													<div class="total-interests">+ ${event.interestedUsers.totalInterestedCount - 3} others are interested</div>
+												</c:when>
+												
+												<c:when test="${event.interestedUsers.totalInterestedCount == 0}">
+													<div class="total-interests">No one interested so far</div>
+												</c:when>
+												
+												<c:when test="${event.interestedUsers.totalInterestedCount <= 3}">
+													<div class="total-interests"> are interested</div>
+												</c:when>
+											</c:choose>								
+										</div>
 			                            <div>
 			                            </div>
 			                        </div>

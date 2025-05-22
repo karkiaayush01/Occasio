@@ -133,9 +133,112 @@ public class EventController extends HttpServlet {
 
 		if ("EDIT".equalsIgnoreCase(method)) {
 			handleEditEvent(request, response, currentUser); // Pass user for auth check maybe later
-		} else {
+		}
+		else if("removeInterest".equalsIgnoreCase(method)) {
+			handleRemoveInterest(request, response);
+		}
+		else if("addInterest".equalsIgnoreCase(method)) {
+			handleAddInterest(request, response);
+		}
+		else {
 			handleAddEvent(request, response, currentUser);
 		}
+	}
+	
+	private void handleAddInterest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int eventId = Integer.parseInt(request.getParameter("eventId"));
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		
+		 String message = eventService.addInterestedUser(userId, eventId);
+		 if(message.startsWith("Success:")) {
+				//displaying success message
+				String[] parts = message.split(": ", 2); 
+				if (parts.length == 2) {
+					SessionUtil.setAttribute(request, "popupMessage", parts[1]);
+					SessionUtil.setAttribute(request, "popupType", "success");
+					response.sendRedirect(request.getContextPath() + "/home");
+				}
+				else {
+					SessionUtil.setAttribute(request, "popupMessage", "You are now interested.");
+					SessionUtil.setAttribute(request, "popupType", "success");
+					response.sendRedirect(request.getContextPath() + "/home");
+				}
+			}
+			else if (message.startsWith("Error:")){
+				//extracting error message
+				String[] parts = message.split(": ", 2); 
+				if (parts.length == 2) {
+					SessionUtil.setAttribute(request, "popupMessage", parts[1]);
+					SessionUtil.setAttribute(request, "popupType", "error");
+					response.sendRedirect(request.getContextPath() + "/home");
+				}
+				else {
+					SessionUtil.setAttribute(request, "popupMessage", "An error occured.");
+					SessionUtil.setAttribute(request, "popupType", "error");
+					response.sendRedirect(request.getContextPath() + "/home");
+				}
+			}
+			else {
+				SessionUtil.setAttribute(request, "popupMessage", "An error occured.");
+				SessionUtil.setAttribute(request, "popupType", "error");
+				response.sendRedirect(request.getContextPath() + "/home");
+			}
+	}
+	
+	private void handleRemoveInterest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int eventId = Integer.parseInt(request.getParameter("eventId"));
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		int postedUserId = Integer.parseInt(request.getParameter("postedUserId"));
+		
+		System.out.println(userId);
+		System.out.println(postedUserId);
+		
+		if(userId == postedUserId) {
+			SessionUtil.setAttribute(request, "popupMessage", "Cannot uninterest self-hosted event");
+			SessionUtil.setAttribute(request, "popupType", "error");
+			response.sendRedirect(request.getContextPath() + "/home");
+			return;
+		}
+		
+		 String message = eventService.removeInterestedUser(userId, eventId);
+		 if(message.startsWith("Success:")) {
+				//displaying success message
+				String[] parts = message.split(": ", 2); 
+				if (parts.length == 2) {
+					SessionUtil.setAttribute(request, "popupMessage", parts[1]);
+					SessionUtil.setAttribute(request, "popupType", "success");
+					response.sendRedirect(request.getContextPath() + "/home");
+					return;
+				}
+				else {
+					SessionUtil.setAttribute(request, "popupMessage", "You are now interested.");
+					SessionUtil.setAttribute(request, "popupType", "success");
+					response.sendRedirect(request.getContextPath() + "/home");
+					return;
+				}
+			}
+			else if (message.startsWith("Error:")){
+				//extracting error message
+				String[] parts = message.split(": ", 2); 
+				if (parts.length == 2) {
+					SessionUtil.setAttribute(request, "popupMessage", parts[1]);
+					SessionUtil.setAttribute(request, "popupType", "error");
+					response.sendRedirect(request.getContextPath() + "/home");
+					return;
+				}
+				else {
+					SessionUtil.setAttribute(request, "popupMessage", "An error occured.");
+					SessionUtil.setAttribute(request, "popupType", "error");
+					response.sendRedirect(request.getContextPath() + "/home");
+					return;
+				}
+			}
+			else {
+				SessionUtil.setAttribute(request, "popupMessage", "An error occured.");
+				SessionUtil.setAttribute(request, "popupType", "error");
+				response.sendRedirect(request.getContextPath() + "/home");
+				return;
+			}
 	}
 
 	private void handleAddEvent(HttpServletRequest request, HttpServletResponse response, UserModel currentUser) throws ServletException, IOException {

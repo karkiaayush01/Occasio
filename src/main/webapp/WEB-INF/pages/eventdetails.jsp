@@ -100,15 +100,19 @@
 						<div class="confirm">
 							<c:choose>
 								<c:when test="${event.interested}">
-									<button class="interested-button">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
-										Interested
-									</button>
+									<form action="${contextPath}/event?method=removeInterest&userId=${userId}&eventId=${event.id}&postedUserId=${event.posterUserId}" method="post">
+										<button class="interested-button" type="submit">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+											Interested
+										</button>
+									</form>
 								</c:when>
 								<c:otherwise>
-									<button class="show-interest-button">
-										Confirm Interest
-									</button>
+									<form action="${contextPath}/event?method=addInterest&userId=${userId}&eventId=${event.id}" method="post">
+										<button class="show-interest-button" type="submit">
+											Confirm Interest
+										</button>
+									</form>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -151,24 +155,28 @@
 					</div>
 				
 				</section>
-				<section class = "organized-section">
-					<div class= "org-event">
-						<p> Posted by </p>
-						<p class = "Org-name"> ${event.postedUserName} </p>
-					</div>
-					<div class= "org-event-sponsor">
-						<p> Sponsored by </p>
-						<p class = "org-sponsor"> Islington College </p>
-					</div>
-					<div class= "org-event-email">
-						<p> Sponsor's Email </p>
-						<p> islingtoncollege@gmail.com </p>
-					</div>
-					<div class= "org-event-contact">
-						<p> Sponsor contact </p>
-						<p> 9812345678 </p>
-					</div>
-				</section>
+				
+				<div class= "org-event">
+					<p> Posted by </p>
+					<p class = "Org-name"> ${event.postedUserName} </p>
+				</div>
+				
+				<c:if test="${not empty event.sponsors }">
+					<section class = "organized-section">
+						<div class= "org-event-sponsor">
+							<p> Sponsored by </p>
+							<p class = "org-sponsor">${event.sponsors.get(0).sponsorName} </p>
+						</div>
+						<div class= "org-event-email">
+							<p> Sponsor's Email </p>
+							<p> ${event.sponsors.get(0).sponsorEmail} </p>
+						</div>
+						<div class= "org-event-contact">
+							<p> Sponsor contact </p>
+							<p> ${event.sponsors.get(0).sponsorContact} </p>
+						</div>
+					</section>
+				</c:if>
 			</div>
 		</main>
 		

@@ -189,6 +189,18 @@ public class EventService {
 	                     eventModel.setId(generatedKeys.getInt(1));
 	                 }
 	             }
+	             
+	             String addInterestedUser = this.addInterestedUser(eventModel.getPosterUserId(), eventModel.getId());
+	             if(addInterestedUser.startsWith("Error:")) {
+	            	 String[] parts = addInterestedUser.split(": ", 2); 
+						if (parts.length == 2) {
+							addInterestedUser = parts[1];
+						}
+	             }
+	             else {
+	            	 addInterestedUser = "";
+	             }
+	             
 
                  //Auto enroll the event creator in event_interested_users
                 boolean enrolledCreator = false;
@@ -199,8 +211,13 @@ public class EventService {
                 }
 
                 if (!enrolledCreator) {
-                 return "Successfully added event, but failed to autolink user to the event.";  //Non Critical failure
-             }
+                	return "Successfully added event, but failed to autolink user to the event.";  //Non Critical failure
+                }
+                
+                if(!addInterestedUser.equals("")) {
+                	return addInterestedUser;
+                }
+                
                  return "Successfully added event";
 	        } else {
 	            return "An error occurred while adding event (Insertion Failed).";
@@ -395,6 +412,10 @@ public class EventService {
 
                 // *** NEW: Fetch all sponsors for this event from the bridging table ***
                 event.setSponsors(getSponsorsForEvent(event.getId())); // Call helper method
+                
+                /* Fetch all interested users for this event by calling helper method*/
+                InterestedModel interestedUsers = getInterestedUsersForEvent(rs.getInt("EventId"), rs.getInt("PostedUserId"));
+				event.setInterestedUsers(interestedUsers);
 
 				userEvents.add(event);
 			}
@@ -596,6 +617,8 @@ public class EventService {
 	            
 	            InterestedModel interestedUsers = getInterestedUsersForEvent(rs.getInt("EventId"), rs.getInt("PostedUserId"));
 				event.setInterestedUsers(interestedUsers);
+				
+				event.setSponsors(getSponsorsForEvent(eventId));
 			}
 			else {
 				SessionUtil.setAttribute(req, "popupMessage", "Event not found");
@@ -661,7 +684,7 @@ public class EventService {
  	 */
  	public String removeInterestedUser(int userId, int eventId) {
          if (this.dbConn == null) {
-             return "Error while connecting to the database.";
+             return "Error: Error while connecting to the database.";
          }
          String sql = "DELETE FROM event_interested_users WHERE UserId = ? AND EventId = ?";
          try (PreparedStatement pstmt = dbConn.prepareStatement(sql)) {
@@ -670,14 +693,14 @@ public class EventService {
              int rowsAffected = pstmt.executeUpdate();
 
              if (rowsAffected > 0) {
-                 return "Successfully removed interest";
+                 return "Success: Successfully removed interest";
              } else {
-                 return "No record found for user and event.";
+                 return "Error: No record found for user and event.";
              }
          } catch (SQLException e) {
              System.err.println("Occasio.EventService.addInterestedUser: Error adding user to event: " + e.getMessage());
              e.printStackTrace();
-             return "An error occurred while removing your interest";
+             return "Error: An error occurred while removing your interest";
          }
      }
  	
@@ -689,7 +712,7 @@ public class EventService {
      */
      public String addInterestedUser(int userId, int eventId) {
          if (this.dbConn == null) {
-             return "Error while connecting to the database.";
+             return "Error: Error while connecting to the database.";
          }
 
          String sql = "INSERT INTO event_interested_users (UserId, EventId) VALUES (?, ?)";
@@ -699,14 +722,14 @@ public class EventService {
              int rowsAffected = pstmt.executeUpdate();
 
              if (rowsAffected > 0) {
-                 return "Successfully confirmed interest";
+                 return "Success: Successfully confirmed interest";
              } else {
-                 return "An error occurred while confirming your interest. Please try again later.";
+                 return "Error: An error occurred while confirming your interest. Please try again later.";
              }
          } catch (SQLException e) {
              System.err.println("Occasio.EventService.addInterestedUser: Error adding user to event: " + e.getMessage());
              e.printStackTrace();
-             return "An error occurred while confirming your interest";
+             return "Error: An error occurred while confirming your interest";
          }
      }
 }

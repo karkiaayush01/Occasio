@@ -36,6 +36,17 @@ public class HomeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
+		
+		String popupMessage = (String) SessionUtil.getAttribute(request, "popupMessage");
+		String popupType = (String) SessionUtil.getAttribute(request, "popupType");
+
+		if(popupMessage != null && popupType != null) {
+			request.setAttribute("popupMessage", popupMessage);
+			request.setAttribute("popupType", popupType);
+			SessionUtil.removeAttribute(request, "popupMessage");
+			SessionUtil.removeAttribute(request, "popupType");
+		}
+		
 		request.setAttribute("userId", user.getUserId());
 		request.setAttribute("fullName", user.getFullName());
 		request.setAttribute("userEmail", user.getEmail());
