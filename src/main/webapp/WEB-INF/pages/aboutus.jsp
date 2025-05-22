@@ -86,8 +86,8 @@
 						</div>
 						<div class = " member-info">
 						<p class = "member-name">Shreejesh Pathak</p>
-						<p class = "member-developer"> Java Developer</p>
-						<p class = "member-para"> Shreejesh played a key role in developing the website using Java, combining technical skill with a passion for clean, scalable code. His dedication to problem-solving and performance optimization makes him a vital part of our development team.</p>
+						<p class = "member-developer"> Web Developer</p>
+						<p class = "member-para"> Shreejesh was responsible for developing the Event Page and About Us Page, handling database design, and performing system testing. His contributions ensured a functional, user-friendly interface and a reliable backend structure, playing a key role in maintaining overall project quality and consistency.</p>
 						</div>
 					</div>
 					<div class = "first-member">
@@ -110,7 +110,7 @@
 						</div>
 						<div class = " member-info">
 						<p class = "member-name">Srijan Shrestha</p>
-						<p class = "member-developer"> Java Developer</p>
+						<p class = "member-developer"> UI/UX Designer</p>
 						<p class = "member-para"> Srijan played a key role in developing the website using Java, combining technical skill with a passion for clean, scalable code. His dedication to problem-solving and performance optimization makes him a vital part of our development team.</p>
 						</div>
 					</div>
@@ -141,6 +141,37 @@
 				</section>
 			</main>
 	</body>
+	<footer class = " footer-main">
+           <div class = footer-content>
+               <div class = "footer-heading">
+                   <span class = " footer-occasio"> Occasio</span>
+                   <p class= footer-text>Organize.</p>
+                   <p class= footer-text>Engage. Enjoy.</p>
+                   <p class = footer-text>With Occasio.</p>
+                   <div class = footer-mail>
+                       <p class = footer-mail-content>Occasio@gmail.com</p>
+                       <p class = footer-mail-content>Islington,Nepal</p>
+                   </div>
+               </div>
+               <div class = "footer-nav-main">
+                   <div class = "footer-nav">
+                       <a class= "nav-button1" href="${contextPath}/home">Home</a>
+                       <a class = "nav-button1" href="${contextPath}/myEvents">My Events</a>
+                       <a class = "nav-button1" href="${contextPath}/aboutUs">About Us</a>
+                       <p class= " copyright"> @Copyright2025. All Rights Reserved</p>
+                   </div>
+               </div>
+               <div class = footer-student-name-main>
+                   <div class = footer-student-name>
+                       <p class = "name-of-student">Shreejesh Pathak</p>
+                       <p class = "name-of-student">Srijan Shrestha</p>
+                       <p class = "name-of-student">Aayush Karki</p>
+                       <p class = "name-of-student">Arpit Neupane</p>
+                       <p class = "name-of-student">Paras Kumar Yadav</p>
+                   </div>
+               </div>
+           </div>
+		</footer>
 	<script>
 	function toggleMobileMenu(){
 		const navElement = document.querySelector(".mobile-nav-overlay");
