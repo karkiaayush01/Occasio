@@ -37,15 +37,38 @@ public class EventController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		UserModel currentUser = (UserModel) SessionUtil.getAttribute(request, "user"); // Get current user
+		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user"); // Get current user
 
 		// Ensure user is logged in for any event action via GET
-        if (currentUser == null) {
+        if (user == null) {
             response.sendRedirect(request.getContextPath() + "/login?error=sessionExpired");
             return;
         }
         
-        if(action==null || "".equals(action)) {
+        if("fetchEventData".equals(action)) {
+        	int eventId = Integer.parseInt(request.getParameter("eventId"));
+        	int userId = Integer.parseInt(request.getParameter("userId"));
+        	
+        	EventModel event = eventService.getEventData(request, eventId, userId);
+        	
+        	String popupMessage = (String) SessionUtil.getAttribute(request, "popupMessage");
+        	String popupType = (String) SessionUtil.getAttribute(request, "popupType");
+        	
+        	if(popupMessage != null && popupType != null) {
+        		request.setAttribute("popupMessage", popupMessage);
+        		request.setAttribute("popupType", popupType);
+        		SessionUtil.removeAttribute(request, "popupMessage");
+        		SessionUtil.removeAttribute(request, "popupType");
+        	}
+        	
+        	request.setAttribute("userId", user.getUserId());
+    		request.setAttribute("fullName", user.getFullName());
+    		request.setAttribute("userEmail", user.getEmail());
+    		request.setAttribute("organizationId", user.getOrgId());
+    		request.setAttribute("userPhoneNumber", user.getPhoneNumber());
+    		request.setAttribute("userProfileImgUrl", user.getProfilePicturePath());
+    		request.setAttribute("event", event);
+    		
         	request.getRequestDispatcher("/WEB-INF/pages/eventdetails.jsp").forward(request, response);
         	return;
         }
@@ -59,11 +82,11 @@ public class EventController extends HttpServlet {
 
 				if (eventToEdit != null) {
 					// Authorization Check: Ensure the current user owns the event
-					 if (eventToEdit.getPosterUserId() == currentUser.getUserId()) {
+					 if (eventToEdit.getPosterUserId() == user.getUserId()) {
 						request.setAttribute("eventToEdit", eventToEdit);
 						System.out.println("Event data fetched successfully, preparing to forward back to home.");
 					 } else {
-						System.err.println("User ID " + currentUser.getUserId() + " is not authorized to edit event ID " + eventId);
+						System.err.println("User ID " + user.getUserId() + " is not authorized to edit event ID " + eventId);
 						redirectToHomeWithError(request, response, "You are not authorized to edit this event.");
 						return;
 					 }

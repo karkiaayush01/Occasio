@@ -14,7 +14,6 @@ import java.io.IOException;
 import com.occasio.model.UserModel;
 import com.occasio.service.UserService;
 import com.occasio.util.ImageUtil;
-//import com.occasio.util.PasswordUtil;
 import com.occasio.util.SessionUtil;
 
 @WebServlet("/userProfile")

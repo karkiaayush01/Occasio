@@ -6,13 +6,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
 import com.occasio.model.UserModel;
 import com.occasio.service.LoginService;
 import com.occasio.util.SessionUtil;
+import com.occasio.util.CookieUtil;
 
 @WebServlet(asyncSupported = true, urlPatterns="/login")
 public class LoginController extends HttpServlet {
@@ -26,11 +26,16 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("loggedInUser") != null) {
-            response.sendRedirect(request.getContextPath() + "/home");
-            return;
+    	String popupMessage = (String) SessionUtil.getAttribute(request, "popupMessage");
+        String popupType = (String) SessionUtil.getAttribute(request, "popupType");
+        
+        if(popupMessage != null && popupType != null) {
+            request.setAttribute("popupMessage", popupMessage);
+            request.setAttribute("popupType", popupType);
+            SessionUtil.removeAttribute(request, "popupMessage");
+            SessionUtil.removeAttribute(request, "popupType");
         }
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
         dispatcher.forward(request, response);
     }
@@ -54,11 +59,13 @@ public class LoginController extends HttpServlet {
 		            if (user != null) {
 		                // Authentication Successful
 		                SessionUtil.setAttribute(request, "user", user); 
+		                
+		                CookieUtil.addCookie(response, "email", user.getEmail(), 900);
+		                CookieUtil.addCookie(response, "fullName", user.getFullName(), 900);
 		
 		                if(user.getRole().equals("admin")) {
 		                	response.sendRedirect(request.getContextPath() + "/dashboard");
 		                	return;
-		                	
 		                }
 		                else{
 		                	response.sendRedirect(request.getContextPath() + "/home"); // Redirect to protected area
@@ -73,9 +80,9 @@ public class LoginController extends HttpServlet {
 		        }
 		
 		        // Authentication Failed or Validation Error
-		        request.setAttribute("loginError", errorMessage);
-		        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
-		        dispatcher.forward(request, response);
+		        SessionUtil.setAttribute(request, "popupMessage", errorMessage);
+		        SessionUtil.setAttribute(request, "popupType", "error");
+		        response.sendRedirect(request.getContextPath() + "/home");
 	    	}
 	    	else if (action.equals("logout")) {
 	    		SessionUtil.removeAttribute(request, "user");

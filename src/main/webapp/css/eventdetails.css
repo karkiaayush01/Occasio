@@ -6,6 +6,7 @@
 }
 body{
 	padding-top: 10px;
+	background: rgb(240, 240, 240, 1);
 }
 
 .main{
@@ -41,7 +42,13 @@ body{
 	border-radius: 50%;
 	width: 48px;
 	height: 48px;
-	
+}
+
+.nav-user-profile-picture-img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
 }
 
 .nav-user-details-name{
@@ -86,6 +93,11 @@ body{
     cursor: pointer;
 	margin-left: 80px;
   }
+  
+ .back-button:hover{
+ 	text-decoration: underline;
+ } 
+ 
   .event-details-text{
   	display: flex;
  	align-items: center;
@@ -103,6 +115,7 @@ body{
   .events-cover{
   	width: 100%;
   	object-fit: contain;
+  	border-radius: 12px;
   }
   .event-interest {
     display: flex;
@@ -150,6 +163,7 @@ body{
 	border: 2px solid white;
 	z-index: 10;
 	margin-left:35px;
+	object-fit: cover;
 }
 
 .total-interests{
@@ -173,26 +187,41 @@ body{
 	left: 36px;
 }
 
-.show-interest-button{
-	background: rgba(246, 94, 44, 1);
-	font-size: 13px;
-	font-family: Poppins-Light;
+.show-interest-button, .interested-button{
 	display: flex;
 	padding: 2px 8px;
-	width: 130px;
+	width: 120px;
 	height: 40px;
+	background: rgba(93, 146, 215, 1);
 	color: white;
 	border: none;
 	font-size: 14px;
+	font-family: Poppins-Regular;
 	border-radius: 6px;
 	gap: 8px;
 	align-items: center;
 	justify-content: space-between;
 	cursor: pointer;
 }
+
+.show-interest-button{
+	background: rgba(246, 94, 44, 1);
+	font-size: 13px;
+	font-family: Poppins-Light;
+}
+
 .show-interest-button:hover{
 	background: rgba(220, 75, 30, 1);
 }
+
+.interested-button{
+	background: rgba(51, 112, 92, 1);
+}
+
+.interested-button:hover{
+	background: rgba(41, 92, 76, 1);
+}
+
 .details-section{
     flex-direction: column;
     width: 100%;
@@ -267,7 +296,7 @@ body{
     font-weight: 400;
 }
 .event-desc{
-	background-color: #EBEBEB;
+	background: rgb(220, 220, 220);
 	border-radius: 12px;
 	
 }

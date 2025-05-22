@@ -17,6 +17,7 @@ public class EventModel {
 	private String location;
 	private String restriction;
 	private int posterUserId;
+	private String postedUserName;
 	private String status;
 	private String reviewNote;
 	private String sponsorName;
@@ -181,5 +182,13 @@ public class EventModel {
 
 	public void setInterestedUsers(InterestedModel interestedUsers) {
 		this.interestedUsers = interestedUsers;
+	}
+
+	public String getPostedUserName() {
+		return postedUserName;
+	}
+
+	public void setPostedUserName(String postedUserName) {
+		this.postedUserName = postedUserName;
 	}
 }

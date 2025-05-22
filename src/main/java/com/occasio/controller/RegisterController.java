@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 import com.occasio.model.UserModel;
 import com.occasio.service.RegisterService;
 import com.occasio.util.ImageUtil;
+import com.occasio.util.ValidationUtil;
 
 /**
  * Servlet implementation class RegisterController
@@ -61,6 +62,8 @@ public class RegisterController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ValidationUtil validation = new ValidationUtil();
+		
 		String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -71,6 +74,7 @@ public class RegisterController extends HttpServlet {
         String profilePictureDbPath = null;
         String uploadedImageName = null;
         String orgIdStr = request.getParameter("orgId");
+        String error="";
 
         Map<String, String> errors = new HashMap<>();
         
@@ -98,7 +102,7 @@ public class RegisterController extends HttpServlet {
 
                          System.out.println("Profile picture upload successful. DB path: " + profilePictureDbPath);
                      } else {
-                         errors.put("profilePicture", "Could not save profile picture.");
+                    	 error="Could not save profile picture.";
                          System.err.println("ImageUtil.uploadImage failed for: " + uploadedImageName);
                          uploadedImageName = null; // Nullify name if upload failed
                      }
@@ -109,9 +113,9 @@ public class RegisterController extends HttpServlet {
 
      		} catch (IOException | ServletException e) {
      			System.err.println("Error processing uploaded file part: " + e.getMessage());
-     			errors.put("profilePicture", "Error processing uploaded file.");
+     			error = "Error processing uploaded file.";
      			e.printStackTrace();
-                 uploadedImageName = null; // Nullify name on exception
+                uploadedImageName = null; // Nullify name on exception
      		}
      		// --- End Image Upload Handling ---
         
@@ -120,50 +124,64 @@ public class RegisterController extends HttpServlet {
 
         // --- Validation Checks ---
         if (fullName == null || fullName.trim().isEmpty()) {
-            errors.put("fullName", "Full Name is required.");
+        	error="Full Name is required.";
             System.out.println("fullname");
         }
 
         if (email == null || email.trim().isEmpty()) {
-            errors.put("email", "Email is required.");
-        } else if (!isValidEmail(email)) {
-            errors.put("email", "Invalid email format.");
+            error = "Email is required.";
+            System.out.println("email");
+        } else if (!validation.isValidEmail(email)) {
+            error = "Invalid email format.";
+            System.out.println("email");
         }
 
         if (password == null || password.isEmpty()) {
-            errors.put("password", "Password is required.");
+            error = "Password is required.";
+            System.out.println("password");
         } else if (password.length() < 8) {
-            errors.put("password", "Password must be at least 8 characters long.");
+            error = "Password must be at least 8 characters long.";
+            System.out.println("password");
         }
 
         if (confirmPassword == null || confirmPassword.isEmpty()) {
-            errors.put("confirmPassword", "Confirm Password is required.");
+            error = "Confirm Password is required.";
+            System.out.println("confirmPassword");
         } else if (password == null || !password.equals(confirmPassword)) {
-            errors.put("confirmPassword", "Passwords do not match.");
+            error = "Passwords do not match.";
+            System.out.println("confirmPassword");
         }
 
         if (role == null || role.trim().isEmpty()) {
-            errors.put("role", "Role is required.");
+            error = "Role is required.";
+            System.out.println("role");
         }
 
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
-            errors.put("phoneNumber", "Phone Number is required.");
-        } else if (!isValidPhoneNumber(phoneNumber)) {
-            errors.put("phoneNumber", "Invalid phone number format.");
+            error = "Phone Number is required.";
+            System.out.println("phoneNumber");
+        } else if (!validation.isValidPhoneNumber(phoneNumber)) {
+            error = "Invalid phone number format.";
+            System.out.println("phoneNumber");
         }
 
         if (orgIdStr == null || orgIdStr.trim().isEmpty()) {
-            errors.put("orgId", "Organization ID is required.");
+            error = "Organization ID is required.";
+            System.out.println("orgId");
         } else if (!orgIdStr.matches("\\d+")) {
-            errors.put("orgId", "Organization ID must be a number.");
+            error = "Organization ID must be a number.";
+            System.out.println("orgId");
         }
 
         // If there are validation errors, forward back to the registration page
-        if (!errors.isEmpty()) {
+        if (!error.equals("") && !error.isEmpty() & error != null) {
         	System.out.println("Validation Errors found, forwarding back to register page.");
         	deleteUploadedFileOnError(context, uploadedImageName);
         	
-            request.setAttribute("errors", errors);
+        	
+        	
+        	request.setAttribute("popupMessage", error);
+            request.setAttribute("popupType", "error");
             request.setAttribute("fullName", fullName);
             request.setAttribute("email", email);
             request.setAttribute("role", role);
@@ -197,8 +215,10 @@ public class RegisterController extends HttpServlet {
             // Registration failed, go back to the registration page with an error message
         	System.out.println("Registration failed via service: " + registrationResult);
             deleteUploadedFileOnError(context, uploadedImageName);
+            error="An occured occured during registration service!";
         
-            request.setAttribute("registrationError", registrationResult);
+            request.setAttribute("popupMessage", registrationResult);
+            request.setAttribute("popupType", "error");
             request.setAttribute("fullName", fullName);
             request.setAttribute("email", email);
             request.setAttribute("role", role);
@@ -238,21 +258,5 @@ public class RegisterController extends HttpServlet {
                  e.printStackTrace();
             }
         }
-    }
-
-    private boolean isValidEmail(String email) {
-        // Basic email validation regex
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
-    private boolean isValidPhoneNumber(String phoneNumber) {
-        // Basic phone number validation regex (allows digits, spaces, hyphens, parentheses)
-        String phoneRegex = "^[\\d\\s\\-\\(\\)]+$";
-        Pattern pattern = Pattern.compile(phoneRegex);
-        Matcher matcher = pattern.matcher(phoneNumber);
-        return matcher.matches();
     }
 }

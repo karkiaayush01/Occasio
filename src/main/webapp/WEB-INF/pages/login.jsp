@@ -19,6 +19,7 @@
         </style>
 	</head>
 	<body>
+		<jsp:include page="popup.jsp"></jsp:include>
 	 	<div id="particles-js"></div>
 	 	
 		<main class="main">

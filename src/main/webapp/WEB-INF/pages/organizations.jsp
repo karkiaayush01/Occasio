@@ -17,6 +17,7 @@
 		<link rel="stylesheet" href="${contextPath}/css/updateProfile.css?v=${System.currentTimeMillis()}" />
 	</head>
 	<body>
+		<jsp:include page="popup.jsp"></jsp:include>
 		<main class = "main">
 			<div class = "side-bar">
 				<h2 class="side-bar-title">Occasio</h2>
@@ -78,30 +79,40 @@
 							</thead>
 							
 							<tbody>
-								<tr class="users-table-data">
-									<td style="width: 100px; display: flex; align-items: center; gap: 12px;">
-										<p style="text-overflow: ellipsis; overflow: hidden;">1</p>
-									</td>
-									<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">Islington College</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">2025-5-26</td>
-									<td style="min-width: 150px; max-width: 150px; text-overflow: ellipsis; overflow: hidden;">Active</td>
-									<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">Admin</td>
-									<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
-										<div class="user-actions">
-											<button class="delete-user-button" onClick="toggleDeleteOrgModal(0)">
-												<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-											
-											<button class="edit-user-button" onClick="toggleUpdateUserModal(0)">
-												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-												</svg>
-											</button>
-										</div>
-									</td>
-								</tr>
+								<c:forEach var="org" items="${organizations}">
+									<tr class="users-table-data">
+										<td style="width: 100px; display: flex; align-items: center; gap: 12px;">
+											<p style="text-overflow: ellipsis; overflow: hidden;">${org.id}</p>
+										</td>
+										<td style="min-width: 250px; max-width: 250px; text-overflow: ellipsis; overflow: hidden;">${org.name}</td>
+										<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">${org.onboardedDate}</td>
+										<td style="min-width: 150px; max-width: 150px; text-overflow: ellipsis; overflow: hidden;">
+											<p class="td-status-${org.status}">${org.status}</p>
+										</td>
+										<td style="min-width: 200px; max-width: 200px; text-overflow: ellipsis; overflow: hidden;">${org.adminName}</td>
+										<td style="min-width: 100px; max-width: 100px; text-overflow: ellipsis; overflow: hidden;">
+											<div class="user-actions">
+												<button class="delete-user-button" onClick="toggleDeleteOrgModal(${org.id})">
+													<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M1.5 4.43294H3.16667M3.16667 4.43294H16.5M3.16667 4.43294V16.0996C3.16667 16.5416 3.34226 16.9656 3.65482 17.2781C3.96738 17.5907 4.39131 17.7663 4.83333 17.7663H13.1667C13.6087 17.7663 14.0326 17.5907 14.3452 17.2781C14.6577 16.9656 14.8333 16.5416 14.8333 16.0996V4.43294H3.16667ZM5.66667 4.43294V2.76628C5.66667 2.32425 5.84226 1.90033 6.15482 1.58776C6.46738 1.2752 6.89131 1.09961 7.33333 1.09961H10.6667C11.1087 1.09961 11.5326 1.2752 11.8452 1.58776C12.1577 1.90033 12.3333 2.32425 12.3333 2.76628V4.43294M7.33333 8.59961V13.5996M10.6667 8.59961V13.5996" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+													</svg>
+												</button>
+												
+												<button
+													class="edit-user-button"
+												    onclick="toggleUpdateUserModal(this)"
+												    data-id="${org.id}"
+												    data-name="${org.name}"
+												    data-admin="${org.adminName}"
+												>
+													<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M14.166 1.9345C14.3849 1.71563 14.6447 1.54201 14.9307 1.42356C15.2167 1.30511 15.5232 1.24414 15.8327 1.24414C16.1422 1.24414 16.4487 1.30511 16.7347 1.42356C17.0206 1.54201 17.2805 1.71563 17.4993 1.9345C17.7182 2.15337 17.8918 2.4132 18.0103 2.69917C18.1287 2.98514 18.1897 3.29163 18.1897 3.60116C18.1897 3.91069 18.1287 4.21719 18.0103 4.50316C17.8918 4.78912 17.7182 5.04896 17.4993 5.26783L6.24935 16.5178L1.66602 17.7678L2.91602 13.1845L14.166 1.9345Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+													</svg>
+												</button>
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 						
@@ -187,7 +198,7 @@
 						
 						<div class="logout-confirm">
 							<p class="logout-confirm-text">Are you sure you want to logout?</p>
-							<form class="logout-actions" action="${pageContext.request.contextPath}/login" method="post">
+							<form class="logout-actions" action="${contextPath}/login" method="post">
 								<input type="hidden" name="action" value="logout" />
 								<button class="logout-action-cancel" type="button" onclick="toggleLogoutOverlay()">Cancel</button>
 								<button class="logout-action-confirm" type="submit">Confirm</button>
@@ -198,7 +209,7 @@
 			</div>
 			
 			<div class="user-management-overlay" id="user-delete-overlay">
-				<form class="user-delete-container">
+				<form class="user-delete-container" action="${pageContext.request.contextPath}/organizations?action=deleteOrg" method="post">
 					<input type="hidden" name="orgId" id="deleteOrgIdField" value="" />
 					<div class="user-delete-container-info">
 						<h2 class="user-delete-container-info-heading">Delete Organization</h2>
@@ -221,15 +232,15 @@
                     </button>
                     <div class="user-edit-container-content">
 						<h2 class="user-edit-container-title">Edit Organization</h2>
-						<form class="user-edit-form">
+						<form class="user-edit-form" action="${contextPath}/organizations?action=updateOrg" method="post">
 							<input type="hidden" name="orgId" id="updateOrgIdField" value="" />
 							<div class="user-edit-form-section">
 								<label for="fullName" class="user-edit-form-section-label">Organization Name</label>
-								<input type="text" name="fullName" class="user-edit-form-section-input" placeholder="Occasio"/>
+								<input type="text" name="fullName" id="orgFullNameField" class="user-edit-form-section-input" placeholder="Occasio"/>
 							</div>
 							<div class="user-edit-form-section">
-								<label for="email" class="user-edit-form-section-label">Admin Name</label>
-								<input type="text" name="email" class="user-edit-form-section-input" placeholder="John Doe"/>
+								<label for="adminName" class="user-edit-form-section-label">Admin Name</label>
+								<input type="text" name="adminName" id="orgAdminNameField" class="user-edit-form-section-input" placeholder="John Doe"/>
 							</div>
 							<button type="submit" class="user-edit-form-submit">Save Edit</button>
 						</form>
@@ -247,7 +258,7 @@
                     </button>
                     <div class="user-edit-container-content">
 						<h2 class="user-edit-container-title">Create Organization</h2>
-						<form class="user-edit-form">
+						<form class="user-edit-form" action="${contextPath}/organizations?action=createOrg" method="post">
 							<div class="user-edit-form-section">
 								<label for="orgName" class="user-edit-form-section-label">Organizaton Name</label>
 								<input type="text" name="orgName" class="user-edit-form-section-input" placeholder="Occasio"/>
@@ -262,7 +273,7 @@
 							</div>
 							<div class="user-edit-form-section">
 								<label for="adminPassword" class="user-edit-form-section-label">Admin Password</label>
-								<input type="text" name="adminPassword" class="user-edit-form-section-input"/>
+								<input type="text" name="adminPassword" autocomplete="off" class="user-edit-form-section-input"/>
 							</div>
 							<button type="submit" class="user-edit-form-submit">Create</button>
 						</form>
@@ -305,17 +316,23 @@
 		}
 		
 		//populate the fields based on userId from here 
-		function toggleUpdateUserModal(orgId = 0){
-			const updateOverlay = document.getElementById("user-edit-overlay");
-			const orgIdInputField = document.getElementById("updateOrgIdField");
-			if(updateOverlay.style.visibility == "hidden" || updateOverlay.style.visibility == ""){
-				updateOverlay.style.visibility = "visible";
-				orgIdInputField.value = userId.toString();
-			} 
-			else{
-				updateOverlay.style.visibility = "hidden";
-				orgIdInputField.value="";
-			}
+		function toggleUpdateUserModal(button) {
+		  const updateOverlay = document.getElementById("user-edit-overlay");
+		  const orgIdInputField = document.getElementById("updateOrgIdField");
+		  const orgFullNameField = document.getElementById("orgFullNameField");
+		  const orgAdminNameField = document.getElementById("orgAdminNameField");
+		
+		  if (updateOverlay.style.visibility === "hidden" || updateOverlay.style.visibility === "") {
+		    updateOverlay.style.visibility = "visible";
+		    orgIdInputField.value = button.getAttribute("data-id");
+		    orgFullNameField.value = button.getAttribute("data-name");
+		    orgAdminNameField.value = button.getAttribute("data-admin");
+		  } else {
+		    updateOverlay.style.visibility = "hidden";
+		    orgIdInputField.value = "";
+		    orgFullNameField.value = "";
+		    orgAdminNameField.value = "";
+		  }
 		}
 		
 		function toggleCreateOrganizationForm() {
